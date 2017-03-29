@@ -6,8 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using WebUI.Models;
-using Domain;
-using Domain.Entities;
+using Data;
+using Data.Entities;
 
 namespace WebUI
 {

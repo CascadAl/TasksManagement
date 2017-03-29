@@ -11,8 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using WebUI.Models;
-using Domain.Entities;
-using Domain;
+using Data.Entities;
+using Data;
 
 namespace WebUI
 {

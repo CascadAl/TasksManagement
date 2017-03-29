@@ -1,13 +1,13 @@
-﻿using Domain.Entities;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Entities;
 
-namespace Domain
+namespace Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

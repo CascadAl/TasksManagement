@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WebUI.Models;
-using Domain.Entities;
+using Data.Entities;
 
 namespace WebUI.Controllers
 {

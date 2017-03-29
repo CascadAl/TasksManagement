@@ -1,5 +1,4 @@
-﻿using Domain.Entities;
-using Repository.Interfaces;
+﻿using Data.Entities;
 using Services.Interfaces;
 using Services.Models;
 using System;
@@ -7,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Data.Repository;
 
 namespace Services.Classes
 {
     public class TestService :ITestService
     {
-        ITestRepository _testRepository = null;
+        private ITestRepository _testRepository = null;
 
         public TestService(ITestRepository testRepository)
         {

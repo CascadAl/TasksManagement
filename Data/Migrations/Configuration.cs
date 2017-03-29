@@ -1,12 +1,14 @@
-namespace Domain.Migrations
+using Data.Entities;
+
+namespace Data.Migrations
 {
-    using Domain.Entities;
+    using Data.Entities;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Domain.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
@@ -14,7 +16,7 @@ namespace Domain.Migrations
             ContextKey = "Domain.ApplicationDbContext";
         }
 
-        protected override void Seed(Domain.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

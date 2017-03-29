@@ -1,14 +1,11 @@
-﻿using Domain;
-using Repository.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq.Expressions;
+using Data;
+using Data.Repository;
 
-namespace Repository
+namespace Data
 {
     public abstract class BaseRepository<TEntity>: IDisposable, IRepository<TEntity> where TEntity: class, IEntity
     {

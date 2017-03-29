@@ -258,13 +258,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
+    <ProjectReference Include="..\Data\Data.csproj">
       <Project>{245bfb33-7b53-4dba-b82f-629a6e9a0d6f}</Project>
-      <Name>Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Repository\Repository.csproj">
-      <Project>{16d7b891-1439-4bf3-83d2-d8afcae607a6}</Project>
-      <Name>Repository</Name>
+      <Name>Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Services\Services.csproj">
       <Project>{d28235df-a1e7-4dbd-952f-19e324846f8a}</Project>

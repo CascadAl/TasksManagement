@@ -1,12 +1,9 @@
-﻿using Domain;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using Data;
 
-namespace Repository.Interfaces
+namespace Data.Repository
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : class, IEntity
     {

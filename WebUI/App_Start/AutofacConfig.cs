@@ -1,10 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.Owin;
-using Domain;
+using Data;
 using Owin;
-using Repository.Classes;
-using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +10,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using Data.Repository;
 using Services.Classes;
 using Services.Interfaces;
 
