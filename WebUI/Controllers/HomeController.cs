@@ -9,7 +9,7 @@ namespace WebUI.Controllers
 {
 	
 
-	public class HomeController : Controller
+	public class HomeController : BaseController
 	{
 		private readonly ITestService _testService = null;
 
@@ -42,5 +42,14 @@ namespace WebUI.Controllers
 		{
 			return View(_testService.GetAllMessages());
 		}
+
+		[Authorize]
+		public ActionResult ExceptionTest()
+		{
+			int a = 5 - 5;
+			a /= a;
+			return View();
+		}
+
 	}
 }
