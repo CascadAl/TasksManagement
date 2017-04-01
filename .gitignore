@@ -194,3 +194,5 @@ WebUI/Web.Debug.config
 WebUI/Web.Debug.config
 Data/App.config
 WebUI/Web.config
+*.config
+*.csproj
