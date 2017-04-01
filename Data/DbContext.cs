@@ -9,7 +9,7 @@ using Data.Entities;
 
 namespace Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<Test> Tests { get; set; }
 
