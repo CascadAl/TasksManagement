@@ -13,11 +13,26 @@ namespace WebUI.Controllers
             HandleErrorInfo errorInfo = new HandleErrorInfo(filterContext.Exception, filterContext.RouteData.Values["controller"].ToString(), filterContext.RouteData.Values["action"].ToString());
             //Log Exception e
             filterContext.ExceptionHandled = true;
-            filterContext.Result = new ViewResult()
+            
+
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
-                ViewName = "Error",
-                ViewData = new ViewDataDictionary(errorInfo)
-            };
+                filterContext.HttpContext.Response.StatusCode = 500;
+                filterContext.Result = new JsonResult()
+                {
+                    Data = new { success = false, error = filterContext.Exception.ToString() },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                };
+            }
+            else
+            {
+                filterContext.Result = new ViewResult()
+                {
+                    ViewName = "Error",
+                    ViewData = new ViewDataDictionary(errorInfo)
+                    
+                };
+            }
         }
     }
 }

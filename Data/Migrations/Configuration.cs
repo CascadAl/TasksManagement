@@ -25,9 +25,9 @@ namespace Data.Migrations
             //
             context.Tests.AddOrUpdate(
               
-              new Test { Message = "Создать структуру проекта", Date=DateTime.Parse("2017-03-22") },
-              new Test { Message = "Создать бизнес-объекты", Date = DateTime.Parse("2017-03-22") },
-              new Test { Message = "Доделать остальное", Date = DateTime.Parse("2017-03-23") }
+              new Test { Id = 1, Message = "Создать структуру проекта", Date=DateTime.Parse("2017-03-22") },
+              new Test { Id = 2, Message = "Создать бизнес-объекты", Date = DateTime.Parse("2017-03-22") },
+              new Test { Id = 3, Message = "Доделать остальное", Date = DateTime.Parse("2017-03-23") }
             );
             //
         }
