@@ -9,7 +9,8 @@
 
 @if (Model != null)
 {
-    <h3>@Model.Exception.Message in action <i>@Model.ActionName</i> of <i>@Model.ControllerName</i> Controller </h3>
-    <p>@Model.Exception.StackTrace</p>
-    
+    <div class="hidden">
+        <h3>@Model.Exception.Message in action <i>@Model.ActionName</i> of <i>@Model.ControllerName</i> Controller </h3>
+        <p>@Model.Exception.StackTrace</p>
+    </div>
 }

@@ -33,18 +33,21 @@ namespace WebUI.App_Start
             #region регистрация сервисов
 
             builder.RegisterType<TestService>().As<ITestService>();
+            builder.RegisterType<GroupService>().As<IGroupService>();
 
             #endregion
 
             #region регистрация репозиториев
 
             builder.RegisterType<TestRepository>().As<ITestRepository>();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
 
             #endregion
 
             // регестрируем контекст данных и указываем его процесс создания
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
-
+            
 
             var container = builder.Build();
             // метод для конфигурации MVC контроллера

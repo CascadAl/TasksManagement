@@ -13,6 +13,7 @@ namespace Data
     {
         public DbSet<Test> Tests { get; set; }
 
+        public DbSet<Group> Groups { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection")
