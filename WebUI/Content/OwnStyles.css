@@ -1,0 +1,96 @@
+﻿body {
+    margin: 0px;
+    padding: 0px;
+}
+
+html,
+body {
+    height: 100%;
+}
+/*Див объединяющий хедер, футер, и боди*/
+.wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+.header {
+    background-color: #dcdcff;
+    min-height: 50px;
+    border-color: #b8b8e6;
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    height: auto; /*40px*/
+    left: 0;
+    bottom: 0;
+    padding: 10px 150px;
+    margin-bottom: 0;
+    background-color: #56567d;
+    color: white;
+    font: 12px/20px Helvetica;
+}
+/*Отступ от верха для тектса футера*/
+div ul.footer-text li {
+    margin-top: 0;
+}
+/*Отступ для выноса футера в самый низ страницы*/
+.content-end {
+    padding-bottom: 130px;
+}
+/*Лого в простом состоянии*/
+#header-main-image{
+    /*background: url(Images/Logo1.png) 0 0 no-repeat;*/
+    /*width: 200px;*/
+    height: 50px;
+    display: block;
+    /*text-indent: -9999px;*/
+    margin: auto;
+}
+/*Лого когда на него наводят*/
+#header-main-image:hover{
+    background: url(Images/Logo2.png);
+}
+.container.container-width{
+    max-width: 1300px;
+}
+/*Отцентрирование текста списков*/
+ul.list-unstyled.center{
+    text-align:center;
+}
+/*Оформление текста списков*/
+li.decor{
+    text-decoration:underline;
+    font: 12px/30px Helvetica;
+    color: #20f3cd;
+}
+/*Расположение списков в футере*/
+.footer div.float-left{
+    float:left;
+    /*margin-right: 350px;*/
+    padding: 0;
+}
+/*Отсуп для первого ряда списков футера*/
+.footer div.float-left#first-info{
+    margin-right: 19%;
+}
+/*Отсуп для оставшихся рядов списков футера*/
+.footer div.float-left.other-info{
+    margin-left: 18%;
+}
+/*Стили для первого контейнера главной страницы*/
+.jumbotron.on-all-width{
+    padding: 100px 30px 50px;
+    margin: 0;
+    text-align: center;
+}
+div.second-container{
+    padding: 50px 30px;
+    margin: 0;
+    text-align: center;
+    background-color:slategrey;
+}
+div.second-container.other-container{
+    background-color:skyblue;
+}
