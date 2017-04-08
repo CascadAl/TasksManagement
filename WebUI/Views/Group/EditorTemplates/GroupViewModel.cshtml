@@ -2,7 +2,7 @@
 
 <li>
     <div class="title">
-        <a asp-controller="Task" asp-action="Get" asp-route-id="@Model.Id">@Model.Title</a>
+        <a href="@Url.Action("Get", "Group", new { id = @Model.Id })">@Model.Title</a>
     </div>
     <div class="description">
         <p>@Model.Description</p>

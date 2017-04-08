@@ -7,11 +7,11 @@ namespace Services.Interfaces
 {
     public interface IGroupService: IDisposable
     {
-        ICollection<GroupViewModel> GetAll(string useId);
+        ICollection<GroupViewModel> GetAll(int useId);
 
         Group Get(int groupId);
 
-        void CreateGroup(GroupViewModel newGroup, string userId);
+        void CreateGroup(GroupViewModel newGroup, int userId);
 
         bool UpdateGroup(GroupViewModel newGroup);
 

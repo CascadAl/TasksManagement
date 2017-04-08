@@ -25,7 +25,7 @@ namespace WebUI.Controllers
         public ActionResult Index()
         {
             
-            var groups = _groupService.GetAll(User.Identity.GetUserId());
+            var groups = _groupService.GetAll(User.Identity.GetUserId<int>());
             return View(groups);
         }
 
@@ -42,9 +42,15 @@ namespace WebUI.Controllers
             if (!ModelState.IsValid)
                 return View(newGroup);
 
-            _groupService.CreateGroup(newGroup, User.Identity.GetUserId());
+            _groupService.CreateGroup(newGroup, User.Identity.GetUserId<int>());
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Get()
+        {
+            return View();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Services.Classes
             _userRepository.Dispose();
         }
 
-        public ICollection<GroupViewModel> GetAll(string userId)
+        public ICollection<GroupViewModel> GetAll(int userId)
         {
             var user=_userRepository.GetUserById(userId);
 
@@ -38,11 +38,13 @@ namespace Services.Classes
             throw new System.NotImplementedException();
         }
 
-        public void CreateGroup(GroupViewModel newGroup, string userId)
+        public void CreateGroup(GroupViewModel newGroup, int userId)
         {
             var user = _userRepository.GetUserById(userId);
+            var group = newGroup.ToEntity();
 
-            user.Groups.Add(newGroup.ToEntity());
+            user.Groups.Add(group);
+            _userRepository.Update(user);
         }
 
         public bool UpdateGroup(GroupViewModel newGroup)

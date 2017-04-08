@@ -3,8 +3,8 @@ using Data.Entities;
 
 namespace Data.Repository
 {
-    public interface IUserRepository : IDisposable
+    public interface IUserRepository : IRepository<ApplicationUser>
     {
-        ApplicationUser GetUserById(string id);
+        ApplicationUser GetUserById(int id);
     }
 }
