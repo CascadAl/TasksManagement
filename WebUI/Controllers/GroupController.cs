@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Data.Entities;
 using Data.Repository;
 using Microsoft.AspNet.Identity;
+using Services.Converters;
 using Services.Interfaces;
 using Services.Models;
 
@@ -37,20 +38,28 @@ namespace WebUI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(GroupViewModel newGroup)
+        public ActionResult Save(GroupViewModel newGroup)
         {
             if (!ModelState.IsValid)
                 return View(newGroup);
 
-            _groupService.CreateGroup(newGroup, User.Identity.GetUserId<int>());
+            _groupService.CreateOrUpdate(newGroup, User.Identity.GetUserId<int>());
 
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult Edit(int id)
         {
-            return View();
+            GroupViewModel viewModel = _groupService.GetViewModel(id, User.Identity.GetUserId<int>());
+            return View("Add", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult Remove(int id)
+        {
+            _groupService.RemoveGroup(id, User.Identity.GetUserId<int>());
+            return RedirectToAction("Index");
         }
     }
 }

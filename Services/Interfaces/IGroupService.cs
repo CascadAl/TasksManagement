@@ -11,10 +11,14 @@ namespace Services.Interfaces
 
         Group Get(int groupId);
 
+        GroupViewModel GetViewModel(int groupId, int userId);
+
         void CreateGroup(GroupViewModel newGroup, int userId);
 
-        bool UpdateGroup(GroupViewModel newGroup);
+        void CreateOrUpdate(GroupViewModel groupViewModel, int userId);
 
-        void RemoveGroup(int groupId);
+        bool UpdateGroup(GroupViewModel groupViewModel, int userId);
+
+        void RemoveGroup(int groupId, int userId);
     }
 }

@@ -4,9 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Create group</h3>
+<h3>Change group</h3>
 
-<form class="form-horizontal" method="post" action="@Url.Action("Add", "Group")">
+<form class="form-horizontal" method="post" action="@Url.Action("Save", "Group")">
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(g => g.Id)
@@ -26,7 +26,7 @@
     </div>
     <hr />
     <div class="form-group">
-        <button class="btn btn-primary pull-right">Create Group</button>
+        <button class="btn btn-primary pull-right">Save changes</button>
     </div>
 </form>
 

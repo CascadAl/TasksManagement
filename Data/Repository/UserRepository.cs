@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Data.Entity;
 using Data.Entities;
 
 namespace Data.Repository
@@ -17,5 +18,10 @@ namespace Data.Repository
             return _context.Users.FirstOrDefault(u => u.Id.Equals(id));
         }
 
+        public ApplicationUser GetAsNoTracking(int id)
+        {
+            return _context.Users.AsNoTracking().FirstOrDefault(u => u.Id == id);
+            
+        }
     }
 }

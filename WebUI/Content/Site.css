@@ -16,3 +16,57 @@
     white-space: normal;
 }
 
+ul.group-list {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+ul.group-list > li:after,
+ul.group-list > li:before {
+    display: table;
+    content: " ";
+}
+li.group-row {
+    display: block;
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+.group-row > .controls {
+    float: right;
+    display: inline-block;
+}
+.group-row > .controls .btn{
+    margin-top: 3px;
+    margin-right: 10px;
+}
+
+.controls > a.remove-group:hover {
+    color: rgb(224, 9, 9);
+}
+
+.controls > a.edit-group:hover {
+    color: darkblue;
+}
+
+.group-row > .title {
+    float: left;
+}
+
+.group-row > .description {
+    max-width: 90%;
+    clear: left;
+}
+
+.group-row > .description p{
+    margin-bottom: 0;
+    vertical-align: top;
+    display: inline-block;
+    overflow: hidden;
+
+    }
+.group-row > li:after {
+    clear: both;
+}
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using Data.Entities;
 using Data.Repository;
 using Services.Converters;
@@ -35,7 +36,18 @@ namespace Services.Classes
 
         public Group Get(int groupId)
         {
-            throw new System.NotImplementedException();
+            return _groupRepository.Get(groupId);
+        }
+
+        public GroupViewModel GetViewModel(int groupId, int userId)
+        {
+            var user = _userRepository.GetUserById(userId);
+            var group= user.Groups.FirstOrDefault(g => g.Id == groupId);
+
+            if (group == null)
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            return group.ToViewModel();
         }
 
         public void CreateGroup(GroupViewModel newGroup, int userId)
@@ -47,14 +59,43 @@ namespace Services.Classes
             _userRepository.Update(user);
         }
 
-        public bool UpdateGroup(GroupViewModel newGroup)
+        public void CreateOrUpdate(GroupViewModel groupViewModel, int userId)
         {
-            throw new System.NotImplementedException();
+            if (!groupViewModel.Id.HasValue)
+            {
+                CreateGroup(groupViewModel, userId);
+            }
+            else
+            {
+                UpdateGroup(groupViewModel, userId);
+            }
         }
 
-        public void RemoveGroup(int groupId)
+        public bool UpdateGroup(GroupViewModel groupViewModel, int userId)
         {
-            throw new System.NotImplementedException();
+            if (!groupViewModel.Id.HasValue)
+                return false;
+
+            if (!IsGroupOwner(groupViewModel.Id.Value, userId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            return _groupRepository.Update(groupViewModel.ToEntity());
+        }
+
+        public void RemoveGroup(int groupId, int userId)
+        {
+            if(!IsGroupOwner(groupId, userId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            _groupRepository.Remove(groupId);
+        }
+
+        private bool IsGroupOwner(int groupId, int userId)
+        {
+            var user = _userRepository.GetAsNoTracking(userId);
+            
+            var groupExists = user.Groups.Any(g => g.Id == groupId);
+            return groupExists;
         }
     }
 }
