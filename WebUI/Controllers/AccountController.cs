@@ -183,9 +183,9 @@ namespace WebUI.Controllers
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+        public async Task<ActionResult> ConfirmEmail(int userId, string code)
         {
-            if (userId == null || code == null)
+            if (code == null)
             {
                 return View("Error");
             }
@@ -301,7 +301,7 @@ namespace WebUI.Controllers
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
+            if (userId < 1)
             {
                 return View("Error");
             }

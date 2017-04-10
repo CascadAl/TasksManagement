@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Services.Models.GroupViewModel>
+           
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h2>Your Groups</h2>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary pull-right" href="@Url.Action("Add", "Group")">New Group</a>
+    </div>
+</div>
+<div class="row">
+    <ul class="group-list">
+        @Html.EditorForModel()
+    </ul>
+</div>

@@ -2,21 +2,18 @@ using Data.Entities;
 
 namespace Data.Migrations
 {
-    using Data.Entities;
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Data.ApplicationDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "Domain.ApplicationDbContext";
+            AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(Data.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -24,10 +21,10 @@ namespace Data.Migrations
             //  to avoid creating duplicate seed data. E.g.
             //
             context.Tests.AddOrUpdate(
-              
-              new Test { Message = "Создать структуру проекта", Date=DateTime.Parse("2017-03-22") },
-              new Test { Message = "Создать бизнес-объекты", Date = DateTime.Parse("2017-03-22") },
-              new Test { Message = "Доделать остальное", Date = DateTime.Parse("2017-03-23") }
+              t => t.Message,
+              new Test { Message = "Create project structure", Date = DateTime.Now },
+              new Test { Message = "Implemented basic exception handler", Date = DateTime.Now },
+              new Test { Message = "Implement groups creation", Date = DateTime.Now }
             );
             //
         }
