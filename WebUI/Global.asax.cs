@@ -17,5 +17,11 @@ namespace WebUI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_BeginRequest()
+        {
+            var req = Request;
+            //LogService.SaveRequestInfo();
+        }
     }
 }

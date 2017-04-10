@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace WebUI.Controllers
 {
-	
 
-	public class HomeController : BaseController
+    [RequireHttps]
+    public class HomeController : BaseController
 	{
 		private readonly ITestService _testService = null;
 

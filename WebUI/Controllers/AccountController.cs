@@ -14,6 +14,7 @@ using Data.Entities;
 namespace WebUI.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -72,6 +73,12 @@ namespace WebUI.Controllers
             if (!ModelState.IsValid)
             {
                 return View(model);
+            }
+
+            ApplicationUser user = await UserManager.FindByEmailAsync(model.Email);
+            if (user != null && !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            {
+                return RedirectToAction("ResendConfirmation", "Account");
             }
 
             // This doesn't count login failures towards account lockout
@@ -156,15 +163,15 @@ namespace WebUI.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("CompleteRegistration", "Account");
                 }
                 AddErrors(result);
             }
@@ -203,19 +210,24 @@ namespace WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                ApplicationUser user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    return View("UnregisteredEmail");
+                }
+                else if (!(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    return RedirectToAction("ResendConfirmation", "Account");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                string callbackUrl = Url.Action("ResetPassword", "Account", 
+                    new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", 
+                    "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -402,6 +414,44 @@ namespace WebUI.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        // GET: /Account/CompleteRegistration
+        [AllowAnonymous]
+        public ActionResult CompleteRegistration()
+        {
+            return View();
+        }
+
+        // GET: /Account/SendConfirmationEmail
+        [AllowAnonymous]
+        public ActionResult ResendConfirmation()
+        {
+            return View();
+        }
+
+        // POST: /Account/SendConfirmationEmail
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ResendConfirmation(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser user = await UserManager.FindByNameAsync(model.Email);
+                if (user == null)
+                {
+                    return View("UnregisteredEmail");
+                }
+
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                return RedirectToAction("CompleteRegistration", "Account");
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         protected override void Dispose(bool disposing)
