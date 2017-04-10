@@ -20,7 +20,14 @@ namespace WebUI.Controllers
 
 		public ActionResult Index()
 		{
-			return View();
+            if(Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Group");
+            }
+            else
+            {
+                return View();
+            }	
 		}
 
 		public ActionResult About()
