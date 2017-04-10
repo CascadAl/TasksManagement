@@ -3,41 +3,72 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Task Management</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Test", "Test", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+<nav class="navbar header navbar-default navbar-fixed-top">
+    <div class="container container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" id="togle-collapsed-border" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar collapse-span-color"></span>
+                <span class="icon-bar collapse-span-color"></span>
+                <span class="icon-bar collapse-span-color"></span>
+            </button>
+                <a class="logo" href='@Url.Action("Index", "Home")' title="Tasks Management Home page">
+                    <!--<img src="../../Content/Images/Logo1.png" class="header-main-image" alt="Tasks Management main page" title="Tasks Management main page"/>-->
+                </a>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
 
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav main-button">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Test", "Test", "Home")</li>
+            </ul>
+            <!--@Html.Partial("_LoginPartial")-->
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+    <div class="container body-content content-end">
+        @RenderBody()
+        <!--<hr />-->
+        </div>
+        <footer class="footer">
+<!--            <div class="container container-width">-->
+            <div class="float-left" id="first-info">
+            <ul class="list-unstyled footer-text">
+                <li>&copy; @DateTime.Now.Year - Task Management</li>
+                <li>All Rights Reserved</li>
+            </ul>
+                </div>
+            <div class="float-left other-info">
+            <ul class="list-unstyled">
+                <li class="decor">CONTACT US</li>
+                <li>almebrti@mail.ru</li>
+                <li>slashdrop@gmail.com</li>
+                <li>095-548-42-08</li>
+            </ul>
+                </div>
+            <div class="float-left">
+            <ul class="list-unstyled">
+                <li class="decor">LOCATION</li>
+                <li>34B Kniazia Volodymyra Velykoho St., </li>
+                <li>Dnipro, 49000, Ukraine</li>
+            </ul>
+                </div>
+                </footer>
+            <!--        <p class="footertext">&copy; @DateTime.Now.Year - Task Management</p>
+        <p class="footertext">All Rights Reserved</p>-->
+<!--        </div>-->
+<!--    </div>-->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
