@@ -6,13 +6,22 @@ body {
     margin: 0px;
     padding: 0px;
     margin-bottom: 115px;
+    font-family: Corbel;
+    font-size: 15pt;
 }
 .header {
-    background-color: #dcdcff;
-    border-color: #b8b8e6;
+    background-color: #f8f9ff;
+    border-color: #dfdff1;
+}
+hr{
+    width: 400px;
+    border-top: 5px double #ea8227;
+    margin-bottom: 0;
+    margin-top: 30px;
 }
 /*Стили для кнопки навигационного меню*/
 .navbar-default .navbar-toggle{
+    margin-top: 12px;
     border: 1px solid transparent;
     border-color: #0f2f7d;
 }
@@ -59,18 +68,18 @@ div.container.container-width{
 }
 /*Лого в простом состоянии*/
 a.logo {
+    margin: 10px 0 0;
     width: 180px;
     height: 50px;
     display: block;
     background: url(Images/Logo1.png) no-repeat;
-    background-size: auto 50px;
+    background-size: auto 40px;
     /*padding: 4px 0 0 50px;*/
 }
 /*Лого когда на него наводят*/
     a.logo:hover {
-        background: url(Images/Logo2.png) no-repeat;
-        background-size: auto 50px;
-        
+        background: url(Images/Logo4.png) no-repeat;
+        background-size: auto 40px;        
     }
 .container.container-width{
     max-width: 1300px;
@@ -99,18 +108,32 @@ li.decor{
 }
 /*Стили для первого контейнера главной страницы*/
 .jumbotron.on-all-width{
-    padding: 100px 30px 50px;
+    padding: 100px 30px 40px;
     margin: 0;
     text-align: center;
+    color: white;
+    background-color: #f76531;
+    border-radius: 0;
+    border: 2px solid #bd3707;
+}
+.text-font{
+    font-family: Corbel;
+}
+h2.text-font{
+    font-weight:bold;
 }
 div.second-container{
-    padding: 50px 30px;
+    padding: 10px 30px;
     margin: 0;
     text-align: center;
-    background-color:slategrey;
+    background-color: #eff1f3;
+    /*font-family: Corbel;*/
+    font-size: 12pt;
 }
 div.second-container.other-container{
-    background-color:skyblue;
+    background-color: #eff1f3;
+    /*font-family: Corbel;*/
+    font-size: 12pt;
 }
 /*Стили для кнопок главного меню*/
 div.navbar-collapse.collapse ul.main-button{
@@ -118,16 +141,25 @@ div.navbar-collapse.collapse ul.main-button{
     font: 17px 'Book Antiqua';
 }
 div ul.nav.navbar-nav.main-button li a{
-    color: #2d4c96;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #7187bb;
 }
 div ul.nav.navbar-nav.main-button li :hover{
-    background-color:#1e41d1;
-    color: black;
+    background-color:#4364eb;
+    color: #c4d5ff;
 }
 /*Стили для слайдера баннеров*/
+.carousel{
+    width: 60%;
+    margin: 0 20%;
+}
 div.carousel-inner.carousel-style{
     min-height: 130px;
-    background-color:#e4e4e4;
+    background-color:#6ce669;
+}
+.carousel-indicators{
+    margin-bottom: 0;
 }
 p.carousel-caption-text{
     font-size: 20px;
@@ -135,15 +167,15 @@ p.carousel-caption-text{
     text-align: center;
 }
 p.carousel-text{
-    font-size: 15px;
+    font-size: 16px;
     font-weight: normal;
     text-align: center;
 }
 .carousel-indicators .active{
-    background-color: #6a49d0;
+    background-color: #22d200;
 }
 .carousel-indicators li{
-    border-color: #777479;
+    border-color: #398e45;
 }
 form div p.content-end-text{
     margin-top: 20px;
@@ -153,15 +185,13 @@ form div p.content-end-text+p{
     text-align:right;
 }
 form div p.content-end-text+p+button{
-    margin-left: 50%;
+    margin-left: 48%;
 }
 .btn-default{
     color: #dbf2f6;
     background-color: #7196ea;
     border-color: #290d5d;
-}
-form div p.content-end-text+p+button :focus{
-
+    width: 120px;
 }
 .btn-default:hover, .btn-default:focus, 
 .btn-default:active, .btn-default.active, 
