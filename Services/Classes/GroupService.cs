@@ -14,24 +14,29 @@ namespace Services.Classes
     {
         private readonly IGroupRepository _groupRepository = null;
         private readonly IUserRepository _userRepository = null;
+        private readonly IApplicationRoleRepository _roleRepository = null;
+        private readonly IGroupMemberRepository _groupMemberRepository = null;
 
-        public GroupService(IGroupRepository groupRepository, IUserRepository userRepository)
+        public GroupService(IGroupRepository groupRepository, IUserRepository userRepository, IApplicationRoleRepository roleRepository, IGroupMemberRepository groupMemberRepository)
         {
             _groupRepository = groupRepository;
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
+            _groupMemberRepository = groupMemberRepository;
         }
 
         public void Dispose()
         {
             _groupRepository.Dispose();
             _userRepository.Dispose();
+            _roleRepository.Dispose();
         }
 
         public ICollection<GroupViewModel> GetAll(int userId)
         {
-            var user=_userRepository.GetUserById(userId);
-
-            return user.Groups.ToList().Select(g=>g.ToViewModel()).ToList();
+            var user = _userRepository.GetUserById(userId);
+            var viewModels = user.GroupMembers.Select(e => e.Group.ToViewModel()).ToList();
+            return viewModels;
         }
 
         public Group Get(int groupId)
@@ -41,22 +46,20 @@ namespace Services.Classes
 
         public GroupViewModel GetViewModel(int groupId, int userId)
         {
-            var user = _userRepository.GetUserById(userId);
-            var group= user.Groups.FirstOrDefault(g => g.Id == groupId);
+            if (!IsGroupParticipant(groupId, userId))
+                throw new ArgumentException("You are not a member of this group");
 
-            if (group == null)
-                throw new ArgumentException("Wrong groupId or group does not belong to you");
+            var group = _groupRepository.Get(groupId);
 
             return group.ToViewModel();
         }
 
         public void CreateGroup(GroupViewModel newGroup, int userId)
         {
-            var user = _userRepository.GetUserById(userId);
-            var group = newGroup.ToEntity();
+            var groupId=_groupRepository.Add(newGroup.ToEntity());
+            var role = _roleRepository.Get(r => r.Name.Equals("Owner")).Single();
 
-            user.Groups.Add(group);
-            _userRepository.Update(user);
+            _groupMemberRepository.AddUserToGroup(groupId, userId, role.Id);
         }
 
         public void CreateOrUpdate(GroupViewModel groupViewModel, int userId)
@@ -92,10 +95,16 @@ namespace Services.Classes
 
         private bool IsGroupOwner(int groupId, int userId)
         {
-            var user = _userRepository.GetAsNoTracking(userId);
-            
-            var groupExists = user.Groups.Any(g => g.Id == groupId);
+            //var user = _userRepository.GetAsNoTracking(userId);
+            var ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
+
+            var groupExists = _groupMemberRepository.Has(g => (g.GroupId == groupId && g.RoleId == ownerRoleId && g.UserId == userId));
             return groupExists;
+        }
+
+        private bool IsGroupParticipant(int groupId, int userId)
+        {
+            return _groupMemberRepository.Has(g => (g.GroupId == groupId && g.UserId == userId));
         }
     }
 }

@@ -15,6 +15,10 @@ namespace Data
 
         public DbSet<Group> Groups { get; set; }
 
+        public DbSet<GroupMember> GroupMembers { get; set; }
+
+        public DbSet<RoleType> RoleTypes { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
@@ -24,6 +28,15 @@ namespace Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //Configure domain classes using modelBuilder here
+            modelBuilder.Entity<GroupMember>()
+                .HasRequired(t => t.User)
+                .WithMany(t => t.GroupMembers)
+                .HasForeignKey(t => t.UserId);
+
+            modelBuilder.Entity<GroupMember>()
+                 .HasRequired(t => t.Group)
+                 .WithMany(t => t.Members)
+                 .HasForeignKey(t => t.GroupId);
 
             base.OnModelCreating(modelBuilder);
             

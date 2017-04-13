@@ -10,7 +10,7 @@ namespace Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Data.ApplicationDbContext context)
@@ -26,7 +26,19 @@ namespace Data.Migrations
               new Test { Message = "Implemented basic exception handler", Date = DateTime.Now },
               new Test { Message = "Implement groups creation", Date = DateTime.Now }
             );
-            //
+
+            context.RoleTypes.AddOrUpdate(
+                r=>r.Name,
+                new RoleType(){Id = 1, Name = "Account"},
+                new RoleType(){Id=2, Name="Group"}
+            );
+            
+            context.Roles.AddOrUpdate(
+                r=>r.Name,
+                new ApplicationRole() {Id = 1, Name = "Admin", RoleTypeId = 1},
+                new ApplicationRole() {Id = 2, Name = "Owner", RoleTypeId = 2},
+                new ApplicationRole() { Id = 3, Name = "Participant", RoleTypeId = 2 }
+                );
         }
     }
 }

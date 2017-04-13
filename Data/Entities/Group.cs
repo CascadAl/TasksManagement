@@ -19,15 +19,15 @@ namespace Data.Entities
 
         public DateTime CreatedAt { get; set; }
 
+        
+        //public ICollection<ApplicationUser> Users { get; set; }
 
-        public virtual ICollection<ApplicationUser> Users { get; set; }
-
-        //public ICollection<GroupUserRole> GroupUserRoles { get; set; }
+        public ICollection<GroupMember> Members { get; set; }
 
         public Group()
         {
-            Users=new List<ApplicationUser>();
-            //GroupAdmins=new List<GroupUserRole>();
+            //Users=new List<ApplicationUser>();
+            Members = new List<GroupMember>();
         }
     }
 }

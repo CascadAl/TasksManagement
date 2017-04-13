@@ -42,6 +42,8 @@ namespace WebUI.App_Start
             builder.RegisterType<TestRepository>().As<ITestRepository>();
             builder.RegisterType<GroupRepository>().As<IGroupRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<GroupMemberRepository>().As<IGroupMemberRepository>();
+            builder.RegisterType<ApplicationRoleRepository>().As<IApplicationRoleRepository>();
 
             #endregion
 
