@@ -8,67 +8,67 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-<nav class="navbar header navbar-default navbar-fixed-top">
-    <div class="container container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" id="togle-collapsed-border" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar collapse-span-color"></span>
-                <span class="icon-bar collapse-span-color"></span>
-                <span class="icon-bar collapse-span-color"></span>
-            </button>
+    <nav class="navbar header navbar-default navbar-fixed-top">
+        <div class="container container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="togle-collapsed-border" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar collapse-span-color"></span>
+                    <span class="icon-bar collapse-span-color"></span>
+                    <span class="icon-bar collapse-span-color"></span>
+                </button>
                 <a class="logo" href='@Url.Action("Index", "Home")' title="Tasks Management Home page">
                     <!--<img src="../../Content/Images/Logo1.png" class="header-main-image" alt="Tasks Management main page" title="Tasks Management main page"/>-->
                 </a>
-        </div>
+            </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav main-button">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Test", "Test", "Home")</li>
-            </ul>
-            <!--@Html.Partial("_LoginPartial")-->
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav main-button">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Test", "Test", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
-</nav>
+        <!-- /.container-fluid -->
+    </nav>
     <div class="container body-content content-end">
         @RenderBody()
         <!--<hr />-->
-        </div>
-        <footer class="footer">
-<!--            <div class="container container-width">-->
-            <div class="float-left" id="first-info">
+    </div>
+    <footer class="footer">
+        <!--            <div class="container container-width">-->
+        <div class="float-left" id="first-info">
             <ul class="list-unstyled footer-text">
                 <li>&copy; @DateTime.Now.Year - Task Management</li>
                 <li>All Rights Reserved</li>
             </ul>
-                </div>
-            <div class="float-left other-info">
+        </div>
+        <div class="float-left other-info">
             <ul class="list-unstyled">
                 <li class="decor">CONTACT US</li>
                 <li>almebrti@mail.ru</li>
                 <li>slashdrop@gmail.com</li>
                 <li>095-548-42-08</li>
             </ul>
-                </div>
-            <div class="float-left">
+        </div>
+        <div class="float-left">
             <ul class="list-unstyled">
                 <li class="decor">LOCATION</li>
                 <li>34B Kniazia Volodymyra Velykoho St., </li>
                 <li>Dnipro, 49000, Ukraine</li>
             </ul>
-                </div>
-                </footer>
-            <!--        <p class="footertext">&copy; @DateTime.Now.Year - Task Management</p>
+        </div>
+    </footer>
+    <!--        <p class="footertext">&copy; @DateTime.Now.Year - Task Management</p>
         <p class="footertext">All Rights Reserved</p>-->
-<!--        </div>-->
-<!--    </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
