@@ -7,7 +7,10 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+
+  <body>
+
+    <!-- Fixed navbar -->
     <nav class="navbar header navbar-default navbar-fixed-top">
         <div class="container container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,9 +40,10 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+      
+    <!-- Begin page content -->
     <div class="container body-content content-end">
-        @RenderBody()
-        <!--<hr />-->
+              @RenderBody()
     </div>
     <footer class="footer">
         <!--            <div class="container container-width">-->
@@ -72,5 +76,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-</body>
+  </body>
 </html>
+
