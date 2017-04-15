@@ -197,3 +197,6 @@ WebUI/Web.config
 *.config
 *.csproj
 /Data/Entities/Migrations
+/Data/Migrations/201704150848408_newGroupMembers.cs
+/Data/Migrations/201704150848408_newGroupMembers.Designer.cs
+/Data/Migrations/201704150848408_newGroupMembers.resx

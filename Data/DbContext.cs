@@ -22,7 +22,7 @@ namespace Data
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
-            
+            Database.SetInitializer(new DatabaseInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

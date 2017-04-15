@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseRepository.cs" />
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="DbContext.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\GroupMember.cs" />
     <Compile Include="Entities\RoleType.cs" />
+    <Compile Include="Identity\ApplicationRoleManager.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="Migrations\201704062146488_init.cs" />
     <Compile Include="Migrations\201704062146488_init.Designer.cs">
@@ -74,6 +77,10 @@
     <Compile Include="Migrations\201704121954005_addGroupMember.cs" />
     <Compile Include="Migrations\201704121954005_addGroupMember.Designer.cs">
       <DependentUpon>201704121954005_addGroupMember.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704150848408_newGroupMembers.cs" />
+    <Compile Include="Migrations\201704150848408_newGroupMembers.Designer.cs">
+      <DependentUpon>201704150848408_newGroupMembers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704121954005_addGroupMember.resx">
       <DependentUpon>201704121954005_addGroupMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704150848408_newGroupMembers.resx">
+      <DependentUpon>201704150848408_newGroupMembers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
