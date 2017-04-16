@@ -20,8 +20,6 @@ namespace Data
                   new RoleType { Id = 2, Name = "Group" } }
             );
 
-            //context.SaveChanges();
-
             var roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole, int, ApplicationUserRole>(context));
 
             roleManager.Create(new ApplicationRole() { Name = "Admin", RoleTypeId = 1 });
@@ -34,7 +32,8 @@ namespace Data
             var admin = new ApplicationUser {
                 UserName = "tasksmanagment.site@gmail.com",
                 Email = "tasksmanagment.site@gmail.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                UserProfile = new UserProfile { FirstName = "Administrator" }
             };
 
             userManager.Create(admin, "OfRqv3Z0");

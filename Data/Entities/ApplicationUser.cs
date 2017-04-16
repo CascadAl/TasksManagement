@@ -14,6 +14,7 @@ namespace Data.Entities
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<int>, IEntity
     {
         public virtual ICollection<GroupMember> GroupMembers { get; set; }
+        public virtual UserProfile UserProfile { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
         {

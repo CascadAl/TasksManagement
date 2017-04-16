@@ -19,6 +19,8 @@ namespace Data
 
         public DbSet<RoleType> RoleTypes { get; set; }
 
+        public DbSet<UserProfile> UserProfiles { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
