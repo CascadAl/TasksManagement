@@ -34,6 +34,7 @@ namespace WebUI.App_Start
 
             builder.RegisterType<TestService>().As<ITestService>();
             builder.RegisterType<GroupService>().As<IGroupService>();
+            builder.RegisterType<ProfileService>().As<IProfileService>();
 
             #endregion
 

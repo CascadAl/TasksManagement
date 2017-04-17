@@ -58,10 +58,13 @@
   <ItemGroup>
     <Compile Include="Classes\GroupService.cs" />
     <Compile Include="Classes\TestService.cs" />
+    <Compile Include="Classes\ProfileService.cs" />
     <Compile Include="Converters\ModelExtensions.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
     <Compile Include="Interfaces\ITestService.cs" />
+    <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

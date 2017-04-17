@@ -18,7 +18,6 @@ body {
     width: 50%;
 }
 
-
 hr {
     
     border-top: 5px double #ea8227;
@@ -202,6 +201,17 @@ div p.content-end-text{
     margin-top: 20px;
     text-align:right;
 }
+
+.cover-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.jumbotron {
+    position: relative;
+}
+
 /*form div p.content-end-text+p+button{
     margin-left: 48%;
 }
