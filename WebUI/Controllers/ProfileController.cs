@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity;
 
 namespace WebUI.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : BaseController
     {
         private IProfileService _profileService = null;
 
