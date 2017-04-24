@@ -7,7 +7,7 @@ namespace Services.Interfaces
 {
     public interface IGroupService: IDisposable
     {
-        ICollection<GroupViewModel> GetAll(int useId);
+        ICollection<GroupWRoleViewModel> GetAll(int useId);
 
         Group Get(int groupId);
 
@@ -20,5 +20,11 @@ namespace Services.Interfaces
         bool UpdateGroup(GroupViewModel groupViewModel, int userId);
 
         void RemoveGroup(int groupId, int userId);
+
+        AddMemberViewModel GetMembers(int groupId, int userId);
+
+        void AddMember(GroupMemberViewModel viewModel);
+
+        void RemoveMember(RemoveMemberViewModel viewModel);
     }
 }

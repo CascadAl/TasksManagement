@@ -12,9 +12,11 @@ namespace Data.Repository
     {
         void AddUserToGroup(int groupId, int userId, int roleId);
 
+        void RemoveUserFromGroup(int groupId, int userId);
+
         bool Has(Expression<Func<GroupMember, bool>> predicate);
 
-
+        IQueryable<GroupMember> Get(Expression<Func<GroupMember, bool>> predicate);
 
     }
 }

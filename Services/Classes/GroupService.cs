@@ -32,11 +32,16 @@ namespace Services.Classes
             _roleRepository.Dispose();
         }
 
-        public ICollection<GroupViewModel> GetAll(int userId)
+        public ICollection<GroupWRoleViewModel> GetAll(int userId)
         {
-            var user = _userRepository.GetUserById(userId);
-            var viewModels = user.GroupMembers.Select(e => e.Group.ToViewModel()).ToList();
-            return viewModels;
+            var groups=_groupMemberRepository.Get(g => g.UserId == userId).ToList();
+            ICollection<GroupWRoleViewModel> groupViewModels = new List<GroupWRoleViewModel>();
+
+            foreach (var group in groups)
+            {
+                groupViewModels.Add(group.ToViewModel());
+            }
+            return groupViewModels;
         }
 
         public Group Get(int groupId)
@@ -95,7 +100,6 @@ namespace Services.Classes
 
         private bool IsGroupOwner(int groupId, int userId)
         {
-            //var user = _userRepository.GetAsNoTracking(userId);
             var ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
 
             var groupExists = _groupMemberRepository.Has(g => (g.GroupId == groupId && g.RoleId == ownerRoleId && g.UserId == userId));
@@ -105,6 +109,50 @@ namespace Services.Classes
         private bool IsGroupParticipant(int groupId, int userId)
         {
             return _groupMemberRepository.Has(g => (g.GroupId == groupId && g.UserId == userId));
+        }
+
+        public AddMemberViewModel GetMembers(int groupId, int userId)
+        {
+            if (!IsGroupParticipant(groupId, userId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            var members = _groupMemberRepository.Get(g => g.GroupId == groupId).ToList();
+            var groupRoles = _roleRepository.Get(r => r.RoleType.Name.Equals("Group")).ToList();
+            AddMemberViewModel viewModel = new AddMemberViewModel();
+
+
+            foreach (var role in groupRoles)
+            {
+                viewModel.GroupRoles.Add(role.ToGroupRole());
+            }
+
+            foreach (var member in members)
+            {
+                viewModel.Members.Add(member.ToMemberViewModel());
+            }
+            viewModel.GroupId = groupId;
+            viewModel.GroupTitle = members.First().Group.Title;
+
+            return viewModel;
+        }
+
+        public void AddMember(GroupMemberViewModel viewModel)
+        {
+            if (IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
+                throw new ArgumentException("User is already in this group.");
+
+            _groupMemberRepository.AddUserToGroup(viewModel.GroupId, viewModel.UserId, viewModel.RoleId);
+        }
+
+        public void RemoveMember(RemoveMemberViewModel viewModel)
+        {
+            if (!IsGroupOwner(viewModel.GroupId, viewModel.UserId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserToRemove))
+                throw new ArgumentException("User does not belong to this group");
+
+            _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
         }
     }
 }

@@ -30,10 +30,22 @@ namespace Data.Repository
             _context.SaveChanges();
         }
 
+        public IQueryable<GroupMember> Get(Expression<Func<GroupMember, bool>> predicate)
+        {
+            return _context.GroupMembers.Where(predicate).AsQueryable();
+        }
+
         public bool Has(Expression<Func<GroupMember, bool>> predicate)
         {
             return _context.GroupMembers.Any(predicate);
         }
 
+        public void RemoveUserFromGroup(int groupId, int userId)
+        {
+            var groupMember = _context.GroupMembers.Single(u => u.UserId == userId && u.GroupId == groupId);
+
+            _context.GroupMembers.Remove(groupMember);
+            _context.SaveChanges();
+        }
     }
 }

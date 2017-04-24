@@ -1,8 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Services.Models
 {
-    public class GroupViewModel
+    public class GroupWRoleViewModel
     {
         public int? Id { get; set; }
 
@@ -13,5 +18,6 @@ namespace Services.Models
         public string Description { get; set; }
 
         public string Role { get; set; }
+
     }
 }

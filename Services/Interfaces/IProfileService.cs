@@ -16,5 +16,7 @@ namespace Services.Interfaces
         string GetAvatar(int userId);
 
         void CreateAvatar(string path, string name);
+
+        IEnumerable<AddMemberProfileViewModel> GetProfileData(string query);
     }
 }

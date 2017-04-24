@@ -7,6 +7,7 @@ using Services.Interfaces;
 using Services.Models;
 using Data.Repository;
 using Data.Entities;
+using Services.Converters;
 
 namespace Services.Classes
 {
@@ -47,9 +48,17 @@ namespace Services.Classes
             throw new NotImplementedException();
         }
 
+        public IEnumerable<AddMemberProfileViewModel> GetProfileData(string query)
+        {
+            var users =_userRepository.Get(u => (u.UserProfile.FirstName + u.UserProfile.LastName).Contains(query)).Take(10).ToList();
+            var viewModels = users.Select(u => u.ToAddMemberProfileViewModel());
+
+            return viewModels;
+        }
+
         public void Dispose()
         {
-            _userRepository.Dispose();;
+            _userRepository.Dispose();
         }
     }
 }
