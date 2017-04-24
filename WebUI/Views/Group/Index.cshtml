@@ -4,16 +4,22 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h3>Your Groups</h3>
+<hr class="m-tb-15" />
+
 <div class="row">
-    <h2>Your Groups</h2>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <a class="btn btn-primary pull-right" href="@Url.Action("Add", "Group")">New Group</a>
+    <div class="col-md-2 col-md-offset-10">
+        <a class="btn btn-primary form-control" href="@Url.Action("Add", "Group")">New Group</a>
     </div>
 </div>
+<p></p>
 <div class="row">
-    <ul class="group-list">
-        @Html.EditorForModel()
-    </ul>
+    <div class="col-md-12">
+        <div class="table-header">
+            <span>You are a member of</span>
+        </div>
+        <ul class="group-list">
+            @Html.EditorForModel()
+        </ul>
+    </div>
 </div>

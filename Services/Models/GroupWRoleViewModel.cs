@@ -19,5 +19,12 @@ namespace Services.Models
 
         public string Role { get; set; }
 
+
+        public bool IsOwner()
+        {
+            return String.Equals(Role, "Owner");
+        }
     }
+
+    
 }

@@ -71,12 +71,6 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddMember()
-        {
-            return View();
-        }
-
-        [HttpGet]
         public ActionResult GetUsers(string query)
         {
             var users = _profileService.GetProfileData(query);
@@ -87,6 +81,9 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddMember(GroupMemberViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    
             _groupService.AddMember(viewModel);
             return RedirectToAction("Members", new { id = viewModel.GroupId});
         }

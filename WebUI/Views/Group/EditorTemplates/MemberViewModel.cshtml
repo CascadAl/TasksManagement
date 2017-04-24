@@ -1,12 +1,15 @@
 ﻿@model Services.Models.MemberViewModel
-
+@using Microsoft.AspNet.Identity;
 <li class="group-row">
 
     <div class="controls">
-            @Html.Hidden("", Model.UserId, new { @class="user-id-js"})
+        @if (!Model.IsOwner() )
+        {
+            @Html.Hidden("", Model.UserId, new { @class = "user-id-js" })
             <button class="btn btn-default remove-member">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
+        }
     </div>
     <div class="title">
         <p>

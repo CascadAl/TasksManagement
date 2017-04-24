@@ -6,7 +6,7 @@ namespace Services.Models
     {
         public int? Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Title is required")]
         [StringLength(100, MinimumLength = 2)]
         public string Title { get; set; }
 
