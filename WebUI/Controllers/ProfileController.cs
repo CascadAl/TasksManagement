@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using WebUI.Models;
 using AutoMapper;
-using Services.DataTypeObjects;
+using Services.DataTransferObjects;
 using System.IO;
 using System.Web.Configuration;
 

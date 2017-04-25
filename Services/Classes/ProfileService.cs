@@ -7,9 +7,10 @@ using Services.Interfaces;
 using Services.Models;
 using Data.Repository;
 using Data.Entities;
-using Services.DataTypeObjects;
+using Services.DataTransferObjects;
 using System.Web.Configuration;
 using System.IO;
+using Services.Converters;
 
 namespace Services.Classes
 {
@@ -52,9 +53,17 @@ namespace Services.Classes
             _userRepository.SaveChanges();
         }
 
+        public IEnumerable<AddMemberProfileViewModel> GetProfileData(string query)
+        {
+            var users = _userRepository.Get(u => (u.UserProfile.FirstName + u.UserProfile.LastName).Contains(query)).Take(10).ToList();
+            var viewModels = users.Select(u => u.ToAddMemberProfileViewModel());
+
+            return viewModels;
+        }
+
         public void Dispose()
         {
-            _userRepository.Dispose();;
+            _userRepository.Dispose();
         }
     }
 }

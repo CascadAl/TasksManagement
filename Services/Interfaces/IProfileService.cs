@@ -1,4 +1,4 @@
-﻿using Services.DataTypeObjects;
+﻿using Services.DataTransferObjects;
 using Services.Models;
 using System;
 using System.Collections.Generic;
@@ -13,5 +13,7 @@ namespace Services.Interfaces
         ProfileDTO GetProfile(int userId);
 
         void Save(ProfileDTO profile);
+
+        IEnumerable<AddMemberProfileViewModel> GetProfileData(string query);
     }
 }
