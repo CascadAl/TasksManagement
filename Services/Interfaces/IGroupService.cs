@@ -26,5 +26,7 @@ namespace Services.Interfaces
         void AddMember(GroupMemberViewModel viewModel);
 
         void RemoveMember(RemoveMemberViewModel viewModel);
+
+        void ChangeMemberRole(GroupMemberViewModel viewModel);
     }
 }

@@ -96,5 +96,14 @@ namespace WebUI.Controllers
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
+
+        [HttpPost]
+        public ActionResult ChangeMemberRole(GroupMemberViewModel viewModel)
+        {
+            viewModel.CurrentUserId = User.Identity.GetUserId<int>();
+            _groupService.ChangeMemberRole(viewModel);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
     }
 }

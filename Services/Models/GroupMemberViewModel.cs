@@ -17,5 +17,7 @@ namespace Services.Models
 
         [Required]
         public int RoleId { get; set; }
+
+        public int CurrentUserId { get; set; }
     }
 }

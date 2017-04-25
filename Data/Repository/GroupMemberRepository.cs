@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Data.Entities;
+using System.Data.Entity;
 
 namespace Data.Repository
 {
@@ -47,5 +48,16 @@ namespace Data.Repository
             _context.GroupMembers.Remove(groupMember);
             _context.SaveChanges();
         }
+
+        public bool Update(GroupMember entity)
+        {
+            if (entity == null) return false;
+
+            if (entity.UserId == 0 || entity.GroupId == 0 || entity.RoleId == 0) return false;
+            _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
+            return true;
+        }
+
     }
 }

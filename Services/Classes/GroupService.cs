@@ -154,5 +154,16 @@ namespace Services.Classes
 
             _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
         }
+
+        public void ChangeMemberRole(GroupMemberViewModel viewModel)
+        {
+            if (!IsGroupOwner(viewModel.GroupId, viewModel.CurrentUserId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
+            if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
+                throw new ArgumentException("User does not belong to this group");
+
+            _groupMemberRepository.Update(viewModel.ToEntity());
+        }
     }
 }

@@ -15,7 +15,6 @@
     white-space: normal;
 }
 
-
 ul.group-list {
     list-style: outside none none;
     margin: 0;
@@ -39,10 +38,14 @@ li.group-row {
     float: right;
     display: inline-block;
 }
-.group-row > .controls .btn{
-    margin-top: 3px;
-    margin-right: 10px;
-}
+
+.group-row > .controls .btn,
+.group-row > .controls select {
+        margin-top: 3px;
+        margin-right: 10px;
+        /*width:auto;*/
+        display: inline-block;
+    }
 
 .controls > a.remove-group:hover, 
 .controls > button.remove-member:hover {
@@ -67,8 +70,8 @@ li.group-row {
     vertical-align: top;
     display: inline-block;
     overflow: hidden;
+}
 
-    }
 .group-row > li:after {
     clear: both;
 }
@@ -85,4 +88,8 @@ li.group-row {
 
 .m-tb-15{
     margin: 15px 0;
+}
+
+.change-group-role-dd{
+    width: 150px;
 }

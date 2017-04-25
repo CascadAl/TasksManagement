@@ -1,15 +1,22 @@
 ﻿@model Services.Models.MemberViewModel
-@using Microsoft.AspNet.Identity;
+@{
+    var groupRoles = ViewData["GroupRoles"] as List<Data.Entities.GroupRole>;
+}
 <li class="group-row">
 
     <div class="controls">
-        @if (!Model.IsOwner() )
-        {
-            @Html.Hidden("", Model.UserId, new { @class = "user-id-js" })
-            <button class="btn btn-default remove-member">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>
-        }
+        @Html.Hidden("", Model.UserId, new { @class = "user-id-js" })
+
+        @Html.DropDownList("RoleId", new SelectList(groupRoles, "Id", "Name", Model.RoleId), new { @class = "form-control change-group-role-dd" })
+
+        <button class="btn btn-default remove-member"
+                data-toggle="confirmation"
+                data-btn-ok-class="btn-danger" data-btn-ok-label="Remove"
+                data-btn-cancel-class="btn-success" data-btn-cancel-label="Cancel"
+                data-title="Confirm member excluding"
+                data-placement="bottom">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
     </div>
     <div class="title">
         <p>

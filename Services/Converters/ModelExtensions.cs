@@ -45,7 +45,8 @@ namespace Services.Converters
                 UserId = entity.UserId,
                 FirstName=entity.User.UserProfile.FirstName,
                 LastName=entity.User.UserProfile.LastName,
-                Role=entity.Role.Name
+                Role=entity.Role.Name,
+                RoleId=entity.RoleId
             };
         }
 
@@ -64,6 +65,16 @@ namespace Services.Converters
             {
                 UserId = entity.Id,
                 FullName = String.Format("{0} {1}", entity.UserProfile.FirstName, entity.UserProfile.LastName) 
+            };
+        }
+
+        public static GroupMember ToEntity(this GroupMemberViewModel viewModel)
+        {
+            return new GroupMember()
+            {
+                UserId = viewModel.UserId,
+                GroupId = viewModel.GroupId,
+                RoleId = viewModel.RoleId
             };
         }
     }

@@ -36,9 +36,31 @@ $(document).ready(function () {
                 UserToRemove: userToRemoveId,
                 GroupId: groupId
             }
-        }).done(function (data, textStatus, jqXHR) {
+        }).done(function () {
             location.reload();
         });
     });
 
+    $(document).on('change', '.change-group-role-dd', function (e) {
+        var userId = $(this).closest('.controls').find('.user-id-js').val();
+        var groupId = $('#GroupId').val();
+        var roleId = e.target.value;
+
+        $.ajax({
+            type: 'POST',
+            url: '/Group/ChangeMemberRole',
+            data: {
+                UserId: userId,
+                GroupId: groupId,
+                RoleId: roleId
+            }
+        }).done(function () {
+            location.reload();
+        });
+    });
+
+    $('.remove-member').confirmation({
+        rootSelector: '.remove-member',
+        container: 'body'
+    });
 });

@@ -35,7 +35,7 @@
             <span>Members with access to <strong>@Model.GroupTitle</strong></span>
         </div>
         <ul class="group-list">
-            @Html.EditorFor(m=>m.Members)
+            @Html.EditorFor(m=>m.Members, new { GroupRoles = Model.GroupRoles }  )
         </ul>
     </div>
 </div>
@@ -43,6 +43,6 @@
 @section scripts{
     @Scripts.Render("~/bundles/typeahead")
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/bootstrap-confirmation.min.js"></script>
     <script src="~/Scripts/groupMembers.js" ></script>
-
 }
