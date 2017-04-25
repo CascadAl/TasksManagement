@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -16,29 +15,24 @@
     white-space: normal;
 }
 
-<<<<<<< HEAD
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-=======
+
 ul.group-list {
     list-style: outside none none;
     margin: 0;
     padding: 0;
+    border: 1px solid #DDD;
 }
 
 ul.group-list > li:after,
 ul.group-list > li:before {
     display: table;
     content: " ";
+    clear:both;
 }
 li.group-row {
     display: block;
     margin: 0;
-    padding: 10px 0;
+    padding: 10px 15px;
     border-bottom: 1px solid #f0f0f0;
 }
 .group-row > .controls {
@@ -50,12 +44,13 @@ li.group-row {
     margin-right: 10px;
 }
 
-.controls > a.remove-group:hover {
+.controls > a.remove-group:hover, 
+.controls > button.remove-member:hover {
     color: rgb(224, 9, 9);
 }
 
 .controls > a.edit-group:hover {
-    color: darkblue;
+    color: blue;
 }
 
 .group-row > .title {
@@ -78,4 +73,16 @@ li.group-row {
     clear: both;
 }
 
->>>>>>> origin/development_start
+.table-header {
+    background-color: #fafafa;
+    padding: 15px;
+    border: 1px solid #DDD;
+    border-bottom: none;
+}
+.add-user-form {
+    margin-bottom: 20px;
+}
+
+.m-tb-15{
+    margin: 15px 0;
+}

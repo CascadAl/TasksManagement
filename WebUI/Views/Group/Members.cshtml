@@ -1,0 +1,48 @@
+﻿@model Services.Models.AddMemberViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Members</h3>
+<hr class="m-tb-15" />
+<p>Add new member to a group <strong>@Model.GroupTitle</strong></p>
+
+<form action="/Group/AddMember" method="post" id="add-member-form">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-8">
+            <input id="add-user" type="text" placeholder="Search for a user by first and last name" class="typeahead form-control" />
+
+            @Html.HiddenFor(u => u.UserId, new { @class="UserId"})
+            @Html.HiddenFor(r => r.GroupId)
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownList("RoleId", new SelectList(Model.GroupRoles, "Id", "Name"), "Select Role", new { @class="form-control"})
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary form-control" type="submit">Add User</button>
+        </div>
+    </div>
+</form>
+
+<p>Existing members</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-header">
+            <span>Members with access to <strong>@Model.GroupTitle</strong></span>
+        </div>
+        <ul class="group-list">
+            @Html.EditorFor(m=>m.Members)
+        </ul>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/typeahead")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/groupMembers.js" ></script>
+
+}

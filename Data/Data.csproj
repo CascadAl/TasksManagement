@@ -66,11 +66,13 @@
     <Compile Include="Entities\ApplicationUserRole.cs" />
     <Compile Include="Entities\Group.cs" />
     <Compile Include="Entities\GroupMember.cs" />
+    <Compile Include="Entities\GroupRole.cs" />
     <Compile Include="Entities\RoleType.cs" />
     <Compile Include="Entities\UserProfile.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="IEntity.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Test.cs" />
     <Compile Include="Repository\ApplicationRoleRepository.cs" />

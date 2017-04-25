@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Services.Converters;
 using Services.Interfaces;
 using Services.Models;
+using System.Net;
 
 namespace WebUI.Controllers
 {
@@ -16,16 +17,16 @@ namespace WebUI.Controllers
     public class GroupController : BaseController
     {
         private IGroupService _groupService = null;
+        private IProfileService _profileService = null;
 
-        public GroupController(IGroupService groupService)
+        public GroupController(IGroupService groupService, IProfileService profileService)
         {
             _groupService = groupService;
+            _profileService = profileService;
         }
 
-        // GET: Groups
         public ActionResult Index()
         {
-            
             var groups = _groupService.GetAll(User.Identity.GetUserId<int>());
             return View(groups);
         }
@@ -60,6 +61,40 @@ namespace WebUI.Controllers
         {
             _groupService.RemoveGroup(id, User.Identity.GetUserId<int>());
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Members(int id)
+        {
+            var memberModels = _groupService.GetMembers(id, User.Identity.GetUserId<int>());
+            return View(memberModels);
+        }
+
+        [HttpGet]
+        public ActionResult GetUsers(string query)
+        {
+            var users = _profileService.GetProfileData(query);
+            return Json(users, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMember(GroupMemberViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    
+            _groupService.AddMember(viewModel);
+            return RedirectToAction("Members", new { id = viewModel.GroupId});
+        }
+
+        [HttpPost]
+        public ActionResult RemoveMember(RemoveMemberViewModel viewModel)
+        {
+            viewModel.UserId = User.Identity.GetUserId<int>();
+            _groupService.RemoveMember(viewModel);
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
