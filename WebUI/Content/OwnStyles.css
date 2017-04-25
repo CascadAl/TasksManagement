@@ -212,6 +212,24 @@ div p.content-end-text{
     position: relative;
 }
 
+.avatarBig {
+    width: 150px;
+    height: 150px;
+}
+
+.avatarSmall {
+    width: 26px;
+    height: 26px;
+}
+
+.brouse-btn {
+    padding-bottom: 5px;
+}
+
+.upload-avatar {
+    font-size: 12pt;
+}
+
 /*form div p.content-end-text+p+button{
     margin-left: 48%;
 }

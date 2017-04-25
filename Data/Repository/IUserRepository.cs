@@ -7,6 +7,8 @@ namespace Data.Repository
     {
         ApplicationUser GetUserById(int id);
 
+        void SaveChanges();
+
         ApplicationUser GetAsNoTracking(int userId);
     }
 }

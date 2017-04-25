@@ -49,6 +49,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,11 +61,11 @@
     <Compile Include="Classes\TestService.cs" />
     <Compile Include="Classes\ProfileService.cs" />
     <Compile Include="Converters\ModelExtensions.cs" />
+    <Compile Include="DataTransferObjects\ProfileDTO.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
     <Compile Include="Interfaces\ITestService.cs" />
     <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
-    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
