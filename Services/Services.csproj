@@ -69,6 +69,9 @@
     <Compile Include="Models\AddMemberViewModel.cs" />
     <Compile Include="Models\GroupMemberViewModel.cs" />
     <Compile Include="Models\GroupViewModel.cs" />
+    <Compile Include="Models\GroupWRoleViewModel.cs" />
+    <Compile Include="Models\MemberViewModel.cs" />
+    <Compile Include="Models\RemoveMemberViewModel.cs" />
     <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
