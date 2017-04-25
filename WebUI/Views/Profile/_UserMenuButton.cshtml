@@ -1,0 +1,21 @@
+﻿@using System.Web.Configuration;
+@model WebUI.Models.ProfileViewModel
+@{ 
+    var userName = string.IsNullOrWhiteSpace(Model.FirstName + Model.LastName) ?
+                Model.Email :
+                String.Format("{0} {1}", Model.FirstName, Model.LastName).Trim();
+}
+
+<li class="dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+        @userName
+        <img src="@Model.AvatarPath" class="img-circle avatarSmall" />
+        <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+        <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
+        <li>@Html.ActionLink("Settins", "Edit", "Profile")</li>
+        <li class="divider"></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</li>

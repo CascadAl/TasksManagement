@@ -1,4 +1,5 @@
-﻿@model Services.Models.ProfileViewModel
+﻿@using System.Web.Configuration;
+@model WebUI.Models.ProfileViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -12,7 +13,7 @@
         </a>
     </div>
     
-    <img width="150" height="150" src="~/Content/Images/Avatars/noavatar.png" class="img-circle" alt="avatar"/>
+    <img src="@Model.AvatarPath" class="img-circle avatarBig" alt="avatar"/>
     <h3><b>@Model.FirstName @Model.LastName</b></h3>
     <h4>@Model.Email</h4>
     <hr />

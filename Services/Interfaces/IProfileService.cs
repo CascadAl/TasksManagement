@@ -1,4 +1,5 @@
-﻿using Services.Models;
+﻿using Services.DataTypeObjects;
+using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,8 @@ namespace Services.Interfaces
 {
     public interface IProfileService : IDisposable
     {
-        ProfileViewModel GetViewModel(int userId);
+        ProfileDTO GetProfile(int userId);
 
-        void Save(ProfileViewModel profile);
-
-        string GetAvatar(int userId);
-
-        void CreateAvatar(string path, string name);
-
-        IEnumerable<AddMemberProfileViewModel> GetProfileData(string query);
+        void Save(ProfileDTO profile);
     }
 }

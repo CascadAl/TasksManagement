@@ -6,21 +6,7 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle">
-                <img width="26" height="26" src="~/Content/Images/Avatars/noavatar.png" alt="avatar" class="img-circle" />
-                <b class="caret"></b>         
-            </a>
-            <ul class="dropdown-menu">
-                <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
-                <li><a href="#">Settins</a></li>
-                <li class="divider"></li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            </ul>
-        </li>
+        @Html.Action("UserMenuButton", "Profile")
     </ul>
     }
 }

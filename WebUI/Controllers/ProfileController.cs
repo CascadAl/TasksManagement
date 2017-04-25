@@ -5,10 +5,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using WebUI.Models;
+using AutoMapper;
+using Services.DataTypeObjects;
+using System.IO;
+using System.Web.Configuration;
 
 namespace WebUI.Controllers
 {
-    public class ProfileController : Controller
+    [Authorize]
+    public class ProfileController : BaseController
     {
         private IProfileService _profileService = null;
 
@@ -20,58 +26,61 @@ namespace WebUI.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            var profile = _profileService.GetViewModel(User.Identity.GetUserId<int>());
+            var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
+            var profile = Mapper.Map<ProfileDTO, ProfileViewModel>(profileDto);
+
             return View(profile);
         }
 
-        // GET: Profile/Details/5
-        public ActionResult Details(int id)
+        // GET: Profile/Edit/
+        public ActionResult Edit()
         {
-            return View();
+            var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, EditProfileViewModel>());
+            var profile = Mapper.Map<ProfileDTO, EditProfileViewModel>(profileDto);
+
+            return View(profile);
         }
 
-        // GET: Profile/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Profile/Create
+        // POST: Profile/Edit/
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EditProfileViewModel model, string action)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            if (!ModelState.IsValid)
+                return View(model);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            Mapper.Initialize(cfg => cfg.CreateMap<EditProfileViewModel, ProfileDTO>());
+            var profileDto = Mapper.Map<EditProfileViewModel, ProfileDTO>(model);
 
-        // GET: Profile/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Profile/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            if (action == "removeAvatar")
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                System.IO.File.Delete(Server.MapPath(model.AvatarPath));
+                profileDto.AvatarPath = null;
             }
-            catch
+            else if (action == "update")
             {
-                return View();
+                if (model.Avatar != null)
+                {
+                    string uniqueName = User.Identity.GetUserId() + Path.GetExtension(model.Avatar.FileName);
+                    string path = Server.MapPath(WebConfigurationManager.AppSettings["AvatarFolder"]);
+                    string fullPath = Path.Combine(path, uniqueName);
+
+                    if (!Directory.Exists(path))
+                        Directory.CreateDirectory(path);
+
+                    if (System.IO.File.Exists(fullPath))
+                        System.IO.File.Delete(fullPath);
+
+                    model.Avatar.SaveAs(fullPath);
+                    profileDto.AvatarPath = uniqueName;
+                }
             }
+
+            _profileService.Save(profileDto);
+
+            return RedirectToAction("Edit");
         }
 
         // GET: Profile/Delete/5
@@ -94,6 +103,16 @@ namespace WebUI.Controllers
             {
                 return View();
             }
+        }
+
+        [ChildActionOnly]
+        public ActionResult UserMenuButton()
+        {
+            var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
+            var profile = Mapper.Map<ProfileDTO, ProfileViewModel>(profileDto);
+
+            return PartialView("_UserMenuButton", profile);
         }
     }
 }

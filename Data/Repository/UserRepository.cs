@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
 using Data.Entities;
+using System;
 
 namespace Data.Repository
 {
@@ -22,6 +23,11 @@ namespace Data.Repository
         {
             return _context.Users.AsNoTracking().FirstOrDefault(u => u.Id == id);
             
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Models
+namespace WebUI.Models
 {
     public class ProfileViewModel
     {
@@ -13,11 +13,11 @@ namespace Services.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 

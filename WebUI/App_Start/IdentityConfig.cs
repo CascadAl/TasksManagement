@@ -14,6 +14,7 @@ using WebUI.Models;
 using Data.Entities;
 using Data;
 using System.Net.Mail;
+using System.Net;
 
 namespace WebUI
 {
@@ -21,19 +22,11 @@ namespace WebUI
     {
         public Task SendAsync(IdentityMessage message)
         {
-            string from = "tasksmanagment.site@gmail.com";
-            string pass = "OfRqv3Z0";
-
             //The address and port of the SMTP-server from which we will send the letter
-            SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
-
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential(from, pass);
-            client.EnableSsl = true;
+            SmtpClient client = new SmtpClient();
 
             //Create a message: message.Destination - address of the recipient
-            MailMessage mail = new MailMessage(from, message.Destination);
+            MailMessage mail = new MailMessage(((NetworkCredential)client.Credentials).UserName, message.Destination);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
             mail.IsBodyHtml = true;
