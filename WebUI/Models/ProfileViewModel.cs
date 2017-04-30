@@ -10,16 +10,17 @@ namespace WebUI.Models
     public class ProfileViewModel
     {
         [Required]
+        [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Display(Name = "Path to avatar")]
         public string AvatarPath { get; set; }

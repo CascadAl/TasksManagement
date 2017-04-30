@@ -43,8 +43,7 @@ namespace Services.Converters
             return new MemberViewModel()
             {
                 UserId = entity.UserId,
-                FirstName=entity.User.UserProfile.FirstName,
-                LastName=entity.User.UserProfile.LastName,
+                FullName=entity.User.UserProfile.FullName,
                 Role=entity.Role.Name,
                 RoleId=entity.RoleId
             };
@@ -64,7 +63,7 @@ namespace Services.Converters
             return new AddMemberProfileViewModel()
             {
                 UserId = entity.Id,
-                FullName = String.Format("{0} {1}", entity.UserProfile.FirstName, entity.UserProfile.LastName) 
+                FullName = entity.UserProfile.FullName 
             };
         }
 

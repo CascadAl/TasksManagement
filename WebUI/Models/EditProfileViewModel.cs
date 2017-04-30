@@ -13,13 +13,13 @@ namespace WebUI.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "First Name")]
+        [Display(Name = "Full name")]
         [StringLength(50)]
-        public string FirstName { get; set; }
+        public string FullName { get; set; }
 
-        [Display(Name = "Last Name")]
+        [Display(Name = "Username")]
         [StringLength(50)]
-        public string LastName { get; set; }
+        public string UserName { get; set; }
 
         [Display(Name = "Email")]
         [EmailAddress]

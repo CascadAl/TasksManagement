@@ -1,9 +1,7 @@
 ﻿@using System.Web.Configuration;
 @model WebUI.Models.ProfileViewModel
 @{ 
-    var userName = string.IsNullOrWhiteSpace(Model.FirstName + Model.LastName) ?
-                Model.Email :
-                String.Format("{0} {1}", Model.FirstName, Model.LastName).Trim();
+    var userName = Model.FullName ?? Model.Username;
 }
 
 <li class="dropdown">

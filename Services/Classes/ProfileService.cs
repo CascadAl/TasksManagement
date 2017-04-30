@@ -35,8 +35,8 @@ namespace Services.Classes
             {
                 Id = user.Id,
                 Email = user.Email,
-                FirstName = user.UserProfile.FirstName,
-                LastName = user.UserProfile.LastName,
+                UserName = user.UserName,
+                FullName = user.UserProfile.FullName,
                 AvatarPath = user.UserProfile.AvatarName != null ?
                     Path.Combine(_avatarFolder, user.UserProfile.AvatarName) :
                     _defaultAvatar
@@ -46,8 +46,8 @@ namespace Services.Classes
         public void Save(ProfileDTO profile)
         {
             ApplicationUser user = _userRepository.GetUserById(profile.Id);
-            user.UserProfile.FirstName = profile.FirstName;
-            user.UserProfile.LastName = profile.LastName;
+            user.UserName = profile.UserName;
+            user.UserProfile.FullName = profile.FullName;
             user.UserProfile.AvatarName= profile.AvatarPath;
 
             _userRepository.SaveChanges();
@@ -55,7 +55,7 @@ namespace Services.Classes
 
         public IEnumerable<AddMemberProfileViewModel> GetProfileData(string query)
         {
-            var users = _userRepository.Get(u => (u.UserProfile.FirstName + u.UserProfile.LastName).Contains(query)).Take(10).ToList();
+            var users = _userRepository.Get(u => (u.UserProfile.FullName).Contains(query)).Take(10).ToList();
             var viewModels = users.Select(u => u.ToAddMemberProfileViewModel());
 
             return viewModels;

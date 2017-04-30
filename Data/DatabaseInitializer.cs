@@ -30,10 +30,10 @@ namespace Data
             var userManager = new ApplicationUserManager(new UserStore<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim> (context));
 
             var admin = new ApplicationUser {
-                UserName = "tasksmanagment.site@gmail.com",
-                Email = "tasksmanagment.site@gmail.com",
+                UserName = "administrator",
+                Email = "tasksmanagment.site@gmail.com",             
                 EmailConfirmed = true,
-                UserProfile = new UserProfile { FirstName = "Administrator" }
+                UserProfile = new UserProfile { FullName = "Administrator" }
             };
 
             userManager.Create(admin, "OfRqv3Z0");

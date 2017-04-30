@@ -49,9 +49,9 @@ namespace WebUI.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username or Email")]
+        //[EmailAddress]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -69,13 +69,14 @@ namespace WebUI.Models
         [Display(Name = "Email*")]
         public string Email { get; set; }
 
+        [Required]
         [StringLength(100)]
-        [Display(Name = "First name")]
-        public string FirstName { get; set; }
+        [Display(Name = "Username*")]
+        public string Username { get; set; }
 
         [StringLength(100)]
-        [Display(Name = "Last name")]
-        public string LastName { get; set; }
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
