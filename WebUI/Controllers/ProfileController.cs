@@ -27,8 +27,8 @@ namespace WebUI.Controllers
         public ActionResult Index()
         {
             var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
-            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
-            var profile = Mapper.Map<ProfileDTO, ProfileViewModel>(profileDto);
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileDetailsViewModel>());
+            var profile = Mapper.Map<ProfileDTO, ProfileDetailsViewModel>(profileDto);
 
             return View(profile);
         }
@@ -109,8 +109,8 @@ namespace WebUI.Controllers
         public ActionResult UserMenuButton()
         {
             var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
-            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileViewModel>());
-            var profile = Mapper.Map<ProfileDTO, ProfileViewModel>(profileDto);
+            Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileDetailsViewModel>());
+            var profile = Mapper.Map<ProfileDTO, ProfileDetailsViewModel>(profileDto);
 
             return PartialView("_UserMenuButton", profile);
         }

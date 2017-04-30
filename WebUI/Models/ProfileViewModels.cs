@@ -9,6 +9,25 @@ using System.Web;
 
 namespace WebUI.Models
 {
+    public class ProfileDetailsViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
+        [Display(Name = "Path to avatar")]
+        public string AvatarPath { get; set; }
+    }
+
     public class EditProfileViewModel
     {
         public int Id { get; set; }
