@@ -1,0 +1,17 @@
+﻿@model Services.Models.IssueViewModel
+
+<li class="group-row">
+    <div class="controls">
+
+    </div>
+    <div class="title">
+        <strong><a href="@Url.Action("Index", "Issues", new { groupId = Model.GroupId, id=Model.Id} )">@Model.Title</a></strong>
+    </div>
+    <div class="description">
+        <p>#@Model.IssueNumber by @Model.OpenedByUser on @Model.OpenedAt.ToShortDateString()</p>
+    </div>
+
+</li>
+
+
+

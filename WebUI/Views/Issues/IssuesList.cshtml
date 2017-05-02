@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Services.Models.IssueViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Issues</h3>
+
+<hr class="m-tb-15" />
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <a class="btn btn-primary form-control" href="@Url.Action("Create", "Issues", new { groupId=ViewBag.GroupId})">New Issue</a>
+    </div>
+</div>
+<p></p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-header p-0 b-0">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#" >Open</a></li>
+                <li role="presentation"><a href="#">Closed</a></li>
+            </ul>
+        </div>
+        <ul class="group-list">
+            @Html.EditorForModel()
+        </ul>
+    </div>
+</div>

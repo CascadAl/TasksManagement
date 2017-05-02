@@ -35,6 +35,7 @@ namespace WebUI.App_Start
             builder.RegisterType<TestService>().As<ITestService>();
             builder.RegisterType<GroupService>().As<IGroupService>();
             builder.RegisterType<ProfileService>().As<IProfileService>();
+            builder.RegisterType<IssueService>().As<IIssueService>();
 
             #endregion
 
@@ -45,6 +46,8 @@ namespace WebUI.App_Start
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<GroupMemberRepository>().As<IGroupMemberRepository>();
             builder.RegisterType<ApplicationRoleRepository>().As<IApplicationRoleRepository>();
+            builder.RegisterType<IssueRepository>().As<IIssueRepository>();
+            builder.RegisterType<CommentRepository>().As<ICommentRepository>();
 
             #endregion
 

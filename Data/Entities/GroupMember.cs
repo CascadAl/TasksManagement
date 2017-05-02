@@ -18,6 +18,8 @@ namespace Data.Entities
         [Required]
         public int RoleId { get; set; }
 
+        [Required]
+        public DateTime JoinedAt { get; set; }
 
         public virtual Group Group { get; set; }
 

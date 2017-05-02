@@ -90,6 +90,23 @@ li.group-row {
     margin: 15px 0;
 }
 
+.p-0{
+    padding:0;
+}
+.p-l-15{
+    padding-left:15px;
+}
 .change-group-role-dd{
     width: 150px;
+}
+
+.table-header>.nav {
+    border-bottom: none;
+}
+.table-header > .nav li.active{
+    font-weight:bold;
+}
+
+.b-0{
+    border: none;
 }

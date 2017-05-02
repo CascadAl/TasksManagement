@@ -31,6 +31,12 @@ namespace WebUI
 
             bundles.Add(new ScriptBundle("~/bundles/typeahead").Include(
                        "~/Scripts/typeahead.bundle.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/simplemde").Include(
+                        "~/Scripts/simplemde.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap-select").Include(
+                        "~/Scripts/bootstrap-select.min.js"));
         }
     }
 }

@@ -18,16 +18,9 @@ namespace Data.Repository
             _context = context;
         }
 
-        public void AddUserToGroup(int groupId, int userId, int roleId)
+        public void AddUserToGroup(GroupMember entity)
         {
-            GroupMember groupMember= new GroupMember()
-            {
-                GroupId = groupId,
-                UserId = userId,
-                RoleId = roleId
-            };
-
-            _context.GroupMembers.Add(groupMember);
+            _context.GroupMembers.Add(entity);
             _context.SaveChanges();
         }
 

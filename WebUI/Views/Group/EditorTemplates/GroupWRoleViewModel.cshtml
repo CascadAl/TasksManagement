@@ -23,7 +23,8 @@
         }
     </div>
     <div class="title">
-        <a href="@Url.Action("Get", "Group", new {id = @Model.Id})">@Model.Title</a>
+        <a href="@Url.Action("Index", "Issues", new { groupId = Model.Id})">@Model.Title</a>
+
         <span><strong> as @Model.Role</strong></span>        
     </div>
     <div class="description">

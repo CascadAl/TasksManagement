@@ -17,16 +17,19 @@ namespace Data.Entities
 
         public string Description { get; set; }
 
+        [Required]
         public DateTime CreatedAt { get; set; }
 
-        
-        //public ICollection<ApplicationUser> Users { get; set; }
+        [Required]
+        public int IssuesTotal { get; set; }
 
-        public ICollection<GroupMember> Members { get; set; }
+        public virtual ICollection<GroupMember> Members { get; set; }
+
+        public virtual ICollection<Issue> Issues { get; set; }
 
         public Group()
         {
-            //Users=new List<ApplicationUser>();
+            Issues=new List<Issue>();
             Members = new List<GroupMember>();
         }
     }

@@ -61,10 +61,11 @@ namespace Services.Classes
 
         public void CreateGroup(GroupViewModel newGroup, int userId)
         {
-            var groupId=_groupRepository.Add(newGroup.ToEntity());
+            int groupId=_groupRepository.Add(newGroup.ToEntity());
             var role = _roleRepository.Get(r => r.Name.Equals("Owner")).Single();
 
-            _groupMemberRepository.AddUserToGroup(groupId, userId, role.Id);
+            GroupMember groupMember = new GroupMember() { GroupId = groupId, UserId = userId, RoleId = role.Id, JoinedAt = DateTime.Now }; 
+            _groupMemberRepository.AddUserToGroup(groupMember);
         }
 
         public void CreateOrUpdate(GroupViewModel groupViewModel, int userId)
@@ -98,7 +99,7 @@ namespace Services.Classes
             _groupRepository.Remove(groupId);
         }
 
-        private bool IsGroupOwner(int groupId, int userId)
+        public bool IsGroupOwner(int groupId, int userId)
         {
             var ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
 
@@ -106,7 +107,7 @@ namespace Services.Classes
             return groupExists;
         }
 
-        private bool IsGroupParticipant(int groupId, int userId)
+        public bool IsGroupParticipant(int groupId, int userId)
         {
             return _groupMemberRepository.Has(g => (g.GroupId == groupId && g.UserId == userId));
         }
@@ -141,7 +142,10 @@ namespace Services.Classes
             if (IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
                 throw new ArgumentException("User is already in this group.");
 
-            _groupMemberRepository.AddUserToGroup(viewModel.GroupId, viewModel.UserId, viewModel.RoleId);
+            var entity = viewModel.ToEntity();
+            entity.JoinedAt = DateTime.Now;
+
+            _groupMemberRepository.AddUserToGroup(entity);
         }
 
         public void RemoveMember(RemoveMemberViewModel viewModel)

@@ -21,6 +21,10 @@ namespace Data
 
         public DbSet<UserProfile> UserProfiles { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Issue> Issues { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
@@ -39,6 +43,24 @@ namespace Data
                  .HasRequired(t => t.Group)
                  .WithMany(t => t.Members)
                  .HasForeignKey(t => t.GroupId);
+
+            modelBuilder.Entity<Issue>()
+                .HasRequired(i => i.Assignee)
+                .WithMany(u => u.AssignedIssues)
+                .HasForeignKey(i => i.AssignedToUserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Issue>()
+                .HasRequired(i => i.UserOpened)
+                .WithMany(u => u.OpenedIssues)
+                .HasForeignKey(i => i.OpenedByUserId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Issue>()
+                .HasOptional(i => i.UserClosed)
+                .WithMany(u => u.ClosedIssues)
+                .HasForeignKey(i => i.ClosedByUserId)
+                .WillCascadeOnDelete(false);
 
             base.OnModelCreating(modelBuilder);
             

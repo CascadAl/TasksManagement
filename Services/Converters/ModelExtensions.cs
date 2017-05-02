@@ -1,6 +1,9 @@
 ﻿using System;
 using Data.Entities;
 using Services.Models;
+using System.Collections.Generic;
+using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace Services.Converters
 {
@@ -13,7 +16,8 @@ namespace Services.Converters
                 Id = viewModel.Id ?? 0,
                 CreatedAt = DateTime.Now,
                 Description = viewModel.Description,
-                Title = viewModel.Title
+                Title = viewModel.Title,
+                IssuesTotal = 0
             };
         }
 
@@ -45,7 +49,9 @@ namespace Services.Converters
                 UserId = entity.UserId,
                 FullName=entity.User.UserProfile.FullName,
                 Role=entity.Role.Name,
-                RoleId=entity.RoleId
+                RoleId=entity.RoleId,
+                Username = entity.User.UserName,
+                JoinedAt = entity.JoinedAt
             };
         }
 
@@ -74,6 +80,39 @@ namespace Services.Converters
                 UserId = viewModel.UserId,
                 GroupId = viewModel.GroupId,
                 RoleId = viewModel.RoleId
+            };
+        }
+
+        public static IssueViewModel ToViewModel(this Issue entity)
+        {
+            return new IssueViewModel()
+            {
+                Id = entity.Id,
+                OpenedAt = entity.OpenedAt,
+                GroupId = entity.GroupId,
+                IssueNumber = entity.IssueNumber,
+                Title = entity.Title,
+                ClosedAt = entity.ClosedAt,
+                AssignedToUserId = entity.AssignedToUserId,
+                //AssignedToUserId = entity.AssignedToUserId.HasValue? entity.AssignedToUserId.Value : 0,
+                OpenedByUserId = entity.OpenedByUserId,
+                OpenedByUser = entity.UserOpened.UserName,
+                ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null
+            };
+        }
+
+        public static Issue ToEntity(this IssueViewModel viewModel)
+        {
+            return new Issue()
+            {
+                Id= viewModel.Id ?? 0,
+                GroupId = viewModel.GroupId,
+                OpenedAt = DateTime.Now,
+                Title = viewModel.Title,
+                IssueNumber = viewModel.IssueNumber,
+                ClosedAt = viewModel.ClosedAt,
+                AssignedToUserId = viewModel.AssignedToUserId,
+                OpenedByUserId = HttpContext.Current.User.Identity.GetUserId<int>()
             };
         }
     }

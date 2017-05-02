@@ -67,6 +67,8 @@ namespace WebUI.Controllers
         public ActionResult Members(int id)
         {
             var memberModels = _groupService.GetMembers(id, User.Identity.GetUserId<int>());
+            if (HttpContext.Request.IsAjaxRequest()) return Json(memberModels, JsonRequestBehavior.AllowGet);
+
             return View(memberModels);
         }
 

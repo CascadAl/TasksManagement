@@ -10,7 +10,7 @@ namespace Data.Repository
 {
     public interface IGroupMemberRepository
     {
-        void AddUserToGroup(int groupId, int userId, int roleId);
+        void AddUserToGroup(GroupMember entity);
 
         void RemoveUserFromGroup(int groupId, int userId);
 

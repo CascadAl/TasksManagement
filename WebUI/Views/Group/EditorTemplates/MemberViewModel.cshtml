@@ -19,9 +19,11 @@
         </button>
     </div>
     <div class="title">
+            <strong>@Model.FullName</strong> @@@Model.Username
+    </div>
+    <div class="description">
         <p>
-            @Model.FullName
-            <span><strong> as @Model.Role</strong></span>
+            Joined on @Model.JoinedAt.ToShortDateString()
         </p>
     </div>
 

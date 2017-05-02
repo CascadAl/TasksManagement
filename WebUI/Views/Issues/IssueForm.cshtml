@@ -1,0 +1,140 @@
+﻿@model Services.Models.IssueViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section head{
+    <link href="~/Content/simplemde.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-select.min.css" rel="stylesheet" />
+}
+
+<h3>@ViewBag.Action issue</h3>
+<hr class="m-tb-15" />
+
+<form class="form-horizontal" method="post" action="@Url.Action("Save", "Issues", new { groupId=Model.GroupId})">
+
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(g => g.Id)
+    <div class="form-group">
+        <label class="col-md-2 control-label">Title*</label>
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Description</label>
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Text, new { @class = "hidden" })
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <label class="col-md-2 control-label">Assignee</label>
+        <div class="col-md-10">
+            <select class="selectpicker" data-header="Select asignee" multiple data-live-search="true" data-size="5" data-max-options="1" name="AssignedToUserId">
+                <option selected>Unassigned</option>
+                <option data-divider="true"></option>
+                <option disabled id="assigneeLoading" data-content="<i class='fa fa-spinner fa-spin' ></i><span class='p-l-15'>Loading</span>"></option>
+            </select>
+            <button class="btn btn-link js-assign-to-me">Assign to me</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Labels</label>
+        <div class="col-md-10">
+            <select class="form-control">
+                <option value="value">text</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class=" col-md-2 col-md-offset-10">
+            <button class="btn btn-primary pull-right">Save changes</button>
+        </div>
+    </div>
+</form>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/simplemde")
+    @Scripts.Render("~/bundles/bootstrap-select")
+
+    <script>
+        var users = [];
+        $(document).ready(function () {
+
+            var simplemde = new SimpleMDE({
+                element: document.getElementById("Text"),
+                autoDownloadFontAwesome: false,
+                spellChecker: false,
+                placeholder: 'Leave a comment'
+            });
+
+
+            $('.selectpicker').on('shown.bs.select', function () {
+                if (users.length > 0) return;
+
+                getUsers();
+            });
+
+            $('.js-assign-to-me').on('click', function (e) {
+                e.preventDefault();
+
+                var userId = '@Model.OpenedByUserId';
+                var currentUser;
+
+                if (users.length == 0) {
+                    var promise = getUsers();
+
+                    promise.then(function () {
+                        currentUser = users.filter(function (user) {
+                            return user.UserId == userId;
+                        });
+
+                        $('.selectpicker').selectpicker('val', userId);
+                    });
+                }
+                else {
+                    var currentUser = users.filter(function (user) {
+                        return user.UserId == userId;
+                    });
+
+                    $('.selectpicker').selectpicker('val', userId);
+                }
+            });
+
+            var getUsers = function () {
+                var deferred = $.Deferred();
+                var selectTemplate = '<option selected>Unassigned</option> <option data-divider="true"></option>';
+
+                $.get('/Group/Members/' + '@Model.GroupId', function (data) {
+                    users = data.Members;
+                    var html = [];
+
+                    users.forEach(function (user, i, users) {
+                        html.push('<option title="' + user.FullName + '" value="' + user.UserId + '" data-content="<span >' + user.FullName + '<br/> @@' + user.Username + '</span>"></option>');
+                    });
+
+                    $('.selectpicker').html(selectTemplate + html.join(''));
+                    $('.selectpicker').selectpicker('refresh');
+
+                    deferred.resolve();
+            });
+                return deferred.promise();
+            };
+
+            //$('.selectpicker').on('changed.bs.select', function (event, clickedIndex, newValue, oldValue) {
+            //    if (clickedIndex == 0 && newValue == false) {
+            //        $('.selectpicker').selectpicker('val', 'Unassigned');
+            //        $('.selectpicker').selectpicker('toggle');
+            //    }
+            //});
+        });
+    </script>
+}
+
+

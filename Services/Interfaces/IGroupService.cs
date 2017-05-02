@@ -28,5 +28,9 @@ namespace Services.Interfaces
         void RemoveMember(RemoveMemberViewModel viewModel);
 
         void ChangeMemberRole(GroupMemberViewModel viewModel);
+
+        bool IsGroupOwner(int groupId, int userId);
+
+        bool IsGroupParticipant(int groupId, int userId);
     }
 }
