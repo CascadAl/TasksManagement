@@ -86,6 +86,14 @@ namespace WebUI.Controllers
                 return RedirectToAction("ResendConfirmation", "Account");
             }
 
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                ModelState.AddModelError("username", "Incorrect username or email.");
+                return View(model);
+            }
+            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(user?.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -100,6 +108,7 @@ namespace WebUI.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("password", "Incorrect password.");
                     return View(model);
             }
         }
