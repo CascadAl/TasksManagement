@@ -40,7 +40,7 @@ namespace Services.Classes
                 AvatarPath = user.UserProfile.AvatarName != null ?
                     Path.Combine(_avatarFolder, user.UserProfile.AvatarName) :
                     _defaultAvatar
-        };       
+            };       
         }
 
         public void Save(ProfileDTO profile)
