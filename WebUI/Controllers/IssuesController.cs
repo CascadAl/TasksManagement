@@ -100,6 +100,13 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
+        public ActionResult Remove(int groupId, int issueId)
+        {
+            _issueService.Remove(issueId);
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddComment(CommentViewModel viewModel)
         {

@@ -19,7 +19,7 @@ body {
     width: 50%;
 }
 
-hr {
+hr.double {
     
     border-top: 5px double #ea8227;
     margin-bottom: 10px;

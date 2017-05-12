@@ -78,6 +78,10 @@
 
         for (var i = 0; i < comments.length; i++) {
             comments[i].innerHTML = marked(rawData[i].innerText);
+
+            if (rawData[i].innerText.length == 0 || rawData[i].innerText === ' ')
+                comments[i].innerHTML = '<em>No description provided</em>';
+
             rawData[i].remove();
         }
 

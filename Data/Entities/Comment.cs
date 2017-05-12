@@ -8,7 +8,7 @@ namespace Data.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(AllowEmptyStrings = true)]
         public string Text { get; set; }
 
         [Required]

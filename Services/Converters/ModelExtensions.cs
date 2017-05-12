@@ -93,9 +93,9 @@ namespace Services.Converters
                 GroupId = entity.GroupId,
                 IssueNumber = entity.IssueNumber,
                 Title = entity.Title,
+                Text = entity.Id>0? entity.Comments.OrderBy(c=>c.CreatedAt).FirstOrDefault().Text : null,
                 ClosedAt = entity.ClosedAt,
                 AssignedToUserId = entity.AssignedToUserId,
-                //AssignedToUserId = entity.AssignedToUserId.HasValue? entity.AssignedToUserId.Value : 0,
                 OpenedByUserId = entity.OpenedByUserId,
                 OpenedByUser = entity.UserOpened.UserName,
                 ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null

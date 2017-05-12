@@ -25,6 +25,6 @@ namespace Services.Interfaces
 
         void RemoveComment(int commentId);
 
-        void RemoveIssue(int issueId);
+        void Remove(int issueId);
     }
 }

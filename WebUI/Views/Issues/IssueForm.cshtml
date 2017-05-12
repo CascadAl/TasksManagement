@@ -16,7 +16,8 @@
 
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(g => g.Id)
+    @Html.HiddenFor(i => i.Id)
+    @Html.HiddenFor(i=>i.GroupId)
     <div class="form-group">
         <label class="col-md-2 control-label">Title*</label>
         <div class="col-md-10">
@@ -30,7 +31,7 @@
             @Html.TextAreaFor(m => m.Text, new { @class = "hidden" })
         </div>
     </div>
-    <hr />
+
     <div class="form-group">
         <label class="col-md-2 control-label">Assignee</label>
         <div class="col-md-10">
@@ -42,17 +43,28 @@
             <button class="btn btn-link js-assign-to-me">Assign to me</button>
         </div>
     </div>
+    @*<div class="form-group">
+            <label class="col-md-2 control-label">Labels</label>
+            <div class="col-md-10">
+                <select class="form-control">
+                    <option value="value">text</option>
+                </select>
+            </div>
+        </div>*@
+    <hr />
     <div class="form-group">
-        <label class="col-md-2 control-label">Labels</label>
-        <div class="col-md-10">
-            <select class="form-control">
-                <option value="value">text</option>
-            </select>
+        <div class="col-md-1 col-md-offset-2">
+            <button class="btn btn-primary">Save changes</button>
         </div>
-    </div>
-    <div class="form-group">
-        <div class=" col-md-2 col-md-offset-10">
-            <button class="btn btn-primary pull-right">Save changes</button>
+        <div class="col-md-1 col-md-offset-8">
+            <button class="btn btn-danger js-delete-issue"
+                    data-toggle="confirmation"
+                    data-btn-ok-class="btn-danger" data-btn-ok-label="Delete"
+                    data-btn-cancel-class="btn-success" data-btn-cancel-label="Cancel"
+                    data-title="Confirm action" data-content="WARNING! All content will be lost"
+                    data-placement="bottom">
+                Delete
+            </button>
         </div>
     </div>
 </form>
@@ -62,6 +74,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/simplemde")
     @Scripts.Render("~/bundles/bootstrap-select")
+    <script src="~/Scripts/bootstrap-confirmation.min.js"></script>
 
     <script>
         var users = [];
@@ -78,6 +91,11 @@
                 if (users.length > 0) return;
 
                 getUsers();
+            });
+
+            $('.js-delete-issue').confirmation({
+                rootSelector: '.js-delete-issue',
+                container: 'body'
             });
 
             $('.js-assign-to-me').on('click', function (e) {
@@ -106,11 +124,27 @@
                 }
             });
 
+            $('.js-delete-issue').on('click', function (e) {
+                e.preventDefault();
+
+                var issueId = $('#Id').val();
+                var groupId = $('#GroupId').val();
+
+                $.post('/Issues/Remove?groupId=' + groupId, { issueId: issueId })
+                    .success(function () {
+                        window.location = '/Issues/?groupId=' + groupId;
+                    })
+                    .error(function () {
+                        console.log("Error: can't delete an issue");
+                    });
+            });
+
             var getUsers = function () {
                 var deferred = $.Deferred();
                 var selectTemplate = '<option selected>Unassigned</option> <option data-divider="true"></option>';
+                var groupId = $('#GroupId').val();
 
-                $.get('/Group/Members/' + '@Model.GroupId', function (data) {
+                $.get('/Group/Members/' + groupId, function (data) {
                     users = data.Members;
                     var html = [];
 
@@ -143,6 +177,12 @@
             };
 
             initAssignee();
+
+            if (!$('#Id').val())
+                $('.js-delete-issue').addClass('hidden');
+
+            
+
         });
     </script>
 }

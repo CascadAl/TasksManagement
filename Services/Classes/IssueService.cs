@@ -41,7 +41,7 @@ namespace Services.Classes
             {
                 CreatedAt = DateTime.Now,
                 IssueId = issueId,
-                Text = viewModel.Text,
+                Text = string.IsNullOrWhiteSpace(viewModel.Text)? string.Empty : viewModel.Text,
                 UserId = userId,
                 IsEdited = false
             };
@@ -213,9 +213,19 @@ namespace Services.Classes
             return _issueRepository.Update(issue);
         }
 
-        public void RemoveIssue(int issueId)
+        public void Remove(int issueId)
         {
-            throw new NotImplementedException();
+            int currentUserId = HttpContext.Current.User.Identity.GetUserId<int>();
+            var issue = _issueRepository.Get(i => i.Id == issueId).SingleOrDefault();
+
+            if (issue == null)
+                throw new ArgumentException("No issue with this id was found.");
+
+            // если текущий пользователь не автор  и не владелец группы --> кинуть исключение
+            if (!(issue.OpenedByUserId == currentUserId || _groupService.IsGroupOwner(issue.GroupId, currentUserId)))
+                throw new MemberAccessException("Only issue author or group owner can delete issues");
+
+            _issueRepository.Remove(issue);
         }
 
         public void Dispose()

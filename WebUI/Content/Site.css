@@ -83,7 +83,9 @@ li.group-row {
     border: 1px solid #DDD;
     border-bottom: none;
 }
-
+.group-list p{
+    margin: 0;
+}
     .table-header > .nav {
         border-bottom: none;
     }
@@ -142,7 +144,8 @@ li.group-row {
     margin: 0;
 }
 
-.comment-header-text {
+.comment-header-text,
+.group-header-li {
     max-width: 80%;
 }
 
@@ -182,7 +185,8 @@ li.group-row {
     color: #e60202;
 }
 
-.issue-header-li {
+.issue-header-li
+{
     float: left;
 }
 
@@ -194,6 +198,8 @@ li.group-row {
     color: black;
     font-size: 110%;
 }
+
+
 
 .b-0 {
     border: none;

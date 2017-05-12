@@ -17,7 +17,7 @@
         </div>
         <div class="comment-body">
             <p>
-                
+                @(Model.Text.Equals(string.Empty)? "<em>No description provided</em>": string.Empty)
             </p>
             <pre>@Model.Text</pre>
         </div>

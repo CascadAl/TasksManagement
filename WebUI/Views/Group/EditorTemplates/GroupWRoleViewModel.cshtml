@@ -22,13 +22,15 @@
         </a>
         }
     </div>
-    <div class="title">
-        <a href="@Url.Action("Index", "Issues", new { groupId = Model.Id})">@Model.Title</a>
 
-        <span><strong> as @Model.Role</strong></span>        
-    </div>
-    <div class="description">
-        <p>@Model.Description</p>
-    </div>
+    <div class="group-header-li">
+        <div class="title">
+            <a href="@Url.Action("Index", "Issues", new { groupId = Model.Id})">@Model.Title</a>
 
+            <span><strong> as @Model.Role</strong></span>
+        </div>
+        <div class="description">
+            <p>@Model.Description</p>
+        </div>
+    </div>
 </li>
