@@ -1,0 +1,102 @@
+﻿@model Services.Models.IssueDetailsViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <link href="~/Content/simplemde.min.css" rel="stylesheet" />
+}
+<section class="issue-header">
+    <div class="issue-actions">
+        <a href="@Url.Action("Edit", "Issues", new { groupId=Model.Issue.GroupId, id=Model.Issue.Id})" class="btn btn-default">Edit</a>
+        <a href="@Url.Action("Create", "Issues", new { groupId = Model.Issue.GroupId })" class="btn btn-primary">New Issue</a>
+    </div>
+    <h1>@Model.Issue.Title <small>#@Model.Issue.IssueNumber</small></h1>
+
+    <div class="issue-title">
+        @if (!Model.Issue.ClosedAt.HasValue)
+        {
+            <span class="label label-success"> <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Open</span>
+        }
+        else
+        {
+            <span class="label label-dander"> <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> Closed</span>
+        }
+        <strong>@Model.Issue.OpenedByUser</strong> opened this issue on @Model.Issue.OpenedAt.ToShortDateString()
+    </div>
+</section>
+
+<section class="comment-list">
+    @Html.EditorFor(c => c.Comments)
+</section>
+
+<section class="comment-editor">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-11">
+            <form action="@Url.Action("AddComment", "Issues")" method="post">
+                @Html.AntiForgeryToken()
+                @Html.Hidden("IssueId", Model.Issue.Id.Value, new { @id="IssueId"})
+                @Html.Hidden("GroupId", Model.Issue.GroupId)
+
+                <textarea id="Text" rows="3" class="form-control" name="Text"></textarea>
+                <button class="btn btn-primary" id="addCommentButton">Comment</button>
+                @if (Model.Issue.ClosedAt.HasValue)
+                {
+                    <a class="btn btn-default" id="openIssueButton">Open issue</a>
+                }
+                else
+                {
+                    <a class="btn btn-default" id="closeIssueButton">Close issue</a>
+                }
+            </form>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <script src="~/Scripts/marked.js"></script>
+        @Scripts.Render("~/bundles/simplemde")
+
+    <script>
+        var comments = $('.comment-body>p');
+        var rawData = $('.comment-body>pre');
+
+        var simplemde = new SimpleMDE({
+            element: document.getElementById("Text"),
+            autoDownloadFontAwesome: false,
+            spellChecker: false,
+            placeholder: 'Leave a comment',
+            autofocus: true,
+        });
+
+        for (var i= 0; i < comments.length; i++) {
+            comments[i].innerHTML = marked(rawData[i].innerText);
+            rawData[i].remove();
+        }
+
+        $('.remove-comment').on('click', function () {
+            var commentBlock = $(this).closest('.row.comment-container');
+            var commentId = commentBlock.find('input[type=hidden]').val();
+
+            $.post('/Issues/RemoveComment', { CommentId: commentId })
+                .success(function () {
+                    commentBlock.remove();
+                }).error(function () {
+                    console.log("error deletion");
+                });
+        });
+
+        $(document).on('click', '#closeIssueButton', function () {
+            var issueId = $('#issueId').val();
+
+            $.post('/Issues/Close', { IssueId: issueId })
+                .success(function () {
+
+                    console.log("closed");
+                }).error(function () {
+                    console.log("error close");
+                });
+        });
+    </script>
+}

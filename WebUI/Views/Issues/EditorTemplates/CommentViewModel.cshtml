@@ -1,0 +1,26 @@
+﻿@model Services.Models.CommentViewModel
+
+<div class="row comment-container">
+    @Html.HiddenFor(m=>m.Id)
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="table-header">
+            <div class="comment-actions">
+                <button class="btn btn-lg remove-comment">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="comment-header-text">
+                <strong>@Model.Username</strong>
+                commented on @Model.CreatedAt.ToShortDateString()
+            </div>
+        </div>
+        <div class="comment-body">
+            <p>
+                
+            </p>
+            <pre>@Model.Text</pre>
+        </div>
+        <i class="vertical-line"></i>
+    </div>
+</div>

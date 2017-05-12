@@ -4,6 +4,7 @@ using Services.Models;
 using System.Collections.Generic;
 using System.Web;
 using Microsoft.AspNet.Identity;
+using System.Linq;
 
 namespace Services.Converters
 {
@@ -101,6 +102,15 @@ namespace Services.Converters
             };
         }
 
+        public static IssueDetailsViewModel ToDetailsViewModel(this Issue entity)
+        {
+            return new IssueDetailsViewModel()
+            {
+                Issue = entity.ToViewModel(),
+                Comments = entity.Comments.Select(c => c.ToViewModel())
+            };
+        }
+
         public static Issue ToEntity(this IssueViewModel viewModel)
         {
             return new Issue()
@@ -113,6 +123,33 @@ namespace Services.Converters
                 ClosedAt = viewModel.ClosedAt,
                 AssignedToUserId = viewModel.AssignedToUserId,
                 OpenedByUserId = HttpContext.Current.User.Identity.GetUserId<int>()
+            };
+        }
+
+        public static CommentViewModel ToViewModel(this Comment entity)
+        {
+            return new CommentViewModel()
+            {
+                Id = entity.Id,
+                CreatedAt = entity.CreatedAt,
+                IsEdited = entity.IsEdited,
+                LastEditedAt = entity.LastEditedAt,
+                Text = entity.Text,
+                Username = entity.User.UserName
+            };
+        }
+
+        public static Comment ToEntity(this CommentViewModel viewModel)
+        {
+            return new Comment()
+            {
+                Id = viewModel.Id.HasValue ? viewModel.Id.Value : 0,
+                CreatedAt = viewModel.CreatedAt,
+                IsEdited = viewModel.IsEdited,
+                IssueId = viewModel.IssueId,
+                Text = viewModel.Text,
+                LastEditedAt = viewModel.LastEditedAt,
+                UserId = viewModel.UserId
             };
         }
     }

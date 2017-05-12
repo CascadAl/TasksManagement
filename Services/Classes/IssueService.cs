@@ -55,7 +55,16 @@ namespace Services.Classes
             if (!_groupService.IsGroupOwner(viewModel.GroupId, userId))
                 throw new ArgumentException("Wrong groupId or group does not belong to you");
 
-            return _issueRepository.Update(viewModel.ToEntity());
+            var issue = _issueRepository.Get(viewModel.Id.Value);
+            var initialComment = issue.Comments.OrderBy(c => c.CreatedAt).First();
+
+            issue.AssignedToUserId = viewModel.AssignedToUserId;
+            issue.Title = viewModel.Title;
+            initialComment.IsEdited = true;
+            initialComment.LastEditedAt = DateTime.Now;
+            initialComment.Text = viewModel.Text;
+            
+            return _issueRepository.Update(issue); 
         }
         public void CreateOrUpdate(IssueViewModel viewModel)
         {
@@ -65,13 +74,94 @@ namespace Services.Classes
                 Update(viewModel);
         }
 
-        public IEnumerable<IssueViewModel> Get(int groupId)
+        public IEnumerable<IssueViewModel> GetAll(int groupId)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
             if (!_groupService.IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
-            return _issueRepository.Get(g => g.GroupId == groupId).ToList().Select(i=>i.ToViewModel());
+            return _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i=>i.IssueNumber).ToList().Select(i=>i.ToViewModel());
+        }
+
+        public IssueViewModel Get (int issueId)
+        {
+            var issue = _issueRepository.Get(i => i.Id == issueId).SingleOrDefault();
+
+            if (issue == null)
+                throw new ArgumentException("No issue with this id was found.");
+
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            if (!_groupService.IsGroupParticipant(issue.GroupId, userId))
+                throw new ArgumentException("You are not a member of this group");
+
+            return issue.ToViewModel();
+        }
+
+        public IssueDetailsViewModel Get(int groupId, int issueId)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            if (!_groupService.IsGroupParticipant(groupId, userId))
+                throw new ArgumentException("You are not a member of this group");
+
+            return _issueRepository.Get(i => i.Id == issueId).Single().ToDetailsViewModel();
+        }
+
+        private void CreateComment(CommentViewModel viewModel)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+
+            viewModel.CreatedAt = DateTime.Now;
+            viewModel.IsEdited = false;
+            viewModel.UserId = userId;
+
+            _commentRepository.Add(viewModel.ToEntity());
+        }
+
+        private bool UpdateComment(CommentViewModel viewModel)
+        {
+            int currentUserId = HttpContext.Current.User.Identity.GetUserId<int>();
+            var comment = _commentRepository.Get(c => c.Id == viewModel.Id.Value).SingleOrDefault();
+
+            if (comment == null)
+                throw new ArgumentException("No comment with this id was found.");
+
+            // если текущий пользователь не автор комментария и не владелец группы --> вернуть false
+            if (!(comment.UserId == currentUserId || _groupService.IsGroupOwner(viewModel.GroupId, currentUserId)) )
+                return false;
+
+            comment.IsEdited = true;
+            comment.LastEditedAt = DateTime.Now;
+            comment.Text = viewModel.Text;
+
+            return _commentRepository.Update(comment);
+        }
+
+        public void CreateOrUpdateComment(CommentViewModel viewModel)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            if (!_groupService.IsGroupParticipant(viewModel.GroupId, userId))
+                throw new ArgumentException("You are not a member of this group");
+
+            if (!viewModel.Id.HasValue)
+                CreateComment(viewModel);
+            else
+                UpdateComment(viewModel);
+                
+        }
+
+        public void RemoveComment(int commentId)
+        {
+            int currentUserId = HttpContext.Current.User.Identity.GetUserId<int>();
+            var comment = _commentRepository.Get(c => c.Id == commentId).SingleOrDefault();
+
+            if (comment == null)
+                throw new ArgumentException("No comment with this id was found.");
+
+            // если текущий пользователь не автор комментария и не владелец группы --> кинить исключение
+            if (!(comment.UserId == currentUserId || _groupService.IsGroupOwner(comment.Issue.GroupId, currentUserId)))
+                throw new MemberAccessException("Only comment author or group owner can delete comments");
+
+            _commentRepository.Remove(comment);
         }
 
         public void RemoveIssue(int issueId)

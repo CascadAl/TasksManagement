@@ -21,13 +21,13 @@ ul.group-list {
     padding: 0;
     border: 1px solid #DDD;
 }
-
 ul.group-list > li:after,
 ul.group-list > li:before {
     display: table;
     content: " ";
     clear:both;
 }
+
 li.group-row {
     display: block;
     margin: 0;
@@ -36,44 +36,38 @@ li.group-row {
 }
 .group-row > .controls {
     float: right;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 
 .group-row > .controls .btn,
 .group-row > .controls select {
         margin-top: 3px;
         margin-right: 10px;
-        /*width:auto;*/
         display: inline-block;
-    }
-
-.controls > a.remove-group:hover, 
-.controls > button.remove-member:hover {
-    color: rgb(224, 9, 9);
 }
-
-.controls > a.edit-group:hover {
-    color: blue;
-}
-
 .group-row > .title {
     float: left;
 }
-
 .group-row > .description {
     max-width: 90%;
     clear: left;
 }
-
 .group-row > .description p{
     margin-bottom: 0;
     vertical-align: top;
     display: inline-block;
     overflow: hidden;
 }
-
 .group-row > li:after {
     clear: both;
+}
+
+.controls > a.remove-group:hover, 
+.controls > button.remove-member:hover {
+    color: rgb(224, 9, 9);
+}
+.controls > a.edit-group:hover {
+    color: blue;
 }
 
 .table-header {
@@ -82,24 +76,6 @@ li.group-row {
     border: 1px solid #DDD;
     border-bottom: none;
 }
-.add-user-form {
-    margin-bottom: 20px;
-}
-
-.m-tb-15{
-    margin: 15px 0;
-}
-
-.p-0{
-    padding:0;
-}
-.p-l-15{
-    padding-left:15px;
-}
-.change-group-role-dd{
-    width: 150px;
-}
-
 .table-header>.nav {
     border-bottom: none;
 }
@@ -107,6 +83,85 @@ li.group-row {
     font-weight:bold;
 }
 
+.add-user-form {
+    margin-bottom: 20px;
+}
+
+.change-group-role-dd{
+    width: 150px;
+}
+
+.issue-header> h1{
+    margin-right: 150px;
+}
+.issue-header .issue-actions{
+    float:right;
+    margin-top:5px;
+}
+.issue-title{
+    border-bottom: 1px solid #DDD;
+    padding-bottom:20px;
+    margin-bottom: 16px;
+}
+.issue-title > .label {
+    font-size:100%;
+    font-weight:normal;
+    margin-right: 10px;
+}
+
+.comment-body {
+    padding: 15px;
+    border: 1px solid #DDD;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius:3px;
+}
+
+.comment-list {
+    border-bottom: 2px solid #DDD;
+    margin-bottom: 20px;
+}
+.comment-list .table-header {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.comment-list p {
+    margin:0;
+}
+
+.comment-header-text{
+    max-width:80%;
+}
+.comment-actions{
+    float:right;
+}
+
+.remove-comment{
+    padding:0;
+    background-color:inherit;
+    vertical-align:top;
+    color: darkgrey;
+}
+
+.vertical-line {
+    height: 15px;
+    border-left: 2px solid #DDD;
+    margin-left:20px;
+}
+
+.comment-editor .CodeMirror,
+.comment-editor .CodeMirror-scroll {
+    min-height: 100px;
+}
+
 .b-0{
     border: none;
+}
+.m-tb-15{
+    margin: 15px 0;
+}
+.p-0{
+    padding:0;
+}
+.p-l-15{
+    padding-left:15px;
 }
