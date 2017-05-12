@@ -9,7 +9,7 @@ namespace Services.Interfaces
 {
     public interface IIssueService
     {
-        IEnumerable<IssueViewModel> GetAll(int groupId);
+        IEnumerable<IssueViewModel> GetAll(int groupId, string state);
 
         IssueViewModel Get(int issueId);
 
@@ -18,6 +18,10 @@ namespace Services.Interfaces
         void CreateOrUpdate(IssueViewModel viewModel);
 
         void CreateOrUpdateComment(CommentViewModel viewModel);
+
+        bool Close(int issueId);
+
+        bool Open(int issueId);
 
         void RemoveComment(int commentId);
 

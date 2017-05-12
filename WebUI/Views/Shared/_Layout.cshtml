@@ -32,10 +32,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav main-button">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Groups", "Index", "Group")</li>
+                    @*<li>@Html.ActionLink("Issues", "Index", "Issues")</li>*@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Test", "Test", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -72,10 +71,7 @@
             </ul>
         </div>
     </footer>
-    <!--        <p class="footertext">&copy; @DateTime.Now.Year - Task Management</p>
-        <p class="footertext">All Rights Reserved</p>-->
-    <!--        </div>-->
-    <!--    </div>-->
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

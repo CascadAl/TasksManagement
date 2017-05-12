@@ -22,10 +22,11 @@ namespace WebUI.Controllers
 
 
         [HttpGet]
-        public ActionResult Index(int groupId)
+        public ActionResult Index(int groupId, string state="open")
         {
             ViewBag.GroupId = groupId;
-            var viewModels=_issueService.GetAll(groupId);
+            ViewBag.State = state;
+            var viewModels=_issueService.GetAll(groupId, state);
 
             return View("IssuesList", viewModels);
         }
@@ -74,6 +75,28 @@ namespace WebUI.Controllers
         {
             var viewModel = _issueService.Get(groupId, id);
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Close(int IssueId)
+        {
+            bool closed = _issueService.Close(IssueId);
+
+            if (closed)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+            else
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotModified);
+        }
+
+        [HttpPost]
+        public ActionResult Open(int IssueId)
+        {
+            bool open = _issueService.Open(IssueId);
+
+            if (open)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+            else
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.NotModified);
         }
 
         [HttpPost]

@@ -21,12 +21,13 @@ ul.group-list {
     padding: 0;
     border: 1px solid #DDD;
 }
-ul.group-list > li:after,
-ul.group-list > li:before {
-    display: table;
-    content: " ";
-    clear:both;
-}
+
+    ul.group-list > li:after,
+    ul.group-list > li:before {
+        display: table;
+        content: " ";
+        clear: both;
+    }
 
 li.group-row {
     display: block;
@@ -34,38 +35,44 @@ li.group-row {
     padding: 10px 15px;
     border-bottom: 1px solid #f0f0f0;
 }
+
 .group-row > .controls {
     float: right;
     /*display: inline-block;*/
 }
 
-.group-row > .controls .btn,
-.group-row > .controls select {
+    .group-row > .controls .btn,
+    .group-row > .controls select {
         margin-top: 3px;
         margin-right: 10px;
         display: inline-block;
-}
+    }
+
 .group-row > .title {
     float: left;
 }
+
 .group-row > .description {
     max-width: 90%;
     clear: left;
 }
-.group-row > .description p{
-    margin-bottom: 0;
-    vertical-align: top;
-    display: inline-block;
-    overflow: hidden;
-}
+
+    .group-row > .description p {
+        margin-bottom: 0;
+        vertical-align: top;
+        display: inline-block;
+        overflow: hidden;
+    }
+
 .group-row > li:after {
     clear: both;
 }
 
-.controls > a.remove-group:hover, 
+.controls > a.remove-group:hover,
 .controls > button.remove-member:hover {
     color: rgb(224, 9, 9);
 }
+
 .controls > a.edit-group:hover {
     color: blue;
 }
@@ -76,36 +83,41 @@ li.group-row {
     border: 1px solid #DDD;
     border-bottom: none;
 }
-.table-header>.nav {
-    border-bottom: none;
-}
-.table-header > .nav li.active{
-    font-weight:bold;
-}
+
+    .table-header > .nav {
+        border-bottom: none;
+    }
+
+        .table-header > .nav .active {
+            font-weight: bold;
+        }
 
 .add-user-form {
     margin-bottom: 20px;
 }
 
-.change-group-role-dd{
+.change-group-role-dd {
     width: 150px;
 }
 
-.issue-header> h1{
+.issue-header > h1 {
     margin-right: 150px;
 }
-.issue-header .issue-actions{
-    float:right;
-    margin-top:5px;
+
+.issue-header .issue-actions {
+    float: right;
+    margin-top: 5px;
 }
-.issue-title{
+
+.issue-title {
     border-bottom: 1px solid #DDD;
-    padding-bottom:20px;
+    padding-bottom: 20px;
     margin-bottom: 16px;
 }
+
 .issue-title > .label {
-    font-size:100%;
-    font-weight:normal;
+    font-size: 100%;
+    font-weight: normal;
     margin-right: 10px;
 }
 
@@ -113,39 +125,42 @@ li.group-row {
     padding: 15px;
     border: 1px solid #DDD;
     border-bottom-left-radius: 3px;
-    border-bottom-right-radius:3px;
+    border-bottom-right-radius: 3px;
 }
 
 .comment-list {
     border-bottom: 2px solid #DDD;
     margin-bottom: 20px;
 }
+
 .comment-list .table-header {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+
 .comment-list p {
-    margin:0;
+    margin: 0;
 }
 
-.comment-header-text{
-    max-width:80%;
-}
-.comment-actions{
-    float:right;
+.comment-header-text {
+    max-width: 80%;
 }
 
-.remove-comment{
-    padding:0;
-    background-color:inherit;
-    vertical-align:top;
+.comment-actions {
+    float: right;
+}
+
+.remove-comment {
+    padding: 0;
+    background-color: inherit;
+    vertical-align: top;
     color: darkgrey;
 }
 
 .vertical-line {
     height: 15px;
     border-left: 2px solid #DDD;
-    margin-left:20px;
+    margin-left: 20px;
 }
 
 .comment-editor .CodeMirror,
@@ -153,15 +168,45 @@ li.group-row {
     min-height: 100px;
 }
 
-.b-0{
+.issue-state-img {
+    padding-right: 10px;
+    padding-top: 3px;
+    float: left;
+}
+
+.issue-state-img > .glyphicon-exclamation-sign {
+    color: green;
+}
+
+.issue-state-img > .glyphicon-ban-circle {
+    color: #e60202;
+}
+
+.issue-header-li {
+    float: left;
+}
+
+.issue-header-li p {
+    margin-bottom: 0;
+}
+
+.issue-header-li a {
+    color: black;
+    font-size: 110%;
+}
+
+.b-0 {
     border: none;
 }
-.m-tb-15{
+
+.m-tb-15 {
     margin: 15px 0;
 }
-.p-0{
-    padding:0;
+
+.p-0 {
+    padding: 0;
 }
-.p-l-15{
-    padding-left:15px;
+
+.p-l-15 {
+    padding-left: 15px;
 }

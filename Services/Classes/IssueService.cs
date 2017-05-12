@@ -74,13 +74,22 @@ namespace Services.Classes
                 Update(viewModel);
         }
 
-        public IEnumerable<IssueViewModel> GetAll(int groupId)
+        public IEnumerable<IssueViewModel> GetAll(int groupId, string state)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
             if (!_groupService.IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
-            return _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i=>i.IssueNumber).ToList().Select(i=>i.ToViewModel());
+            IQueryable<Issue> issues= _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i => i.IssueNumber);
+
+            //filtering
+            if (state.Equals("open"))
+                issues = issues.Where(i => i.ClosedAt == null);
+            else
+            if (state.Equals("closed"))
+                issues = issues.Where(i => i.ClosedAt.HasValue);
+            
+            return issues.ToList().Select(i => i.ToViewModel());
         }
 
         public IssueViewModel Get (int issueId)
@@ -162,6 +171,46 @@ namespace Services.Classes
                 throw new MemberAccessException("Only comment author or group owner can delete comments");
 
             _commentRepository.Remove(comment);
+        }
+
+        public bool Close(int issueId)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            var issue = _issueRepository.Get(i => i.Id == issueId).SingleOrDefault();
+
+            if (issue == null)
+                return false;
+
+            if (!_groupService.IsGroupParticipant(issue.GroupId, userId))
+                return false;
+
+            if (issue.ClosedAt != null)
+                return false;
+
+            issue.ClosedAt = DateTime.Now;
+            issue.ClosedByUserId = userId;
+
+            return _issueRepository.Update(issue);
+        }
+
+        public bool Open(int issueId)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            var issue = _issueRepository.Get(i => i.Id == issueId).SingleOrDefault();
+
+            if (issue == null)
+                return false;
+
+            if (!_groupService.IsGroupParticipant(issue.GroupId, userId))
+                return false;
+
+            if (issue.ClosedAt == null)
+                return false;
+
+            issue.ClosedAt = null;
+            issue.ClosedByUserId = null;
+
+            return _issueRepository.Update(issue);
         }
 
         public void RemoveIssue(int issueId)

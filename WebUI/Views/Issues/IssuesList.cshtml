@@ -18,8 +18,9 @@
     <div class="col-md-12">
         <div class="table-header p-0 b-0">
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#" >Open</a></li>
-                <li role="presentation"><a href="#">Closed</a></li>
+                <li role="presentation" class="@(ViewBag.State.Equals("open")? "active": "")"> <a href="@Url.Action("Index", "Issues", new { groupId=ViewBag.GroupId})" >Open</a></li>
+                <li role="presentation" class="@(ViewBag.State.Equals("closed")? "active": "")"> <a href="@Url.Action("Index", "Issues", new { groupId=ViewBag.GroupId, state="closed"})">Closed</a></li>
+                <li role="presentation" class="@(ViewBag.State.Equals("all")? "active": "")"> <a href="@Url.Action("Index", "Issues", new { groupId=ViewBag.GroupId, state="all"})">All</a></li>
             </ul>
         </div>
         <ul class="group-list">

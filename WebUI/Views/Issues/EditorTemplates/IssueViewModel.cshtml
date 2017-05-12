@@ -1,16 +1,19 @@
 ﻿@model Services.Models.IssueViewModel
 
 <li class="group-row">
-    <div class="controls">
 
+    <div class="issue-state-img">
+        <span class="glyphicon @(Model.ClosedAt == null? "glyphicon-exclamation-sign" : "glyphicon-ban-circle")" aria-hidden="true"></span>
     </div>
-    <div class="title">
-        <strong><a href="@Url.Action("Details", "Issues", new { groupId = Model.GroupId, id=Model.Id} )">@Model.Title</a></strong>
+    <div class="issue-header-li">
+        <div class="title">
+            <strong><a href="@Url.Action("Details", "Issues", new { groupId = Model.GroupId, id=Model.Id} )">@Model.Title</a></strong>
+        </div>
+        <div class="description">
+            <p>#@Model.IssueNumber by @Model.OpenedByUser on @Model.OpenedAt.ToShortDateString()</p>
+        </div>
     </div>
-    <div class="description">
-        <p>#@Model.IssueNumber by @Model.OpenedByUser on @Model.OpenedAt.ToShortDateString()</p>
-    </div>
-
+    
 </li>
 
 
