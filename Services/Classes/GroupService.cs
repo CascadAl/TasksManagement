@@ -7,6 +7,8 @@ using Data.Repository;
 using Services.Converters;
 using Services.Interfaces;
 using Services.Models;
+using Microsoft.AspNet.Identity;
+using System.Web;
 
 namespace Services.Classes
 {
@@ -99,6 +101,21 @@ namespace Services.Classes
             _groupRepository.Remove(groupId);
         }
 
+        public void LeaveGroup(int groupId)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+
+            if (!IsGroupParticipant(groupId, userId))
+                throw new ArgumentException("Wrong groupId or you are not a member of this group");
+
+            var group = _groupRepository.Get(groupId);
+
+            _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
+
+            if (group.Members.Count == 0)
+                _groupRepository.Remove(groupId);
+        }
+
         public bool IsGroupOwner(int groupId, int userId)
         {
             var ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
@@ -148,15 +165,31 @@ namespace Services.Classes
             _groupMemberRepository.AddUserToGroup(entity);
         }
 
-        public void RemoveMember(RemoveMemberViewModel viewModel)
+        public bool RemoveMember(RemoveMemberViewModel viewModel)
         {
-            if (!IsGroupOwner(viewModel.GroupId, viewModel.UserId))
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+
+            if (!IsGroupOwner(viewModel.GroupId, userId))
                 throw new ArgumentException("Wrong groupId or group does not belong to you");
 
             if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserToRemove))
                 throw new ArgumentException("User does not belong to this group");
 
+            if (IsGroupOwner(viewModel.GroupId, viewModel.UserToRemove))
+            {
+                int ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
+                int owners = _groupMemberRepository.Get(m => m.GroupId == viewModel.GroupId).Where(r => r.RoleId.Equals(ownerRoleId)).Count();
+
+                if (owners > 1)
+                {
+                    _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
+                    return true;
+                }
+                return false;
+            }
+
             _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
+            return true;
         }
 
         public void ChangeMemberRole(GroupMemberViewModel viewModel)

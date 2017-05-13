@@ -16,8 +16,7 @@ namespace Data.Entities
         [Required]
         public int GroupId { get; set; }
 
-        [Required]
-        public int AssignedToUserId { get; set; }
+       public int? AssignedToUserId { get; set; }
 
         [Required]
         public int IssueNumber { get; set; }

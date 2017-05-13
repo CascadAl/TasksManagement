@@ -36,9 +36,16 @@ $(document).ready(function () {
                 UserToRemove: userToRemoveId,
                 GroupId: groupId
             }
-        }).done(function () {
-            location.reload();
-        });
+        })
+            .done(function (data, textStatus, xhr) {
+                if (xhr.status === 200)
+                    location.reload();
+                else
+                    $('#error-alert').show();
+            })
+            .fail(function () {
+                console.log("Error: can't exclude user grom a group")
+            });
     });
 
     $(document).on('change', '.change-group-role-dd', function (e) {

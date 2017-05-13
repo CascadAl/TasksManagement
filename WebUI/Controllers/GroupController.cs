@@ -34,7 +34,8 @@ namespace WebUI.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            return View();
+            ViewBag.Action = "Create";
+            return View("GroupForm", new GroupViewModel());
         }
 
         [HttpPost]
@@ -53,7 +54,16 @@ namespace WebUI.Controllers
         public ActionResult Edit(int id)
         {
             GroupViewModel viewModel = _groupService.GetViewModel(id, User.Identity.GetUserId<int>());
-            return View("Add", viewModel);
+            ViewBag.Action = "Edit";
+
+            return View("GroupForm", viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Leave(int id)
+        {
+            _groupService.LeaveGroup(id);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -94,9 +104,12 @@ namespace WebUI.Controllers
         public ActionResult RemoveMember(RemoveMemberViewModel viewModel)
         {
             viewModel.UserId = User.Identity.GetUserId<int>();
-            _groupService.RemoveMember(viewModel);
+            bool isDeleted=_groupService.RemoveMember(viewModel);
 
-            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            if (isDeleted)
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+
+            return new HttpStatusCodeResult(HttpStatusCode.NotModified);
         }
 
         [HttpPost]

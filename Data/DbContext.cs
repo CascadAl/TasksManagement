@@ -45,7 +45,7 @@ namespace Data
                  .HasForeignKey(t => t.GroupId);
 
             modelBuilder.Entity<Issue>()
-                .HasRequired(i => i.Assignee)
+                .HasOptional(i => i.Assignee)
                 .WithMany(u => u.AssignedIssues)
                 .HasForeignKey(i => i.AssignedToUserId)
                 .WillCascadeOnDelete(false);

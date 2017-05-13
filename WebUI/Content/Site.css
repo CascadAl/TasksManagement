@@ -38,9 +38,10 @@ li.group-row {
 
 .group-row > .controls {
     float: right;
-    /*display: inline-block;*/
 }
-
+.controls form{
+    display:inline-block;
+}
     .group-row > .controls .btn,
     .group-row > .controls select {
         margin-top: 3px;
@@ -146,7 +147,7 @@ li.group-row {
 
 .comment-header-text,
 .group-header-li {
-    max-width: 80%;
+    max-width: 78%;
 }
 
 .comment-actions {

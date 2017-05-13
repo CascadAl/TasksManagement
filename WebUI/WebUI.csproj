@@ -245,13 +245,14 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\self\issue-details.js" />
+    <Content Include="Scripts\self\issue-form.js" />
     <Content Include="Scripts\simplemde.min.js" />
     <Content Include="Scripts\typeahead.bundle.js" />
     <Content Include="Scripts\typeahead.bundle.min.js" />
     <Content Include="Scripts\typeahead.jquery.js" />
     <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\Group\Add.cshtml" />
+    <Content Include="Views\Group\GroupForm.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -299,6 +300,8 @@
     <Content Include="Views\Issues\EditorTemplates\IssueViewModel.cshtml" />
     <Content Include="Views\Issues\Details.cshtml" />
     <Content Include="Views\Issues\EditorTemplates\CommentViewModel.cshtml" />
+    <Content Include="Views\Group\Members.cshtml" />
+    <Content Include="Views\Group\AddMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

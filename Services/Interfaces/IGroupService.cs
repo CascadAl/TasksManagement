@@ -19,13 +19,15 @@ namespace Services.Interfaces
 
         bool UpdateGroup(GroupViewModel groupViewModel, int userId);
 
+        void LeaveGroup(int groupId);
+
         void RemoveGroup(int groupId, int userId);
 
         AddMemberViewModel GetMembers(int groupId, int userId);
 
         void AddMember(GroupMemberViewModel viewModel);
 
-        void RemoveMember(RemoveMemberViewModel viewModel);
+        bool RemoveMember(RemoveMemberViewModel viewModel);
 
         void ChangeMemberRole(GroupMemberViewModel viewModel);
 

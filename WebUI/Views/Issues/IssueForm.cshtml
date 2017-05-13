@@ -1,4 +1,5 @@
 ﻿@model Services.Models.IssueViewModel
+@using Microsoft.AspNet.Identity
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,6 +13,7 @@
 <h3>@ViewBag.Action issue</h3>
 <hr class="m-tb-15" />
 
+@Html.Hidden("CurrentUserId", User.Identity.GetUserId<int>(), new { @id="UserId"})
 <form class="form-horizontal" method="post" action="@Url.Action("Save", "Issues", new { groupId=Model.GroupId})">
 
     @Html.AntiForgeryToken()
@@ -36,21 +38,13 @@
         <label class="col-md-2 control-label">Assignee</label>
         <div class="col-md-10">
             <select class="selectpicker" data-header="Select asignee" multiple data-live-search="true" data-size="5" data-max-options="1" name="AssignedToUserId" data-init="@Model.AssignedToUserId">
-                <option selected>Unassigned</option>
+                <option value="" selected>Unassigned</option>
                 <option data-divider="true"></option>
                 <option disabled id="assigneeLoading" data-content="<i class='fa fa-spinner fa-spin' ></i><span class='p-l-15'>Loading</span>"></option>
             </select>
             <button class="btn btn-link js-assign-to-me">Assign to me</button>
         </div>
     </div>
-    @*<div class="form-group">
-            <label class="col-md-2 control-label">Labels</label>
-            <div class="col-md-10">
-                <select class="form-control">
-                    <option value="value">text</option>
-                </select>
-            </div>
-        </div>*@
     <hr />
     <div class="form-group">
         <div class="col-md-1 col-md-offset-2">
@@ -75,116 +69,7 @@
     @Scripts.Render("~/bundles/simplemde")
     @Scripts.Render("~/bundles/bootstrap-select")
     <script src="~/Scripts/bootstrap-confirmation.min.js"></script>
-
-    <script>
-        var users = [];
-        $(document).ready(function () {
-
-            var simplemde = new SimpleMDE({
-                element: document.getElementById("Text"),
-                autoDownloadFontAwesome: false,
-                spellChecker: false,
-                placeholder: 'Leave a comment'
-            });
-
-            $('.selectpicker').on('shown.bs.select', function () {
-                if (users.length > 0) return;
-
-                getUsers();
-            });
-
-            $('.js-delete-issue').confirmation({
-                rootSelector: '.js-delete-issue',
-                container: 'body'
-            });
-
-            $('.js-assign-to-me').on('click', function (e) {
-                e.preventDefault();
-
-                var userId = '@Model.OpenedByUserId';
-                var currentUser;
-
-                if (users.length == 0) {
-                    var promise = getUsers();
-
-                    promise.then(function () {
-                        currentUser = users.filter(function (user) {
-                            return user.UserId == userId;
-                        });
-
-                        $('.selectpicker').selectpicker('val', userId);
-                    });
-                }
-                else {
-                    var currentUser = users.filter(function (user) {
-                        return user.UserId == userId;
-                    });
-
-                    $('.selectpicker').selectpicker('val', userId);
-                }
-            });
-
-            $('.js-delete-issue').on('click', function (e) {
-                e.preventDefault();
-
-                var issueId = $('#Id').val();
-                var groupId = $('#GroupId').val();
-
-                $.post('/Issues/Remove?groupId=' + groupId, { issueId: issueId })
-                    .success(function () {
-                        window.location = '/Issues/?groupId=' + groupId;
-                    })
-                    .error(function () {
-                        console.log("Error: can't delete an issue");
-                    });
-            });
-
-            var getUsers = function () {
-                var deferred = $.Deferred();
-                var selectTemplate = '<option selected>Unassigned</option> <option data-divider="true"></option>';
-                var groupId = $('#GroupId').val();
-
-                $.get('/Group/Members/' + groupId, function (data) {
-                    users = data.Members;
-                    var html = [];
-
-                    users.forEach(function (user, i, users) {
-                        html.push('<option title="' + user.FullName + '" value="' + user.UserId + '" data-content="<span >' + user.FullName + '<br/> @@' + user.Username + '</span>"></option>');
-                    });
-
-                    $('.selectpicker').html(selectTemplate + html.join(''));
-                    $('.selectpicker').selectpicker('refresh');
-
-                    deferred.resolve();
-            });
-                return deferred.promise();
-            };
-
-            var initAssignee = function () {
-                var assigneeInitialId = $('.selectpicker').data('init');
-
-                if (assigneeInitialId > 0) {
-                    var promise = getUsers();
-
-                    promise.then(function () {
-                        asignee = users.filter(function (user) {
-                            return user.UserId == assigneeInitialId;
-                        });
-
-                        $('.selectpicker').selectpicker('val', assigneeInitialId);
-                    });
-                }
-            };
-
-            initAssignee();
-
-            if (!$('#Id').val())
-                $('.js-delete-issue').addClass('hidden');
-
-            
-
-        });
-    </script>
+    <script src="~/Scripts/self/issue-form.js"></script>
 }
 
 

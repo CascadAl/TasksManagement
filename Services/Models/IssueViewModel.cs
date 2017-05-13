@@ -25,7 +25,7 @@ namespace Services.Models
 
         public DateTime? ClosedAt { get; set; }
 
-        public int AssignedToUserId { get; set; }
+        public int? AssignedToUserId { get; set; }
 
         public int OpenedByUserId { get; set; }
 
