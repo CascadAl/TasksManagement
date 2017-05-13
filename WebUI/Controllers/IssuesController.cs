@@ -118,6 +118,17 @@ namespace WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveComment(CommentViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+
+            _issueService.CreateOrUpdateComment(viewModel);
+            return RedirectToAction("Details", new { groupId = viewModel.GroupId, id = viewModel.IssueId });
+        }
+
+        [HttpPost]
         public ActionResult RemoveComment(int CommentId)
         {
             _issueService.RemoveComment(CommentId);

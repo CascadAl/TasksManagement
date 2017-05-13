@@ -33,6 +33,21 @@
 
 <section class="comment-list">
     @Html.EditorFor(c => c.Comments)
+
+    @if (Model.Issue.ClosedAt.HasValue)
+    {
+    <div class="row issue-closed">
+        <div class="col-md-11 col-md-offset-1">
+            <div>
+                <span class="label label-danger">
+                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                </span>
+                <strong>@Model.Issue.ClosedByUser</strong> closed this on @Model.Issue.ClosedAt.Value.ToShortDateString()
+            </div>
+            <i class="vertical-line"></i>
+        </div>
+    </div>
+    }
 </section>
 
 <section class="comment-editor">
@@ -61,80 +76,8 @@
 
 
 @section scripts{
+
     <script src="~/Scripts/marked.js"></script>
     @Scripts.Render("~/bundles/simplemde")
-
-    <script>
-        var comments = $('.comment-body>p');
-        var rawData = $('.comment-body>pre');
-
-        var simplemde = new SimpleMDE({
-            element: document.getElementById("Text"),
-            autoDownloadFontAwesome: false,
-            spellChecker: false,
-            placeholder: 'Leave a comment',
-            autofocus: true,
-        });
-
-        for (var i = 0; i < comments.length; i++) {
-            comments[i].innerHTML = marked(rawData[i].innerText);
-
-            if (rawData[i].innerText.length == 0 || rawData[i].innerText === ' ')
-                comments[i].innerHTML = '<em>No description provided</em>';
-
-            rawData[i].remove();
-        }
-
-        $('.remove-comment').on('click', function () {
-            var commentBlock = $(this).closest('.row.comment-container');
-            var commentId = commentBlock.find('input[type=hidden]').val();
-
-            $.post('/Issues/RemoveComment', { CommentId: commentId })
-                .success(function () {
-                    commentBlock.remove();
-                }).error(function () {
-                    console.log("error deletion");
-                });
-        });
-
-        $(document).on('click', '#closeIssueButton', function () {
-            var issueId = $('#IssueId').val();
-            var button = this;
-
-            $.post('/Issues/Close', { IssueId: issueId })
-                .success(function (data, textStatus, xhr) {
-                    if (xhr.status === 200)
-                        toogleIssueState(button);
-                }).error(function () {
-                    console.log("Error: can't open an issue");
-                });
-        });
-
-        $(document).on('click', '#openIssueButton', function () {
-            var issueId = $('#IssueId').val();
-            var button = this;
-
-            $.post('/Issues/Open', { IssueId: issueId })
-                .success(function (data, textStatus, xhr) {
-                    if (xhr.status === 200)
-                        toogleIssueState(button);
-                    console.log(xhr.status);
-                }).error(function () {
-                    console.log("Error: can't open an issue");
-                });
-        });
-
-        var toogleIssueState = function (button) {
-            var titleLabel = $('.issue-title').find('.js-issue-status-label');
-            var issueStatus = titleLabel.hasClass('label-success') ? 'open' : 'closed';
-
-            titleLabel.toggleClass('label-success label-danger');
-            titleLabel.children().first().toggleClass('glyphicon-exclamation-sign glyphicon-ban-circle');
-            titleLabel.find('.js-status-text').text(issueStatus === 'open' ? 'Closed' : 'Open');
-
-            button.innerText = issueStatus === 'open' ? 'Open issue' : 'Close issue';
-            button.setAttribute('id', issueStatus === 'open' ? 'openIssueButton' : 'closeIssueButton');
-        };
-
-    </script>
+    <script src="~/Scripts/self/issue-details.js"></script>
 }

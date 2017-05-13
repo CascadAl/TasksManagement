@@ -8,6 +8,7 @@ namespace Services.Models
         public int? Id { get; set; }
 
         [Required]
+        [StringLength(1000, MinimumLength =2)]
         public string Text { get; set; }
 
         public DateTime CreatedAt { get; set; }

@@ -62,7 +62,7 @@ namespace Services.Classes
             issue.Title = viewModel.Title;
             initialComment.IsEdited = true;
             initialComment.LastEditedAt = DateTime.Now;
-            initialComment.Text = viewModel.Text;
+            initialComment.Text = string.IsNullOrWhiteSpace(viewModel.Text) ? string.Empty : viewModel.Text;
             
             return _issueRepository.Update(issue); 
         }
@@ -132,7 +132,7 @@ namespace Services.Classes
             var comment = _commentRepository.Get(c => c.Id == viewModel.Id.Value).SingleOrDefault();
 
             if (comment == null)
-                throw new ArgumentException("No comment with this id was found.");
+                throw new ArgumentException("No comment with this id was found");
 
             // если текущий пользователь не автор комментария и не владелец группы --> вернуть false
             if (!(comment.UserId == currentUserId || _groupService.IsGroupOwner(viewModel.GroupId, currentUserId)) )
@@ -164,11 +164,14 @@ namespace Services.Classes
             var comment = _commentRepository.Get(c => c.Id == commentId).SingleOrDefault();
 
             if (comment == null)
-                throw new ArgumentException("No comment with this id was found.");
+                throw new ArgumentException("No comment with this id was found");
 
             // если текущий пользователь не автор комментария и не владелец группы --> кинить исключение
             if (!(comment.UserId == currentUserId || _groupService.IsGroupOwner(comment.Issue.GroupId, currentUserId)))
                 throw new MemberAccessException("Only comment author or group owner can delete comments");
+
+            if (comment.Text.Equals(string.Empty))
+                throw new ArgumentException("You can't delete initial comment");
 
             _commentRepository.Remove(comment);
         }

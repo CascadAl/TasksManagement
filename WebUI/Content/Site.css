@@ -153,17 +153,36 @@ li.group-row {
     float: right;
 }
 
-.remove-comment {
-    padding: 0;
-    background-color: inherit;
-    vertical-align: top;
-    color: darkgrey;
+    .comment-actions button {
+        padding: 0;
+        background-color: inherit;
+        vertical-align: top;
+        color: darkgrey;
+        margin-right:5px;
+    }
+        .comment-actions button:active,
+        .comment-actions button.active {
+            box-shadow: none;
+        }
+
+.issue-closed .label {
+    margin-left: 8px;
+    margin-right: 5px;
+    border-radius:22px;
+    padding:5px;
+    position:relative;
+    z-index:1;
+}
+.issue-closed .glyphicon {
+    padding-left: 3px;
+    font-size: 14px;
 }
 
 .vertical-line {
-    height: 15px;
     border-left: 2px solid #DDD;
     margin-left: 20px;
+    position:relative;
+    z-index:0;
 }
 
 .comment-editor .CodeMirror,
@@ -171,6 +190,9 @@ li.group-row {
     min-height: 100px;
 }
 
+.comment-editor .validation-error{
+    margin-bottom:10px;
+}
 .issue-state-img {
     padding-right: 10px;
     padding-top: 3px;
