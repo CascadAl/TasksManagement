@@ -10,6 +10,10 @@ namespace Services.Interfaces
 {
     public interface IProfileService : IDisposable
     {
+        string  AvatarFolder { get; set; }
+
+        string DefaultAvatar { get; set; }
+
         ProfileDTO GetProfile(int userId);
 
         void Save(ProfileDTO profile);

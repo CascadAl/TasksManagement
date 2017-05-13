@@ -74,6 +74,7 @@ namespace WebUI.Models
         [Display(Name = "Username*")]
         public string Username { get; set; }
 
+        [Required]
         [StringLength(100)]
         [Display(Name = "Full name")]
         public string FullName { get; set; }

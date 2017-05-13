@@ -21,6 +21,8 @@ namespace WebUI.Controllers
         public ProfileController(IProfileService profileService)
         {
             _profileService = profileService;
+            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
+            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
         }
 
         // GET: Profile
@@ -59,23 +61,20 @@ namespace WebUI.Controllers
                 System.IO.File.Delete(Server.MapPath(model.AvatarPath));
                 profileDto.AvatarPath = null;
             }
-            else if (action == "update")
+            else if (action == "update" && model.Avatar != null)
             {
-                if (model.Avatar != null)
-                {
-                    string uniqueName = User.Identity.GetUserId() + Path.GetExtension(model.Avatar.FileName);
-                    string path = Server.MapPath(WebConfigurationManager.AppSettings["AvatarFolder"]);
-                    string fullPath = Path.Combine(path, uniqueName);
+                string uniqueName = User.Identity.GetUserId() + Path.GetExtension(model.Avatar.FileName);
+                string path = Server.MapPath(_profileService.AvatarFolder);
+                string fullPath = Path.Combine(path, uniqueName);
 
-                    if (!Directory.Exists(path))
-                        Directory.CreateDirectory(path);
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
-                    if (System.IO.File.Exists(fullPath))
-                        System.IO.File.Delete(fullPath);
+                if (System.IO.File.Exists(fullPath))
+                    System.IO.File.Delete(fullPath);
 
-                    model.Avatar.SaveAs(fullPath);
-                    profileDto.AvatarPath = uniqueName;
-                }
+                model.Avatar.SaveAs(fullPath);
+                profileDto.AvatarPath = uniqueName;
             }
 
             _profileService.Save(profileDto);
@@ -87,22 +86,6 @@ namespace WebUI.Controllers
         public ActionResult Delete(int id)
         {
             return View();
-        }
-
-        // POST: Profile/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         [ChildActionOnly]

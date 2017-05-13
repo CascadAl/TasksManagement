@@ -17,14 +17,15 @@ namespace Services.Classes
     public class ProfileService : IProfileService
     {
         private readonly IUserRepository _userRepository = null;
-        private readonly string _avatarFolder = null;
-        private readonly string _defaultAvatar = null;
+        private string _avatarFolder;
+        private string _defaultAvatar;
+
+        public string AvatarFolder { get => _avatarFolder; set => _avatarFolder = value; }
+        public string DefaultAvatar { get => _defaultAvatar; set => _defaultAvatar = value; }
 
         public ProfileService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _avatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
-            _defaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
         }
 
         public ProfileDTO GetProfile(int userId)
@@ -38,8 +39,8 @@ namespace Services.Classes
                 UserName = user.UserName,
                 FullName = user.UserProfile.FullName,
                 AvatarPath = user.UserProfile.AvatarName != null ?
-                    Path.Combine(_avatarFolder, user.UserProfile.AvatarName) :
-                    _defaultAvatar
+                    Path.Combine(AvatarFolder, user.UserProfile.AvatarName) :
+                    DefaultAvatar
             };       
         }
 

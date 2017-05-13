@@ -12,6 +12,7 @@ namespace Data.Entities
     {
         [Key, ForeignKey(nameof(ApplicationUser))]
         public int Id { get; set; }
+        [Required]
         public string FullName { get; set; }
         public string AvatarName { get; set; }
 

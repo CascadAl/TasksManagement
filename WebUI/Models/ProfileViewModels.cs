@@ -32,6 +32,7 @@ namespace WebUI.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Display(Name = "Full name")]
         [StringLength(50)]
         public string FullName { get; set; }
