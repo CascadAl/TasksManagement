@@ -39,7 +39,7 @@ namespace WebUI.Controllers
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = "Your contact page.";
+			ViewBag.Message = " Task Management contact page.";
 
 			return View();
 		}
