@@ -19,6 +19,7 @@ namespace Services.Models
 
         public string Role { get; set; }
 
+        public DateTime JoinedAt { get; set; }
 
         public bool IsOwner()
         {

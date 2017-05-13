@@ -150,12 +150,18 @@ namespace Services.Classes
             }
             viewModel.GroupId = groupId;
             viewModel.GroupTitle = members.First().Group.Title;
+            viewModel.IsOwner = IsGroupOwner(groupId, userId);
 
             return viewModel;
         }
 
         public void AddMember(GroupMemberViewModel viewModel)
         {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+
+            if (!IsGroupOwner(viewModel.GroupId, userId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
+
             if (IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
                 throw new ArgumentException("User is already in this group.");
 
@@ -200,7 +206,10 @@ namespace Services.Classes
             if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
                 throw new ArgumentException("User does not belong to this group");
 
-            _groupMemberRepository.Update(viewModel.ToEntity());
+            var groupMember = _groupMemberRepository.Get(u => u.GroupId == viewModel.GroupId && u.UserId == viewModel.UserId).Single();
+
+            groupMember.RoleId = viewModel.RoleId;
+            _groupMemberRepository.Update(groupMember);
         }
     }
 }

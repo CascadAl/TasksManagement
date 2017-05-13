@@ -28,7 +28,7 @@ namespace Services.Converters
             {
                 Id = entity.Id,
                 Description = entity.Description,
-                Title = entity.Title
+                Title = entity.Title,
             };
         }
 
@@ -39,7 +39,8 @@ namespace Services.Converters
                 Id = entity.GroupId,
                 Title = entity.Group.Title,
                 Description = entity.Group.Description,
-                Role = entity.Role.Name
+                Role = entity.Role.Name,
+                JoinedAt=entity.JoinedAt
             };
         }
 
@@ -102,12 +103,13 @@ namespace Services.Converters
             };
         }
 
-        public static IssueDetailsViewModel ToDetailsViewModel(this Issue entity)
+        public static IssueDetailsViewModel ToDetailsViewModel(this Issue entity, bool isOwner)
         {
             return new IssueDetailsViewModel()
             {
                 Issue = entity.ToViewModel(),
-                Comments = entity.Comments.Select(c => c.ToViewModel())
+                Comments = entity.Comments.Select(c => c.ToViewModel()),
+                IsOwner=isOwner
             };
         }
 

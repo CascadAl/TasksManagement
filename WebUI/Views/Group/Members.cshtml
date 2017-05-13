@@ -6,10 +6,19 @@
 <div class="alert alert-danger alert-dismissible collapse" role="alert" id="error-alert"> 
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">×</span></button> 
-    <strong>Error!</strong> Can't remove the only owner of the group. Assign another owner or remove whole group. </div>
+    <strong>Error!</strong> Can't remove the only owner of the group. Assign another owner or remove whole group. 
+</div>
+<div class="alert alert-warning alert-dismissible collapse" role="alert" id="error-alert-userAlreadyHere">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <strong>Warning!</strong> Selected user is already in this group.
+</div>
 
 <h3>Members</h3>
 <hr class="m-tb-15" />
+
+@if(Model.IsOwner){
 <p>Add new member to a group <strong>@Model.GroupTitle</strong></p>
 
 <form action="/Group/AddMember" method="post" id="add-member-form">
@@ -31,6 +40,7 @@
         </div>
     </div>
 </form>
+}
 
 <p>Existing members</p>
 <div class="row">
@@ -39,7 +49,7 @@
             <span>Members with access to <strong>@Model.GroupTitle</strong></span>
         </div>
         <ul class="group-list">
-            @Html.EditorFor(m=>m.Members, new { GroupRoles = Model.GroupRoles }  )
+            @Html.EditorFor(m=>m.Members, new { GroupRoles = Model.GroupRoles, IsOwner=Model.IsOwner }  )
         </ul>
     </div>
 </div>

@@ -66,6 +66,20 @@ $(document).ready(function () {
         });
     });
 
+    $('#add-member-form').on('submit', function (e) {
+        var selectedUserId = $('#UserId').val();
+        var usersInGroup = $('.group-list').find('.user-id-js');
+
+        var filter = usersInGroup.filter(function (index) {
+            return this.value == selectedUserId;
+        });
+
+        if (filter.length > 0) {
+            e.preventDefault();
+            $('#error-alert-userAlreadyHere').show();
+        }
+    });
+
     $('.remove-member').confirmation({
         rootSelector: '.remove-member',
         container: 'body'

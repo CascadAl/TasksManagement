@@ -17,12 +17,14 @@ namespace WebUI.Controllers
     public class ProfileController : BaseController
     {
         private IProfileService _profileService = null;
+        private IIssueService _issueService = null;
 
-        public ProfileController(IProfileService profileService)
+        public ProfileController(IProfileService profileService, IIssueService issueService)
         {
             _profileService = profileService;
             _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
             _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
+            _issueService = issueService;
         }
 
         // GET: Profile
@@ -94,6 +96,7 @@ namespace WebUI.Controllers
             var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
             Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileDetailsViewModel>());
             var profile = Mapper.Map<ProfileDTO, ProfileDetailsViewModel>(profileDto);
+            profile.AssignedTasks = _issueService.CountAssignedTasks();
 
             return PartialView("_UserMenuButton", profile);
         }

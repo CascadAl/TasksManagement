@@ -112,7 +112,9 @@ namespace Services.Classes
             if (!_groupService.IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
-            return _issueRepository.Get(i => i.Id == issueId).Single().ToDetailsViewModel();
+            bool isOwner = _groupService.IsGroupOwner(groupId, userId);
+
+            return _issueRepository.Get(i => i.Id == issueId).Single().ToDetailsViewModel(isOwner);
         }
 
         private void CreateComment(CommentViewModel viewModel)
@@ -231,6 +233,11 @@ namespace Services.Classes
             _issueRepository.Remove(issue);
         }
 
+        public int CountAssignedTasks()
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            return _issueRepository.Get(i => i.AssignedToUserId == userId && i.ClosedAt==null).Count();
+        }
         public void Dispose()
         {
             _issueRepository.Dispose();

@@ -6,10 +6,13 @@
     <link href="~/Content/simplemde.min.css" rel="stylesheet" />
 }
 <section class="issue-header">
+    @if (Model.IsOwner)
+    {
     <div class="issue-actions">
-        <a href="@Url.Action("Edit", "Issues", new { groupId=Model.Issue.GroupId, id=Model.Issue.Id})" class="btn btn-default">Edit</a>
+        <a href="@Url.Action("Edit", "Issues", new { groupId = Model.Issue.GroupId, id = Model.Issue.Id })" class="btn btn-default">Edit</a>
         <a href="@Url.Action("Create", "Issues", new { groupId = Model.Issue.GroupId })" class="btn btn-primary">New Issue</a>
     </div>
+    }
     <h1>@Model.Issue.Title <small>#@Model.Issue.IssueNumber</small></h1>
 
     <div class="issue-title">

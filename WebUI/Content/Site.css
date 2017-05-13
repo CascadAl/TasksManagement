@@ -222,6 +222,20 @@ li.group-row {
     font-size: 110%;
 }
 
+.badge-notify {
+    background: red;
+    position: relative;
+    top: -3px;
+    left: -15px;
+}
+
+#notification-section {
+    font-size:20px;
+    padding-bottom:0px;
+    padding-right:0px;
+    padding-top:16px;
+    display: inline-block;
+}
 
 
 .b-0 {

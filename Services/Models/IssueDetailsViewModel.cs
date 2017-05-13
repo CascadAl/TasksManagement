@@ -10,6 +10,8 @@ namespace Services.Models
     {
         public IssueViewModel Issue { get; set; }
 
+        public bool IsOwner { get; set; }
+
         public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

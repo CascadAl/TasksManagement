@@ -24,6 +24,8 @@ namespace Services.Models
         [Required(ErrorMessage ="Select member role from the dropdown list")]
         public int RoleId { get; set; }
 
+        public bool IsOwner { get; set; }
+
         public AddMemberViewModel()
         {
             GroupRoles = new List<GroupRole>();

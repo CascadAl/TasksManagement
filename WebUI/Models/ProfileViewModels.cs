@@ -26,6 +26,8 @@ namespace WebUI.Models
 
         [Display(Name = "Path to avatar")]
         public string AvatarPath { get; set; }
+
+        public int AssignedTasks { get; set; }
     }
 
     public class EditProfileViewModel
