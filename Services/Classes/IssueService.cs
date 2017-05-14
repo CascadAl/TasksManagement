@@ -82,7 +82,7 @@ namespace Services.Classes
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
 
-            if (!_groupService.IsGroupOwner(groupId, userId))
+            if (!_groupService.IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
             IQueryable<Issue> issues= _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i => i.IssueNumber);
