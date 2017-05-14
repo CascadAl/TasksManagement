@@ -43,7 +43,10 @@ namespace WebUI.Controllers
         public ActionResult Save(GroupViewModel newGroup)
         {
             if (!ModelState.IsValid)
-                return View(newGroup);
+            {
+                ViewBag.Action = "Edit";
+                return View("GroupForm", newGroup);
+            }
 
             _groupService.CreateOrUpdate(newGroup, User.Identity.GetUserId<int>());
 
@@ -105,11 +108,12 @@ namespace WebUI.Controllers
         [HttpPost]
         public ActionResult RemoveMember(RemoveMemberViewModel viewModel)
         {
-            viewModel.UserId = User.Identity.GetUserId<int>();
+            int userId = User.Identity.GetUserId<int>();
+            viewModel.UserId = userId;
             bool isDeleted=_groupService.RemoveMember(viewModel);
 
             if (isDeleted)
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                return Json(userId);
 
             return new HttpStatusCodeResult(HttpStatusCode.NotModified);
         }

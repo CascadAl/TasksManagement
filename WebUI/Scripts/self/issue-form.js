@@ -70,7 +70,7 @@ $(document).ready(function () {
             var html = [];
 
             users.forEach(function (user, i, users) {
-                html.push('<option title="' + user.FullName + '" value="' + user.UserId + '" data-content="<span >' + user.FullName + '<br/> @@' + user.Username + '</span>"></option>');
+                html.push('<option title="' + user.FullName + '" value="' + user.UserId + '" data-content="<span >' + user.FullName + '<br/> @' + user.Username + '</span>"></option>');
             });
 
             $('.selectpicker').html(selectTemplate + html.join(''));

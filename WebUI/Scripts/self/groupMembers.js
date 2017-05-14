@@ -38,8 +38,12 @@ $(document).ready(function () {
             }
         })
             .done(function (data, textStatus, xhr) {
-                if (xhr.status === 200)
-                    location.reload();
+                if (xhr.status === 200) {
+                    if (data == userToRemoveId)
+                        window.location='/Group';
+                    else
+                        location.reload();
+                }
                 else
                     $('#error-alert').show();
             })

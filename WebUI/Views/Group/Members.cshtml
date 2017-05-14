@@ -25,7 +25,7 @@
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-md-8">
-            <input id="add-user" type="text" placeholder="Search for a user by first and last name" class="typeahead form-control" />
+            <input id="add-user" type="text" placeholder="Search for a user" class="typeahead form-control" />
 
             @Html.HiddenFor(u => u.UserId, new { @class="UserId"})
             @Html.HiddenFor(r => r.GroupId)
@@ -41,7 +41,7 @@
     </div>
 </form>
 }
-
+<p class="text-info m-b-15">You can search by full name or username using @@ before it</p>
 <p>Existing members</p>
 <div class="row">
     <div class="col-md-12">

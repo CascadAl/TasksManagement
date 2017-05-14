@@ -8,10 +8,10 @@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/fontawesome")
     @Scripts.Render("~/bundles/modernizr")
-    
+
 </head>
 
-  <body>
+<body>
 
     <!-- Fixed navbar -->
     <nav class="navbar header navbar-default navbar-fixed-top">
@@ -42,38 +42,40 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-      
+
     <!-- Begin page content -->
     <div class="container body-content content-end">
-              @RenderBody()
+        @RenderBody()
     </div>
     <footer class="footer">
-        <!--            <div class="container container-width">-->
-        <div class="float-left" id="first-info">
-            <ul class="list-unstyled footer-text">
-                <li>&copy; @DateTime.Now.Year - Task Management</li>
-                <li>All Rights Reserved</li>
-            </ul>
+        <div class="container">
+            <div class="col-md-2">
+                <ul class="list-unstyled footer-text">
+                    <li>&copy; @DateTime.Now.Year - Task Management</li>
+                    <li>All Rights Reserved</li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-md-offset-4">
+                <ul class="list-unstyled">
+                    <li class="decor">CONTACT US</li>
+                    <li>tasksmanagment.site@gmail.com</li>
+                    <li>095-548-42-08</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul class="list-unstyled">
+                    <li class="decor">LOCATION</li>
+                    <li>34B Kniazia Volodymyra Velykoho St., </li>
+                    <li>Dnipro, 49000, Ukraine</li>
+                </ul>
+            </div>
         </div>
-        <div class="float-left other-info">
-            <ul class="list-unstyled">
-                <li class="decor">CONTACT US</li>
-                <li>tasksmanagment.site@gmail.com</li>
-                <li>095-548-42-08</li>
-            </ul>
-        </div>
-        <div class="float-left">
-            <ul class="list-unstyled">
-                <li class="decor">LOCATION</li>
-                <li>34B Kniazia Volodymyra Velykoho St., </li>
-                <li>Dnipro, 49000, Ukraine</li>
-            </ul>
-        </div>
+
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-  </body>
+</body>
 </html>
 
