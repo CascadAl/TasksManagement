@@ -10,7 +10,14 @@
             <strong><a href="@Url.Action("Details", "Issues", new { groupId = Model.GroupId, id=Model.Id} )">@Model.Title</a></strong>
         </div>
         <div class="description">
-            <p>#@Model.IssueNumber by @Model.OpenedByUser on @Model.OpenedAt.ToShortDateString()</p>
+            @if (Model.ClosedAt.HasValue)
+            {
+                <p>#@Model.IssueNumber was closed on @Model.ClosedAt.Value.ToShortDateString() by @Model.ClosedByUser </p>
+            }
+            else
+            {
+                <p>#@Model.IssueNumber opened on @Model.OpenedAt.ToShortDateString() by @Model.OpenedByUser </p>
+            }
         </div>
     </div>
     @if (Model.AssignedToUserId.HasValue)

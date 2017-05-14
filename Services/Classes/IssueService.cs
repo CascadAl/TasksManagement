@@ -29,6 +29,8 @@ namespace Services.Classes
             _groupRepository = groupRepo;
             _groupService = groupService;
             _profileService = profileService;
+            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
+            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
         }
 
         private void Create (IssueViewModel viewModel)
@@ -96,9 +98,6 @@ namespace Services.Classes
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
 
-            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
-            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
-
             var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
             return new IssueListViewModel() { Issues = filteredIssues, IsOwner = _groupService.IsGroupOwner(groupId, userId) };
         }
@@ -114,9 +113,6 @@ namespace Services.Classes
             else
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
-
-            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
-            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
 
             var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
             return new IssueListViewModel() { Issues = filteredIssues };

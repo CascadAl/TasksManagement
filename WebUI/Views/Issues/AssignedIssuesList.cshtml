@@ -15,9 +15,9 @@
         <div class="col-md-12">
             <div class="table-header p-0 b-0">
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="@(ViewBag.State.Equals("open") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId })">Open</a></li>
-                    <li role="presentation" class="@(ViewBag.State.Equals("closed") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId, state = "closed" })">Closed</a></li>
-                    <li role="presentation" class="@(ViewBag.State.Equals("all") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId, state = "all" })">All</a></li>
+                    <li role="presentation" class="@(ViewBag.State.Equals("open") ? "active" : "")"> <a href="@Url.Action("Assigned", "Issues")">Open</a></li>
+                    <li role="presentation" class="@(ViewBag.State.Equals("closed") ? "active" : "")"> <a href="@Url.Action("Assigned", "Issues", new { state = "closed" })">Closed</a></li>
+                    <li role="presentation" class="@(ViewBag.State.Equals("all") ? "active" : "")"> <a href="@Url.Action("Assigned", "Issues", new { state = "all" })">All</a></li>
                     <li class="header-right"> <span>Assignee</span></li>
                 </ul>
 
