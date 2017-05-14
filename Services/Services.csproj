@@ -74,6 +74,7 @@
     <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\GroupWRoleViewModel.cs" />
     <Compile Include="Models\IssueDetailsViewModel.cs" />
+    <Compile Include="Models\IssueListViewModel.cs" />
     <Compile Include="Models\IssueViewModel.cs" />
     <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\RemoveMemberViewModel.cs" />

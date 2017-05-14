@@ -301,6 +301,7 @@
     <Content Include="Views\Issues\Details.cshtml" />
     <Content Include="Views\Issues\EditorTemplates\CommentViewModel.cshtml" />
     <Content Include="Views\Group\Members.cshtml" />
+    <Content Include="Views\Issues\AssignedIssuesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

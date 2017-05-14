@@ -9,7 +9,8 @@ namespace Services.Interfaces
 {
     public interface IIssueService
     {
-        IEnumerable<IssueViewModel> GetAll(int groupId, string state);
+        IssueListViewModel GetAll(int groupId, string state);
+        IssueListViewModel GetAssigned(string state);
 
         IssueViewModel Get(int issueId);
 

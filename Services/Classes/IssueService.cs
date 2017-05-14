@@ -34,6 +34,8 @@ namespace Services.Classes
         private void Create (IssueViewModel viewModel)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            if (!_groupService.IsGroupOwner(viewModel.GroupId, userId))
+                throw new ArgumentException("Wrong groupId or group does not belong to you");
 
             var group = _groupService.Get(viewModel.GroupId);
 
@@ -78,7 +80,7 @@ namespace Services.Classes
                 Update(viewModel);
         }
 
-        public IEnumerable<IssueViewModel> GetAll(int groupId, string state)
+        public IssueListViewModel GetAll(int groupId, string state)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
 
@@ -93,16 +95,38 @@ namespace Services.Classes
             else
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
-            
-            return issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+
+            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
+            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
+
+            var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+            return new IssueListViewModel() { Issues = filteredIssues, IsOwner = _groupService.IsGroupOwner(groupId, userId) };
         }
+
+        public IssueListViewModel GetAssigned(string state)
+        {
+            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            IQueryable<Issue> issues = _issueRepository.Get(i => i.AssignedToUserId.Value == userId).OrderBy(i => i.OpenedAt);
+
+            //filtering
+            if (state.Equals("open"))
+                issues = issues.Where(i => i.ClosedAt == null);
+            else
+            if (state.Equals("closed"))
+                issues = issues.Where(i => i.ClosedAt.HasValue);
+
+            _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
+            _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
+
+            var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+            return new IssueListViewModel() { Issues = filteredIssues };
+        }
+
 
         private IssueViewModel SetAvatarPath(IssueViewModel viewModel)
         {
             if (viewModel.AssignedToUserId.HasValue)
             {
-                _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
-                _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
                 var profileDto = _profileService.GetProfile(viewModel.AssignedToUserId.Value);
                 viewModel.AsignedToUsername = profileDto.UserName;
                 viewModel.AssignedToAvatarPath = profileDto.AvatarPath;

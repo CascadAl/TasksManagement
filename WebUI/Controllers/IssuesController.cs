@@ -32,6 +32,15 @@ namespace WebUI.Controllers
         }
 
         [HttpGet]
+        public ActionResult Assigned(string state = "open")
+        {
+            ViewBag.State = state;
+            var viewModels = _issueService.GetAssigned(state);
+
+            return View("AssignedIssuesList", viewModels);
+        }
+
+        [HttpGet]
         public ActionResult Create(int groupId)
         {
             ViewBag.Action = "Create";
