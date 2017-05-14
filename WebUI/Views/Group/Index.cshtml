@@ -3,6 +3,12 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="alert alert-danger alert-dismissible collapse" role="alert" id="error-alert" data-hide="@ViewBag.Leaved">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <strong>Error!</strong> Can't leave because you are the only owner of the group. Assign another owner or remove whole group.
+</div>
 
 <h3>Your Groups</h3>
 <hr class="m-tb-15" />
@@ -36,6 +42,10 @@
                 rootSelector: '.js-leave-group',
                 container: 'body'
             });
+
+            var userLeaved = $('#error-alert').data('hide');
+            if (userLeaved==='False')
+                $('#error-alert').show();
         });
     </script>
 }

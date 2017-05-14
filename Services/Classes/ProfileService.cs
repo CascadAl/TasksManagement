@@ -56,8 +56,18 @@ namespace Services.Classes
 
         public IEnumerable<AddMemberProfileViewModel> GetProfileData(string query)
         {
-            var users = _userRepository.Get(u => (u.UserProfile.FullName).Contains(query)).Take(10).ToList();
-            var viewModels = users.Select(u => u.ToAddMemberProfileViewModel());
+            IQueryable<ApplicationUser> users;
+
+            if (query.Contains("@")) //search by username
+            {
+                users = _userRepository.Get(u => (u.UserName).Contains(query.Substring(1)));
+            }
+            else                    //search by fullname
+            {
+                users = _userRepository.Get(u => (u.UserProfile.FullName).Contains(query));
+            }
+
+            var viewModels = users.Take(7).ToList().Select(u => u.ToAddMemberProfileViewModel());
 
             return viewModels;
         }

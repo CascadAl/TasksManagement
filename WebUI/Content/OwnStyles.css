@@ -5,7 +5,6 @@
 body {
     margin: 0px;
     padding: 0px;
-    /*margin-bottom: 115px;*/
     font-family: 'Lao UI';
     font-size: 15px;
     padding-top:60px;
@@ -51,9 +50,7 @@ div.navbar-collapse.in ul.main-button{
 /*Футер*/
 .footer {
     bottom: 0;
-    height: 115px; /*40px
-
-    /*margin-top: 10px;*/
+    height: 115px;
     position: absolute;
     width: 100%;
     left: 0;

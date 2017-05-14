@@ -12,19 +12,21 @@ using System.Web;
 
 namespace Services.Classes
 {
-    public class GroupService:IGroupService
+    public class GroupService : IGroupService
     {
         private readonly IGroupRepository _groupRepository = null;
         private readonly IUserRepository _userRepository = null;
         private readonly IApplicationRoleRepository _roleRepository = null;
         private readonly IGroupMemberRepository _groupMemberRepository = null;
+        private readonly IIssueRepository _issueRepository = null;
 
-        public GroupService(IGroupRepository groupRepository, IUserRepository userRepository, IApplicationRoleRepository roleRepository, IGroupMemberRepository groupMemberRepository)
+        public GroupService(IGroupRepository groupRepository, IUserRepository userRepository, IApplicationRoleRepository roleRepository, IGroupMemberRepository groupMemberRepository, IIssueRepository issueRepository)
         {
             _groupRepository = groupRepository;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _groupMemberRepository = groupMemberRepository;
+            _issueRepository = issueRepository;
         }
 
         public void Dispose()
@@ -32,11 +34,12 @@ namespace Services.Classes
             _groupRepository.Dispose();
             _userRepository.Dispose();
             _roleRepository.Dispose();
+            _issueRepository.Dispose();
         }
 
         public ICollection<GroupWRoleViewModel> GetAll(int userId)
         {
-            var groups=_groupMemberRepository.Get(g => g.UserId == userId).ToList();
+            var groups = _groupMemberRepository.Get(g => g.UserId == userId).ToList();
             ICollection<GroupWRoleViewModel> groupViewModels = new List<GroupWRoleViewModel>();
 
             foreach (var group in groups)
@@ -63,10 +66,10 @@ namespace Services.Classes
 
         public void CreateGroup(GroupViewModel newGroup, int userId)
         {
-            int groupId=_groupRepository.Add(newGroup.ToEntity());
+            int groupId = _groupRepository.Add(newGroup.ToEntity());
             var role = _roleRepository.Get(r => r.Name.Equals("Owner")).Single();
 
-            GroupMember groupMember = new GroupMember() { GroupId = groupId, UserId = userId, RoleId = role.Id, JoinedAt = DateTime.Now }; 
+            GroupMember groupMember = new GroupMember() { GroupId = groupId, UserId = userId, RoleId = role.Id, JoinedAt = DateTime.Now };
             _groupMemberRepository.AddUserToGroup(groupMember);
         }
 
@@ -95,25 +98,41 @@ namespace Services.Classes
 
         public void RemoveGroup(int groupId, int userId)
         {
-            if(!IsGroupOwner(groupId, userId))
+            if (!IsGroupOwner(groupId, userId))
                 throw new ArgumentException("Wrong groupId or group does not belong to you");
 
             _groupRepository.Remove(groupId);
         }
 
-        public void LeaveGroup(int groupId)
+        public bool LeaveGroup(int groupId)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
 
             if (!IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("Wrong groupId or you are not a member of this group");
 
-            var group = _groupRepository.Get(groupId);
+            if (IsGroupOwner(groupId, userId))
+            {
+                int ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
+                int owners = _groupMemberRepository.Get(m => m.GroupId == groupId).Where(r => r.RoleId.Equals(ownerRoleId)).Count();
 
-            _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
+                if (owners > 1)
+                {
+                    _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
+                    AssignToNoone(groupId, userId);
 
-            if (group.Members.Count == 0)
-                _groupRepository.Remove(groupId);
+                    return true;
+                }
+            }
+            else
+            {
+                _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
+                AssignToNoone(groupId, userId);
+
+                return true;
+            }
+
+            return false;
         }
 
         public bool IsGroupOwner(int groupId, int userId)
@@ -189,13 +208,28 @@ namespace Services.Classes
                 if (owners > 1)
                 {
                     _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
+                    AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
+
                     return true;
                 }
                 return false;
             }
 
             _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
+            AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
+
             return true;
+        }
+
+        private void AssignToNoone(int groupId, int userId)
+        {
+            var assignedIssues = _issueRepository.Get(i => i.AssignedToUserId == userId && i.GroupId == groupId).ToList();
+
+            foreach (var issue in assignedIssues)
+            {
+                issue.AssignedToUserId = null;
+                _issueRepository.Update(issue);
+            }
         }
 
         public void ChangeMemberRole(GroupMemberViewModel viewModel)

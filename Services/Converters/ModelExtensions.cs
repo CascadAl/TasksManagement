@@ -71,7 +71,8 @@ namespace Services.Converters
             return new AddMemberProfileViewModel()
             {
                 UserId = entity.Id,
-                FullName = entity.UserProfile.FullName 
+                FullName = entity.UserProfile.FullName,
+                Username = entity.UserName
             };
         }
 
@@ -99,7 +100,7 @@ namespace Services.Converters
                 AssignedToUserId = entity.AssignedToUserId,
                 OpenedByUserId = entity.OpenedByUserId,
                 OpenedByUser = entity.UserOpened.UserName,
-                ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null,
+                ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null
             };
         }
 

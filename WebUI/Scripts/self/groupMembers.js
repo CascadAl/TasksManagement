@@ -12,12 +12,12 @@ $(document).ready(function () {
     });
 
     $('#add-user').typeahead({
-        minLength: 2,
+        minLength: 3,
         highlight: true
     },
         {
             name: 'users',
-            display: 'FullName',
+            display: 'FullName',// + '@' + 'Username',
             source: users
         }).on('typeahead:select', function (e, user) {
             $('#UserId').val(user.UserId).trigger("change");

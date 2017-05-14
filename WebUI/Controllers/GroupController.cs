@@ -62,8 +62,10 @@ namespace WebUI.Controllers
         [HttpPost]
         public ActionResult Leave(int id)
         {
-            _groupService.LeaveGroup(id);
-            return RedirectToAction("Index");
+            ViewBag.Leaved=_groupService.LeaveGroup(id);
+            var groups = _groupService.GetAll(User.Identity.GetUserId<int>());
+
+            return View("Index", groups);
         }
 
         [HttpGet]

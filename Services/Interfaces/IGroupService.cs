@@ -19,7 +19,7 @@ namespace Services.Interfaces
 
         bool UpdateGroup(GroupViewModel groupViewModel, int userId);
 
-        void LeaveGroup(int groupId);
+        bool LeaveGroup(int groupId);
 
         void RemoveGroup(int groupId, int userId);
 
