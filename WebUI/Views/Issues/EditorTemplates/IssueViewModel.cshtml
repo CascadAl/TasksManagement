@@ -13,6 +13,9 @@
             <p>#@Model.IssueNumber by @Model.OpenedByUser on @Model.OpenedAt.ToShortDateString()</p>
         </div>
     </div>
+    <div class="issue-assignee-li">
+        <img src="@Model.AssignedToAvatarPath" class="img-circle avatarSmall" title="Assigned to @Model.AsignedToUsername" />
+    </div>
     
 </li>
 

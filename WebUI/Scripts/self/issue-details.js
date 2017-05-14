@@ -5,8 +5,7 @@ var simplemde = new SimpleMDE({
     element: document.getElementById("Text"),
     autoDownloadFontAwesome: false,
     spellChecker: false,
-    placeholder: 'Leave a comment',
-    autofocus: true
+    placeholder: 'Leave a comment'
 });
 var simplemdeEdit = null;
 

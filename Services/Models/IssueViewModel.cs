@@ -27,6 +27,10 @@ namespace Services.Models
 
         public int? AssignedToUserId { get; set; }
 
+        public string AssignedToAvatarPath { get; set; }
+
+        public string AsignedToUsername { get; set; }
+
         public int OpenedByUserId { get; set; }
 
         public string OpenedByUser { get; set; }

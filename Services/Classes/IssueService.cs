@@ -10,6 +10,7 @@ using Services.Converters;
 using Data.Entities;
 using Microsoft.AspNet.Identity;
 using System.Web;
+using System.Web.Configuration;
 
 namespace Services.Classes
 {
@@ -19,18 +20,21 @@ namespace Services.Classes
         private readonly ICommentRepository _commentRepository = null;
         private readonly IGroupRepository _groupRepository = null;
         private readonly IGroupService _groupService = null;
+        private readonly IProfileService _profileService = null;
 
-        public IssueService(IIssueRepository issueRepo, ICommentRepository commentRepo, IGroupRepository groupRepo, IGroupService groupService)
+        public IssueService(IIssueRepository issueRepo, IProfileService profileService, ICommentRepository commentRepo, IGroupRepository groupRepo, IGroupService groupService)
         {
             _issueRepository = issueRepo;
             _commentRepository = commentRepo;
             _groupRepository = groupRepo;
             _groupService = groupService;
+            _profileService = profileService;
         }
 
         private void Create (IssueViewModel viewModel)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+
             var group = _groupService.Get(viewModel.GroupId);
 
             viewModel.IssueNumber = ++group.IssuesTotal;
@@ -77,7 +81,8 @@ namespace Services.Classes
         public IEnumerable<IssueViewModel> GetAll(int groupId, string state)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
-            if (!_groupService.IsGroupParticipant(groupId, userId))
+
+            if (!_groupService.IsGroupOwner(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
             IQueryable<Issue> issues= _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i => i.IssueNumber);
@@ -89,7 +94,20 @@ namespace Services.Classes
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
             
-            return issues.ToList().Select(i => i.ToViewModel());
+            return issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+        }
+
+        private IssueViewModel SetAvatarPath(IssueViewModel viewModel)
+        {
+            if (viewModel.AssignedToUserId.HasValue)
+            {
+                _profileService.AvatarFolder = WebConfigurationManager.AppSettings["AvatarFolder"];
+                _profileService.DefaultAvatar = WebConfigurationManager.AppSettings["DefaultAvatar"];
+                var profileDto = _profileService.GetProfile(viewModel.AssignedToUserId.Value);
+                viewModel.AsignedToUsername = profileDto.UserName;
+                viewModel.AssignedToAvatarPath = profileDto.AvatarPath;
+            }
+            return viewModel;
         }
 
         public IssueViewModel Get (int issueId)

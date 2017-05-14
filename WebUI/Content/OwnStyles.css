@@ -50,12 +50,13 @@ div.navbar-collapse.in ul.main-button{
 }
 /*Футер*/
 .footer {
+    bottom: 0;
+    height: 115px; /*40px
+
     /*margin-top: 10px;*/
     position: absolute;
     width: 100%;
-    /*height: 115px; /*40px*/
     left: 0;
-    /*bottom: 0;*/
     padding: 10px 9%;
     margin-bottom: 0;
     background-color: #56567d;
@@ -75,7 +76,7 @@ div ul.footer-text li {
 }
 /*Отступ для выноса футера в самый низ страницы*/
 .content-end {
-    padding-bottom: 20px;
+    padding-bottom: 115px;
     /*margin-top: 60px;*/
 }
 div.container.container-width{

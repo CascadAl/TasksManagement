@@ -220,6 +220,11 @@ li.group-row {
 .issue-header-li a {
     color: black;
     font-size: 110%;
+    margin-right:50px;
+}
+
+.issue-assignee-li{
+    float:right;
 }
 
 .badge-notify {
@@ -237,6 +242,13 @@ li.group-row {
     display: inline-block;
 }
 
+.table-header .header-right {
+    float: right;
+}
+
+.header-right{
+    padding:10px 15px;
+}
 
 .b-0 {
     border: none;

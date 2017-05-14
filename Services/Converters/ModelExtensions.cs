@@ -28,7 +28,7 @@ namespace Services.Converters
             {
                 Id = entity.Id,
                 Description = entity.Description,
-                Title = entity.Title,
+                Title = entity.Title
             };
         }
 
@@ -99,7 +99,7 @@ namespace Services.Converters
                 AssignedToUserId = entity.AssignedToUserId,
                 OpenedByUserId = entity.OpenedByUserId,
                 OpenedByUser = entity.UserOpened.UserName,
-                ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null
+                ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null,
             };
         }
 
