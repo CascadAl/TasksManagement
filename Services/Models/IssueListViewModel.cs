@@ -11,5 +11,7 @@ namespace Services.Models
         public IEnumerable<IssueViewModel> Issues { get; set; }
 
         public bool IsOwner { get; set; }
+
+        public string GroupTitle { get; set; }
     }
 }

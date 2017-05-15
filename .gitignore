@@ -201,3 +201,4 @@ WebUI/Web.config
 /Data/Migrations/201704150848408_newGroupMembers.Designer.cs
 /Data/Migrations/201704150848408_newGroupMembers.resx
 /WebUI/Content/Images/Avatars
+/WebUI/Properties/PublishProfiles

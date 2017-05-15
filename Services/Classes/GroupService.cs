@@ -19,6 +19,7 @@ namespace Services.Classes
         private readonly IApplicationRoleRepository _roleRepository = null;
         private readonly IGroupMemberRepository _groupMemberRepository = null;
         private readonly IIssueRepository _issueRepository = null;
+        //private int ownerRoleId = 0;
 
         public GroupService(IGroupRepository groupRepository, IUserRepository userRepository, IApplicationRoleRepository roleRepository, IGroupMemberRepository groupMemberRepository, IIssueRepository issueRepository)
         {
@@ -27,6 +28,7 @@ namespace Services.Classes
             _roleRepository = roleRepository;
             _groupMemberRepository = groupMemberRepository;
             _issueRepository = issueRepository;
+            //ownerRoleId = _roleRepository.Get(r => r.Name.Equals(RoleNames.ROLE_OWNER)).Select(r => r.Id).Single();
         }
 
         public void Dispose()
@@ -67,7 +69,7 @@ namespace Services.Classes
         public void CreateGroup(GroupViewModel newGroup, int userId)
         {
             int groupId = _groupRepository.Add(newGroup.ToEntity());
-            var role = _roleRepository.Get(r => r.Name.Equals("Owner")).Single();
+            var role = _roleRepository.Get(r => r.Name.Equals(RoleNames.ROLE_OWNER)).Single();
 
             GroupMember groupMember = new GroupMember() { GroupId = groupId, UserId = userId, RoleId = role.Id, JoinedAt = DateTime.Now };
             _groupMemberRepository.AddUserToGroup(groupMember);
@@ -176,18 +178,17 @@ namespace Services.Classes
 
         public void AddMember(GroupMemberViewModel viewModel)
         {
-            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            string userRole = _groupMemberRepository.GetRole(viewModel.GroupId, viewModel.CurrentUserId);
 
-            if (!IsGroupOwner(viewModel.GroupId, userId))
-                throw new ArgumentException("Wrong groupId or group does not belong to you");
+            if (userRole.Equals(RoleNames.ROLE_OWNER) &&
+                !_groupMemberRepository.IsInGroup(viewModel.GroupId, viewModel.UserId))
+            {
+                var entity = viewModel.ToEntity();
+                entity.JoinedAt = DateTime.Now;
 
-            if (IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
-                throw new ArgumentException("User is already in this group.");
-
-            var entity = viewModel.ToEntity();
-            entity.JoinedAt = DateTime.Now;
-
-            _groupMemberRepository.AddUserToGroup(entity);
+                _groupMemberRepository.AddUserToGroup(entity);
+            }
+            else throw new ArgumentException("User is already in this group.");
         }
 
         public bool RemoveMember(RemoveMemberViewModel viewModel)

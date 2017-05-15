@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h3>Issues</h3>
+<h3>Issues / <strong>@Model.GroupTitle</strong></h3>
 
 <hr class="m-tb-15" />
 
@@ -17,8 +17,7 @@
 </div>
 }
 <p></p>
-@if (Model.Issues.Count() > 0)
-{
+
 <div class="row">
     <div class="col-md-12">
         <div class="table-header p-0 b-0">
@@ -35,4 +34,3 @@
         </ul>
     </div>
 </div>
-}

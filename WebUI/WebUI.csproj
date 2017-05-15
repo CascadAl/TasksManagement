@@ -230,6 +230,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\self\groupMembers.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -302,6 +303,7 @@
     <Content Include="Views\Issues\EditorTemplates\CommentViewModel.cshtml" />
     <Content Include="Views\Group\Members.cshtml" />
     <Content Include="Views\Issues\AssignedIssuesList.cshtml" />
+    <Content Include="Views\Account\CompleteRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

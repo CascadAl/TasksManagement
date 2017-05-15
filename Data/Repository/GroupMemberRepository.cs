@@ -52,5 +52,19 @@ namespace Data.Repository
             return true;
         }
 
+        public string GetRole(int groupId, int userId)
+        {
+            var groupMember = _context.GroupMembers.Where(g => (g.GroupId == groupId && g.UserId == userId)).SingleOrDefault();
+            if (groupMember == null)
+            {
+                throw new ArgumentException("Wrong groupId or you are not a member of this group");
+            }
+            return groupMember.Role.Name;
+        }
+
+        public bool IsInGroup(int groupId, int userId)
+        {
+            return _context.GroupMembers.Any(g => (g.GroupId == groupId && g.UserId == userId));
+        }
     }
 }

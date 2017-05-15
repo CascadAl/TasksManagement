@@ -85,9 +85,10 @@ namespace Services.Classes
         public IssueListViewModel GetAll(int groupId, string state)
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
-
+            
             if (!_groupService.IsGroupParticipant(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
+            string groupTitle = _groupRepository.Get(groupId).Title;
 
             IQueryable<Issue> issues= _issueRepository.Get(g => g.GroupId == groupId).OrderByDescending(i => i.IssueNumber);
 
@@ -99,7 +100,7 @@ namespace Services.Classes
                 issues = issues.Where(i => i.ClosedAt.HasValue);
 
             var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
-            return new IssueListViewModel() { Issues = filteredIssues, IsOwner = _groupService.IsGroupOwner(groupId, userId) };
+            return new IssueListViewModel() { Issues = filteredIssues, IsOwner = _groupService.IsGroupOwner(groupId, userId), GroupTitle= groupTitle };
         }
 
         public IssueListViewModel GetAssigned(string state)

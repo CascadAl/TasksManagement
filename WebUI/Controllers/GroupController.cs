@@ -100,8 +100,10 @@ namespace WebUI.Controllers
         {
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                    
+
+            viewModel.CurrentUserId = User.Identity.GetUserId<int>();
             _groupService.AddMember(viewModel);
+
             return RedirectToAction("Members", new { id = viewModel.GroupId});
         }
 

@@ -19,5 +19,9 @@ namespace Data.Repository
         IQueryable<GroupMember> Get(Expression<Func<GroupMember, bool>> predicate);
 
         bool Update(GroupMember entity);
+
+        string GetRole(int groupId, int userId);
+
+        bool IsInGroup(int groupId, int userId);
     }
 }

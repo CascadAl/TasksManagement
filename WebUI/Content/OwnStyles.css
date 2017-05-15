@@ -3,7 +3,8 @@
   min-height: 100%;
 }
 body {
-    margin: 0px;
+    /*margin: 0px;*/
+    margin-bottom:100px;
     padding: 0px;
     font-family: 'Lao UI';
     font-size: 15px;
@@ -19,7 +20,6 @@ body {
 }
 
 hr.double {
-    
     border-top: 5px double #ea8227;
     margin-bottom: 10px;
     margin-top: 30px;
@@ -54,27 +54,17 @@ div.navbar-collapse.in ul.main-button{
     position: absolute;
     width: 100%;
     left: 0;
-    padding: 10px 9%;
-    margin-bottom: 0;
+    padding: 10px 5%;
     background-color: #56567d;
     color: white;
     font: 12px/20px Helvetica;
-}
-/*--------------------*/
-.footer-container{
-    width: auto;
-    max-width: 680px;
-    padding: 0 15px;
+    margin-bottom: 0;
+    min-width: 750px;
 }
 /*--------------------*/
 /*Отступ от верха для тектса футера*/
 div ul.footer-text li {
-    margin-top: 0;
-}
-/*Отступ для выноса футера в самый низ страницы*/
-.content-end {
-    padding-bottom: 115px;
-    /*margin-top: 60px;*/
+    padding-top: 0px;
 }
 div.container.container-width{
     float:left;
@@ -105,21 +95,22 @@ li.decor{
     /*text-align:center;*/
 }
 /*Расположение списков в футере*/
-.footer div.float-left{
-    float:left;
-    /*margin-right: 350px;*/
+.footer div.float-left {
+    float: left;
     padding: 0;
 }
-/*Отсуп для первого ряда списков футера*/
-.footer div.float-left#first-info{
-    margin-right: 40%;
-    min-width: 150px;
-}
-/*Отсуп для оставшихся рядов списков футера*/
-.footer div.float-left.other-info{
-    margin-right: 15%;
-}
-/*Стили для первого контейнера главной страницы*/
+
+    /*Отсуп для первого ряда списков футера*/
+    .footer div.float-left#first-info {
+        width: 35%;
+    }
+
+    /*Отсуп для оставшихся рядов списков футера*/
+    .footer div.float-left.other-info {
+        width: 32%;
+        margin: 0;
+    }
+    /*Стили для первого контейнера главной страницы*/
 .jumbotron.on-all-width{
     padding: 40px 30px;
     margin: 0;
@@ -159,8 +150,8 @@ div ul.nav.navbar-nav.main-button li a{
     color: #7187bb;
 }
 div ul.nav.navbar-nav.main-button li :hover {
-    background-color: #4364eb;
-    color: #c4d5ff;
+    background-color: #63639d;
+    color: #f8f9ff;
 }
 .divider {
     height: 1px;
