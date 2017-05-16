@@ -59,13 +59,11 @@
   <ItemGroup>
     <Compile Include="Classes\GroupService.cs" />
     <Compile Include="Classes\IssueService.cs" />
-    <Compile Include="Classes\TestService.cs" />
     <Compile Include="Classes\ProfileService.cs" />
     <Compile Include="Converters\ModelExtensions.cs" />
     <Compile Include="DataTransferObjects\ProfileDTO.cs" />
     <Compile Include="Interfaces\IGroupService.cs" />
     <Compile Include="Interfaces\IIssueService.cs" />
-    <Compile Include="Interfaces\ITestService.cs" />
     <Compile Include="Interfaces\IProfileService.cs" />
     <Compile Include="Models\AddMemberProfileViewModel.cs" />
     <Compile Include="Models\AddMemberViewModel.cs" />
@@ -78,8 +76,6 @@
     <Compile Include="Models\IssueViewModel.cs" />
     <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\RemoveMemberViewModel.cs" />
-    <Compile Include="Models\RoleNames.cs" />
-    <Compile Include="Models\TestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

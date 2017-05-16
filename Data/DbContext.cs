@@ -11,8 +11,6 @@ namespace Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
-        public DbSet<Test> Tests { get; set; }
-
         public DbSet<Group> Groups { get; set; }
 
         public DbSet<GroupMember> GroupMembers { get; set; }

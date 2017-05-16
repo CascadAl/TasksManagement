@@ -23,5 +23,7 @@ namespace Data.Repository
         string GetRole(int groupId, int userId);
 
         bool IsInGroup(int groupId, int userId);
+
+        int CountOwners(int groupId);
     }
 }

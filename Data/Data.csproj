@@ -76,7 +76,6 @@
     <Compile Include="IEntity.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\Test.cs" />
     <Compile Include="Repository\ApplicationRoleRepository.cs" />
     <Compile Include="Repository\CommentRepository.cs" />
     <Compile Include="Repository\GroupMemberRepository.cs" />
@@ -90,8 +89,7 @@
     <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\IGroupRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\ITestRepository.cs" />
-    <Compile Include="Repository\TestRepository.cs" />
+    <Compile Include="RoleNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

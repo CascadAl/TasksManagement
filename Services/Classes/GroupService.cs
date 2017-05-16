@@ -9,6 +9,7 @@ using Services.Interfaces;
 using Services.Models;
 using Microsoft.AspNet.Identity;
 using System.Web;
+using Data;
 
 namespace Services.Classes
 {
@@ -19,7 +20,6 @@ namespace Services.Classes
         private readonly IApplicationRoleRepository _roleRepository = null;
         private readonly IGroupMemberRepository _groupMemberRepository = null;
         private readonly IIssueRepository _issueRepository = null;
-        //private int ownerRoleId = 0;
 
         public GroupService(IGroupRepository groupRepository, IUserRepository userRepository, IApplicationRoleRepository roleRepository, IGroupMemberRepository groupMemberRepository, IIssueRepository issueRepository)
         {
@@ -28,7 +28,6 @@ namespace Services.Classes
             _roleRepository = roleRepository;
             _groupMemberRepository = groupMemberRepository;
             _issueRepository = issueRepository;
-            //ownerRoleId = _roleRepository.Get(r => r.Name.Equals(RoleNames.ROLE_OWNER)).Select(r => r.Id).Single();
         }
 
         public void Dispose()
@@ -58,7 +57,7 @@ namespace Services.Classes
 
         public GroupViewModel GetViewModel(int groupId, int userId)
         {
-            if (!IsGroupParticipant(groupId, userId))
+            if (!_groupMemberRepository.IsInGroup(groupId, userId))
                 throw new ArgumentException("You are not a member of this group");
 
             var group = _groupRepository.Get(groupId);
@@ -110,7 +109,7 @@ namespace Services.Classes
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
 
-            if (!IsGroupParticipant(groupId, userId))
+            if (!_groupMemberRepository.IsInGroup(groupId, userId))
                 throw new ArgumentException("Wrong groupId or you are not a member of this group");
 
             if (IsGroupOwner(groupId, userId))
@@ -121,7 +120,7 @@ namespace Services.Classes
                 if (owners > 1)
                 {
                     _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
-                    AssignToNoone(groupId, userId);
+                    _issueRepository.AssignToNoone(groupId, userId);
 
                     return true;
                 }
@@ -129,7 +128,7 @@ namespace Services.Classes
             else
             {
                 _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
-                AssignToNoone(groupId, userId);
+                _issueRepository.AssignToNoone(groupId, userId);
 
                 return true;
             }
@@ -139,7 +138,7 @@ namespace Services.Classes
 
         public bool IsGroupOwner(int groupId, int userId)
         {
-            var ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
+            var ownerRoleId = _roleRepository.Get(r => r.Name.Equals(RoleNames.ROLE_OWNER)).Select(r => r.Id).Single();
 
             var groupExists = _groupMemberRepository.Has(g => (g.GroupId == groupId && g.RoleId == ownerRoleId && g.UserId == userId));
             return groupExists;
@@ -152,7 +151,7 @@ namespace Services.Classes
 
         public AddMemberViewModel GetMembers(int groupId, int userId)
         {
-            if (!IsGroupParticipant(groupId, userId))
+            if (!_groupMemberRepository.IsInGroup(groupId, userId))
                 throw new ArgumentException("Wrong groupId or group does not belong to you");
 
             var members = _groupMemberRepository.Get(g => g.GroupId == groupId).ToList();
@@ -193,23 +192,20 @@ namespace Services.Classes
 
         public bool RemoveMember(RemoveMemberViewModel viewModel)
         {
-            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
+            string userRole = _groupMemberRepository.GetRole(viewModel.GroupId, viewModel.UserId);
 
-            if (!IsGroupOwner(viewModel.GroupId, userId))
-                throw new ArgumentException("Wrong groupId or group does not belong to you");
-
-            if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserToRemove))
+            if (!userRole.Equals(RoleNames.ROLE_OWNER) ||
+                !_groupMemberRepository.IsInGroup(viewModel.GroupId, viewModel.UserToRemove))
                 throw new ArgumentException("User does not belong to this group");
 
             if (IsGroupOwner(viewModel.GroupId, viewModel.UserToRemove))
             {
-                int ownerRoleId = _roleRepository.Get(r => r.Name.Equals("Owner")).Select(r => r.Id).Single();
-                int owners = _groupMemberRepository.Get(m => m.GroupId == viewModel.GroupId).Where(r => r.RoleId.Equals(ownerRoleId)).Count();
+                int owners = _groupMemberRepository.CountOwners(viewModel.GroupId);
 
                 if (owners > 1)
                 {
                     _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
-                    AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
+                    _issueRepository.AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
 
                     return true;
                 }
@@ -217,34 +213,24 @@ namespace Services.Classes
             }
 
             _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
-            AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
+            _issueRepository.AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
 
             return true;
         }
 
-        private void AssignToNoone(int groupId, int userId)
-        {
-            var assignedIssues = _issueRepository.Get(i => i.AssignedToUserId == userId && i.GroupId == groupId).ToList();
-
-            foreach (var issue in assignedIssues)
-            {
-                issue.AssignedToUserId = null;
-                _issueRepository.Update(issue);
-            }
-        }
-
         public void ChangeMemberRole(GroupMemberViewModel viewModel)
         {
-            if (!IsGroupOwner(viewModel.GroupId, viewModel.CurrentUserId))
-                throw new ArgumentException("Wrong groupId or group does not belong to you");
+            string userRole = _groupMemberRepository.GetRole(viewModel.GroupId, viewModel.CurrentUserId);
 
-            if (!IsGroupParticipant(viewModel.GroupId, viewModel.UserId))
-                throw new ArgumentException("User does not belong to this group");
+            if (userRole.Equals(RoleNames.ROLE_OWNER) &&
+                _groupMemberRepository.IsInGroup(viewModel.GroupId, viewModel.UserId))
+            {
+                var groupMember = _groupMemberRepository.Get(u => u.GroupId == viewModel.GroupId && u.UserId == viewModel.UserId).Single();
 
-            var groupMember = _groupMemberRepository.Get(u => u.GroupId == viewModel.GroupId && u.UserId == viewModel.UserId).Single();
-
-            groupMember.RoleId = viewModel.RoleId;
-            _groupMemberRepository.Update(groupMember);
+                groupMember.RoleId = viewModel.RoleId;
+                _groupMemberRepository.Update(groupMember);
+            }
+            else throw new ArgumentException("User does not belong to this group");
         }
     }
 }

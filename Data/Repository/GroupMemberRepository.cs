@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data.Entities;
 using System.Data.Entity;
+using Data;
 
 namespace Data.Repository
 {
@@ -65,6 +66,10 @@ namespace Data.Repository
         public bool IsInGroup(int groupId, int userId)
         {
             return _context.GroupMembers.Any(g => (g.GroupId == groupId && g.UserId == userId));
+        }
+
+        public int CountOwners(int groupId) {
+            return _context.GroupMembers.Where(m => m.GroupId == groupId && m.Role.Name.Equals(RoleNames.ROLE_OWNER)).Count();
         }
     }
 }

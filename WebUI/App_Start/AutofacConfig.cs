@@ -32,7 +32,6 @@ namespace WebUI.App_Start
 
             #region регистрация сервисов
 
-            builder.RegisterType<TestService>().As<ITestService>();
             builder.RegisterType<GroupService>().As<IGroupService>();
             builder.RegisterType<ProfileService>().As<IProfileService>();
             builder.RegisterType<IssueService>().As<IIssueService>();
@@ -41,7 +40,6 @@ namespace WebUI.App_Start
 
             #region регистрация репозиториев
 
-            builder.RegisterType<TestRepository>().As<ITestRepository>();
             builder.RegisterType<GroupRepository>().As<IGroupRepository>();
             builder.RegisterType<UserRepository>().As<IUserRepository>();
             builder.RegisterType<GroupMemberRepository>().As<IGroupMemberRepository>();

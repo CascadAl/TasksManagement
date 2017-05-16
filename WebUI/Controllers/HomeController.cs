@@ -8,16 +8,8 @@ using System.Web.Mvc;
 namespace WebUI.Controllers
 {
 
-
     public class HomeController : BaseController
 	{
-		private readonly ITestService _testService = null;
-
-		public HomeController(ITestService testService)
-		{
-			_testService = testService;
-		}
-
 		public ActionResult Index()
 		{
             if(Request.IsAuthenticated)
@@ -39,24 +31,9 @@ namespace WebUI.Controllers
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = " Task Management contact page.";
+			ViewBag.Message = "Task Management contact page.";
 
 			return View();
 		}
-
-		[Authorize]
-		public ActionResult Test()
-		{
-			return View(_testService.GetAllMessages());
-		}
-
-		[Authorize]
-		public ActionResult ExceptionTest()
-		{
-			int a = 5 - 5;
-			a /= a;
-			return View();
-		}
-
 	}
 }

@@ -254,7 +254,9 @@
     <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Group\GroupForm.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -289,7 +291,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
@@ -304,6 +305,8 @@
     <Content Include="Views\Group\Members.cshtml" />
     <Content Include="Views\Issues\AssignedIssuesList.cshtml" />
     <Content Include="Views\Account\CompleteRegistration.cshtml" />
+    <Content Include="Views\Account\ResendConfirmation.cshtml" />
+    <Content Include="Views\Account\UnregisteredEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

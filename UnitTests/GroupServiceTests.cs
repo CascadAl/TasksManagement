@@ -17,6 +17,7 @@ using System.Security.Principal;
 using System.Security.Claims;
 using System.Web.Routing;
 using Services.Models;
+using Data;
 
 namespace UnitTests
 {
@@ -88,7 +89,7 @@ namespace UnitTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void AddMember_RejectsWhenAlreadyinGroup()
+        public void AddMember_RejectsWhenAlreadyInGroup()
         {
             // Arrange
             var mockGroupMember = new Mock<IGroupMemberRepository>();
@@ -101,5 +102,24 @@ namespace UnitTests
             // Act
             groupService.AddMember(viewModel);
         }
+
+        [TestMethod]
+        public void AddMember_AddsWhenAuthorized()
+        {
+            // Arrange
+            var mockGroupMember = new Mock<IGroupMemberRepository>();
+            IGroupService groupService = new GroupService(null, null, null, mockGroupMember.Object, null);
+
+            mockGroupMember.Setup(m => m.GetRole(0, 0)).Returns(RoleNames.ROLE_OWNER);
+            mockGroupMember.Setup(m => m.IsInGroup(0, 0)).Returns(false);
+            var viewModel = new GroupMemberViewModel();
+
+            // Act
+            groupService.AddMember(viewModel);
+
+            // Assert
+            mockGroupMember.Verify(gm => gm.AddUserToGroup(It.IsAny<GroupMember>()));
+        }
+
     }
 }

@@ -9,5 +9,6 @@ namespace Data.Repository
 {
     public interface IIssueRepository : IRepository<Issue>
     {
+        void AssignToNoone(int groupId, int userId);
     }
 }
