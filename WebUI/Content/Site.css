@@ -1,10 +1,10 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    padding-top:20px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -16,9 +16,257 @@
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+ul.group-list {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #DDD;
+}
+
+    ul.group-list > li:after,
+    ul.group-list > li:before {
+        display: table;
+        content: " ";
+        clear: both;
+    }
+
+li.group-row {
+    display: block;
+    margin: 0;
+    padding: 10px 15px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.group-row > .controls {
+    float: right;
+}
+.controls form{
+    display:inline-block;
+}
+    .group-row > .controls .btn,
+    .group-row > .controls select {
+        margin-top: 3px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+.group-row > .title {
+    float: left;
+}
+
+.group-row > .description {
+    max-width: 90%;
+    clear: left;
+}
+
+    .group-row > .description p {
+        margin-bottom: 0;
+        vertical-align: top;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+.group-row > li:after {
+    clear: both;
+}
+
+.controls > a.remove-group:hover,
+.controls > button.remove-member:hover {
+    color: rgb(224, 9, 9);
+}
+
+.controls > a.edit-group:hover {
+    color: blue;
+}
+
+.table-header {
+    background-color: #fafafa;
+    padding: 15px;
+    border: 1px solid #DDD;
+    border-bottom: none;
+}
+.group-list p{
+    margin: 0;
+}
+    .table-header > .nav {
+        border-bottom: none;
+    }
+
+        .table-header > .nav .active {
+            font-weight: bold;
+        }
+
+.add-user-form {
+    margin-bottom: 20px;
+}
+
+.change-group-role-dd {
+    width: 150px;
+}
+
+.issue-header > h1 {
+    margin-right: 150px;
+}
+
+.issue-header .issue-actions {
+    float: right;
+    margin-top: 5px;
+}
+
+.issue-title {
+    border-bottom: 1px solid #DDD;
+    padding-bottom: 20px;
+    margin-bottom: 16px;
+}
+
+.issue-title > .label {
+    font-size: 100%;
+    font-weight: normal;
+    margin-right: 10px;
+}
+
+.comment-body {
+    padding: 15px;
+    border: 1px solid #DDD;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.comment-list {
+    border-bottom: 2px solid #DDD;
+    margin-bottom: 20px;
+}
+
+.comment-list .table-header {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.comment-list p {
+    margin: 0;
+}
+
+.comment-header-text,
+.group-header-li {
+    max-width: 78%;
+}
+
+.comment-actions {
+    float: right;
+}
+
+    .comment-actions button {
+        padding: 0;
+        background-color: inherit;
+        vertical-align: top;
+        color: darkgrey;
+        margin-right:5px;
+    }
+        .comment-actions button:active,
+        .comment-actions button.active {
+            box-shadow: none;
+        }
+
+.issue-closed .label {
+    margin-left: 8px;
+    margin-right: 5px;
+    border-radius:22px;
+    padding:5px;
+    position:relative;
+    z-index:1;
+}
+.issue-closed .glyphicon {
+    padding-left: 3px;
+    font-size: 14px;
+}
+
+.vertical-line {
+    border-left: 2px solid #DDD;
+    margin-left: 20px;
+    position:relative;
+    z-index:0;
+}
+
+.comment-editor .CodeMirror,
+.comment-editor .CodeMirror-scroll {
+    min-height: 100px;
+}
+
+.comment-editor .validation-error{
+    margin-bottom:10px;
+}
+.issue-state-img {
+    padding-right: 10px;
+    padding-top: 3px;
+    float: left;
+}
+
+.issue-state-img > .glyphicon-exclamation-sign {
+    color: green;
+}
+
+.issue-state-img > .glyphicon-ban-circle {
+    color: #e60202;
+}
+
+.issue-header-li
+{
+    float: left;
+}
+
+.issue-header-li p {
+    margin-bottom: 0;
+}
+
+.issue-header-li a {
+    color: black;
+    font-size: 110%;
+    margin-right:50px;
+}
+
+.issue-assignee-li{
+    float:right;
+}
+
+.badge-notify {
+    background: red;
+    position: relative;
+    top: -3px;
+    left: -15px;
+}
+
+#notification-section {
+    font-size:20px;
+    padding-bottom:0px;
+    padding-right:0px;
+    padding-top:16px;
+    display: inline-block;
+}
+
+.table-header .header-right {
+    float: right;
+}
+
+.header-right{
+    padding:10px 15px;
+}
+
+.b-0 {
+    border: none;
+}
+
+.m-tb-15 {
+    margin: 15px 0;
+}
+
+.m-b-15 {
+    margin-bottom: 25px;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-l-15 {
+    padding-left: 15px;
 }

@@ -7,20 +7,19 @@ using System.Web.Mvc;
 
 namespace WebUI.Controllers
 {
-	
 
-	public class HomeController : Controller
+    public class HomeController : BaseController
 	{
-		private readonly ITestService _testService = null;
-
-		public HomeController(ITestService testService)
-		{
-			_testService = testService;
-		}
-
 		public ActionResult Index()
 		{
-			return View();
+            if(Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Group");
+            }
+            else
+            {
+                return View();
+            }	
 		}
 
 		public ActionResult About()
@@ -32,15 +31,9 @@ namespace WebUI.Controllers
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = "Your contact page.";
+			ViewBag.Message = "Task Management contact page.";
 
 			return View();
-		}
-
-		[Authorize]
-		public ActionResult Test()
-		{
-			return View(_testService.GetAllMessages());
 		}
 	}
 }

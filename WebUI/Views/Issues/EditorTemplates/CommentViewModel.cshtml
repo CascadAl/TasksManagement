@@ -1,0 +1,41 @@
+﻿@model Services.Models.CommentViewModel
+
+<div class="row comment-container">
+    @Html.HiddenFor(m => m.Id)
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        <div class="comment-content">
+            <div class="table-header">
+                <div class="comment-actions">
+                    <button class="btn btn-lg edit-comment">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                    <button class="btn btn-lg remove-comment">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="comment-header-text">
+                    <strong>@Model.Username</strong>
+                    commented on @Model.CreatedAt.ToShortDateString()
+                </div>
+            </div>
+            <div class="comment-body">
+                <p>
+                    @(Model.Text.Equals(string.Empty) ? "<em>No description provided</em>" : string.Empty)
+                </p>
+                <pre class="hidden">@Model.Text</pre>
+            </div>
+        </div>
+        <div class="comment-editor hidden">
+            <textarea></textarea>
+
+            <div class="validation-error hidden">
+                <span class="text-danger">Text is required (2-1000 characters)</span>
+            </div>
+
+            <input type="button" class="btn btn-primary js-update-comment" value="Update Comment" />
+            <input type="button" class="btn btn-default js-cancel-comment-edit" value="Cancel" />
+        </div>
+        <i class="vertical-line"></i>
+    </div>
+</div>

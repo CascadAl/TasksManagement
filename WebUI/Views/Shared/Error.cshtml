@@ -7,3 +7,10 @@
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
+@if (Model != null)
+{
+    <div class="hidden">
+        <h3>@Model.Exception.Message in action <i>@Model.ActionName</i> of <i>@Model.ControllerName</i> Controller </h3>
+        <p>@Model.Exception.StackTrace</p>
+    </div>
+}

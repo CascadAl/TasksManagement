@@ -1,10 +1,8 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.Owin;
-using Domain;
+using Data;
 using Owin;
-using Repository.Classes;
-using Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +10,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
+using Data.Repository;
 using Services.Classes;
 using Services.Interfaces;
 
@@ -33,19 +32,26 @@ namespace WebUI.App_Start
 
             #region регистрация сервисов
 
-            builder.RegisterType<TestService>().As<ITestService>();
+            builder.RegisterType<GroupService>().As<IGroupService>();
+            builder.RegisterType<ProfileService>().As<IProfileService>();
+            builder.RegisterType<IssueService>().As<IIssueService>();
 
             #endregion
 
             #region регистрация репозиториев
 
-            builder.RegisterType<TestRepository>().As<ITestRepository>();
+            builder.RegisterType<GroupRepository>().As<IGroupRepository>();
+            builder.RegisterType<UserRepository>().As<IUserRepository>();
+            builder.RegisterType<GroupMemberRepository>().As<IGroupMemberRepository>();
+            builder.RegisterType<ApplicationRoleRepository>().As<IApplicationRoleRepository>();
+            builder.RegisterType<IssueRepository>().As<IIssueRepository>();
+            builder.RegisterType<CommentRepository>().As<ICommentRepository>();
 
             #endregion
 
             // регестрируем контекст данных и указываем его процесс создания
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
-
+            
 
             var container = builder.Build();
             // метод для конфигурации MVC контроллера

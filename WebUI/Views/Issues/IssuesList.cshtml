@@ -1,0 +1,36 @@
+﻿@model Services.Models.IssueListViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Issues / <strong>@Model.GroupTitle</strong></h3>
+
+<hr class="m-tb-15" />
+
+@if (Model.IsOwner)
+{
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <a class="btn btn-primary form-control" href="@Url.Action("Create", "Issues", new { groupId = ViewBag.GroupId })">New Issue</a>
+    </div>
+</div>
+}
+<p></p>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-header p-0 b-0">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="@(ViewBag.State.Equals("open") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId })" >Open</a></li>
+                <li role="presentation" class="@(ViewBag.State.Equals("closed") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId, state = "closed" })">Closed</a></li>
+                <li role="presentation" class="@(ViewBag.State.Equals("all") ? "active" : "")"> <a href="@Url.Action("Index", "Issues", new { groupId = ViewBag.GroupId, state = "all" })">All</a></li>
+                <li class="header-right" > <span>Assignee</span></li>
+            </ul>
+            
+        </div>
+        <ul class="group-list">
+            @Html.EditorFor(m => m.Issues)
+        </ul>
+    </div>
+</div>

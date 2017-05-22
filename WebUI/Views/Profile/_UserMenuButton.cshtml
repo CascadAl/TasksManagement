@@ -1,0 +1,24 @@
+﻿@using System.Web.Configuration;
+@model WebUI.Models.ProfileDetailsViewModel
+@{ 
+    var userName = Model.FullName ?? Model.Username;
+}
+<li >
+    <a role="button"  class="btn btn-link" id="notification-section" href="@Url.Action("Assigned", "Issues")">
+        <span class="glyphicon glyphicon-bell"></span>
+    </a>
+    <span class="badge badge-notify @(Model.AssignedTasks==0?"hidden":"")">@Model.AssignedTasks</span>
+</li>
+<li class="dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle">
+        @userName
+        <img src="@Model.AvatarPath" class="img-circle avatarSmall" />
+        <b class="caret"></b>
+    </a>
+    <ul class="dropdown-menu">
+        <li>@Html.ActionLink("Profile", "Index", "Profile")</li>
+        <li>@Html.ActionLink("Settings", "Edit", "Profile")</li>
+        <li class="divider"></li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    </ul>
+</li>

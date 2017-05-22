@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Services.Models.GroupWRoleViewModel>
+           
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="alert alert-danger alert-dismissible collapse" role="alert" id="error-alert" data-hide="@ViewBag.Leaved">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">×</span>
+    </button>
+    <strong>Error!</strong> Can't leave because you are the only owner of the group. Assign another owner or remove whole group.
+</div>
+
+<h3>Your Groups</h3>
+<hr class="m-tb-15" />
+
+<div class="row">
+    <div class="col-md-2 col-md-offset-10">
+        <a class="btn btn-primary form-control" href="@Url.Action("Add", "Group")">New Group</a>
+    </div>
+</div>
+<p></p>
+
+@if (Model.Count() > 0)
+{
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-header">
+            <span>You are a member of</span>
+        </div>
+        <ul class="group-list">
+            @Html.EditorForModel()
+        </ul>
+    </div>
+</div>
+}
+
+@section scripts {
+<script src="~/Scripts/bootstrap-confirmation.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-leave-group').confirmation({
+                rootSelector: '.js-leave-group',
+                container: 'body'
+            });
+
+            var userLeaved = $('#error-alert').data('hide');
+            if (userLeaved==='False')
+                $('#error-alert').show();
+        });
+    </script>
+}

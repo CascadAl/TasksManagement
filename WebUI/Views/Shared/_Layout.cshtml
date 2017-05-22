@@ -4,73 +4,76 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Task Management</title>
+    @RenderSection("head", required: false)
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fontawesome")
     @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="wrapper">
-        <div class="navbar navbar-inverse header navbar-fixed-top">
-            <div class="container container-width">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
 
-                    <a href='@Url.Action("Index", "Home")'>
-                      <img src="../../Content/Images/Logo1.png" id="header-main-image" alt="Tasks Management main page" title="Tasks Management main page"/>
-                    </a>
-                    
-<!--                    @Html.ActionLink("Logo", "Index", "Home", null, new {@class="header-main-image"})-->
-                    
-<!--                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })-->
-                </div>
-                <!--<div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li>@Html.ActionLink("Test", "Test", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>-->
+</head>
+
+<body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar header navbar-default navbar-fixed-top">
+        <div class="container container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" id="togle-collapsed-border" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar collapse-span-color"></span>
+                    <span class="icon-bar collapse-span-color"></span>
+                    <span class="icon-bar collapse-span-color"></span>
+                </button>
+                <a class="logo" href='@Url.Action("Index", "Home")' title="Tasks Management Home page"> </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav main-button">
+                    <li>@Html.ActionLink("Groups", "Index", "Group")</li>
+                    <li>@Html.ActionLink("Issues", "Assigned", "Issues")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- Begin page content -->
+    <div class="container body-content content-end">
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="col-md-3 float-left" id="first-info">
+                <ul class="list-unstyled footer-text">
+                    <li>&copy; @DateTime.Now.Year - Task Management</li>
+                    <li>All Rights Reserved</li>
+                </ul>
+            </div>
+            <div class="col-md-3 col-md-offset-3 float-left other-info">
+                <ul class="list-unstyled">
+                    <li class="decor">CONTACT US</li>
+                    <li>tasksmanagment.site@gmail.com</li>
+                    <li>095-548-42-08</li>
+                </ul>
+            </div>
+            <div class="col-md-3 float-left">
+                <ul class="list-unstyled">
+                    <li class="decor">LOCATION</li>
+                    <li>34B Kniazia Volodymyra Velykoho St., </li>
+                    <li>Dnipro, 49000, Ukraine</li>
+                </ul>
             </div>
         </div>
-        <div class="container body-content content-end">
-            @RenderBody()
-        <!--<hr />-->
-        </div>
-        <div class="footer">
-            <div class="container container-width">
-            <div class="float-left" id="first-info">
-            <ul class="list-unstyled footer-text">
-                <li>&copy; @DateTime.Now.Year - Task Management</li>
-                <li>All Rights Reserved</li>
-            </ul>
-                </div>
-            <div class="float-left other-info">
-            <ul class="list-unstyled center">
-                <li class="decor">CONTACT US</li>
-                <li>almebrti@mail.ru</li>
-                <li>slashdrop@gmail.com</li>
-                <li>095-548-42-08</li>
-            </ul>
-                </div>
-            <div class="float-left other-info">
-            <ul class="list-unstyled center">
-                <li class="decor">LOCATION</li>
-                <li>34B Kniazia Volodymyra Velykoho St., </li>
-                <li>Dnipro, 49000, Ukraine</li>
-            </ul>
-                </div>
-                </div>
-            <!--        <p class="footertext">&copy; @DateTime.Now.Year - Task Management</p>
-        <p class="footertext">All Rights Reserved</p>-->
-        </div>
-    </div>
+
+    </footer>
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
