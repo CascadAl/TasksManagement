@@ -1,10 +1,5 @@
 ﻿using Services.Models.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace WebUI.Models
@@ -26,8 +21,6 @@ namespace WebUI.Models
 
         [Display(Name = "Path to avatar")]
         public string AvatarPath { get; set; }
-
-        public int AssignedTasks { get; set; }
     }
 
     public class EditProfileViewModel

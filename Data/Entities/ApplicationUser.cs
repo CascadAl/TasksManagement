@@ -14,7 +14,6 @@ namespace Data.Entities
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>, IUser<int>, IEntity
     {
         public virtual ICollection<GroupMember> GroupMembers { get; set; }
-        public virtual ICollection<Issue> AssignedIssues { get; set; }
         public virtual ICollection<Issue> OpenedIssues { get; set; }
         public virtual ICollection<Issue> ClosedIssues { get; set; }
         public virtual UserProfile UserProfile { get; set; }
@@ -30,7 +29,6 @@ namespace Data.Entities
         public ApplicationUser()
         {
             GroupMembers = new List<GroupMember>();
-            AssignedIssues = new List<Issue>();
             OpenedIssues = new List<Issue>();
             ClosedIssues = new List<Issue>();
         }
