@@ -35,7 +35,7 @@ namespace WebUI.Controllers
         public ActionResult Assigned(string state = "open")
         {
             ViewBag.State = state;
-            var viewModels = _issueService.GetAssigned(state);
+            var viewModels = _issueService.GetAll(state);
 
             return View("AssignedIssuesList", viewModels);
         }

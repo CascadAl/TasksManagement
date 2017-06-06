@@ -97,7 +97,6 @@ namespace Services.Converters
                 Title = entity.Title,
                 Text = entity.Id>0? entity.Comments.OrderBy(c=>c.CreatedAt).FirstOrDefault().Text : null,
                 ClosedAt = entity.ClosedAt,
-                AssignedToUserId = entity.AssignedToUserId,
                 OpenedByUserId = entity.OpenedByUserId,
                 OpenedByUser = entity.UserOpened.UserName,
                 ClosedByUser = entity.UserClosed != null ? entity.UserClosed.UserName : null
@@ -124,7 +123,6 @@ namespace Services.Converters
                 Title = viewModel.Title,
                 IssueNumber = viewModel.IssueNumber,
                 ClosedAt = viewModel.ClosedAt,
-                AssignedToUserId = viewModel.AssignedToUserId,
                 OpenedByUserId = HttpContext.Current.User.Identity.GetUserId<int>()
             };
         }

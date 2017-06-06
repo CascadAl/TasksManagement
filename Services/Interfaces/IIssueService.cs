@@ -10,7 +10,7 @@ namespace Services.Interfaces
     public interface IIssueService
     {
         IssueListViewModel GetAll(int groupId, string state);
-        IssueListViewModel GetAssigned(string state);
+        IssueListViewModel GetAll(string state);
 
         IssueViewModel Get(int issueId);
 
@@ -28,6 +28,6 @@ namespace Services.Interfaces
 
         void Remove(int issueId);
 
-        int CountAssignedTasks();
+        int CountTasks();
     }
 }

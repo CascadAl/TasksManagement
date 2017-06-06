@@ -66,7 +66,6 @@ namespace Services.Classes
             var issue = _issueRepository.Get(viewModel.Id.Value);
             var initialComment = issue.Comments.OrderBy(c => c.CreatedAt).First();
 
-            issue.AssignedToUserId = viewModel.AssignedToUserId;
             issue.Title = viewModel.Title;
             initialComment.IsEdited = true;
             initialComment.LastEditedAt = DateTime.Now;
@@ -99,36 +98,23 @@ namespace Services.Classes
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
 
-            var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+            var filteredIssues = issues.ToList().Select(i => i.ToViewModel());
             return new IssueListViewModel() { Issues = filteredIssues, IsOwner = _groupService.IsGroupOwner(groupId, userId), GroupTitle= groupTitle };
         }
 
-        public IssueListViewModel GetAssigned(string state)
+        public IssueListViewModel GetAll(string state)
         {
-            int userId = HttpContext.Current.User.Identity.GetUserId<int>();
-            IQueryable<Issue> issues = _issueRepository.Get(i => i.AssignedToUserId.Value == userId).OrderBy(i => i.OpenedAt);
+            IQueryable<Issue> issues = _issueRepository.Get().OrderBy(i => i.OpenedAt);
 
-            //filtering
+            // filtering
             if (state.Equals("open"))
                 issues = issues.Where(i => i.ClosedAt == null);
             else
             if (state.Equals("closed"))
                 issues = issues.Where(i => i.ClosedAt.HasValue);
 
-            var filteredIssues = issues.ToList().Select(i => SetAvatarPath(i.ToViewModel()));
+            var filteredIssues = issues.ToList().Select(i => i.ToViewModel());
             return new IssueListViewModel() { Issues = filteredIssues };
-        }
-
-
-        private IssueViewModel SetAvatarPath(IssueViewModel viewModel)
-        {
-            if (viewModel.AssignedToUserId.HasValue)
-            {
-                var profileDto = _profileService.GetProfile(viewModel.AssignedToUserId.Value);
-                viewModel.AsignedToUsername = profileDto.UserName;
-                viewModel.AssignedToAvatarPath = profileDto.AvatarPath;
-            }
-            return viewModel;
         }
 
         public IssueViewModel Get (int issueId)
@@ -272,11 +258,12 @@ namespace Services.Classes
             _issueRepository.Remove(issue);
         }
 
-        public int CountAssignedTasks()
+        public int CountTasks()
         {
             int userId = HttpContext.Current.User.Identity.GetUserId<int>();
-            return _issueRepository.Get(i => i.AssignedToUserId == userId && i.ClosedAt==null).Count();
+            return _issueRepository.Get(i => i.ClosedAt == null).Count();
         }
+
         public void Dispose()
         {
             _issueRepository.Dispose();

@@ -96,7 +96,7 @@ namespace WebUI.Controllers
             var profileDto = _profileService.GetProfile(User.Identity.GetUserId<int>());
             Mapper.Initialize(cfg => cfg.CreateMap<ProfileDTO, ProfileDetailsViewModel>());
             var profile = Mapper.Map<ProfileDTO, ProfileDetailsViewModel>(profileDto);
-            profile.AssignedTasks = _issueService.CountAssignedTasks();
+            profile.AssignedTasks = _issueService.CountTasks();
 
             return PartialView("_UserMenuButton", profile);
         }

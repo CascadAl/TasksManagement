@@ -14,16 +14,5 @@ namespace Data.Repository
         {
             _context = context;
         }
-
-        public void AssignToNoone(int groupId, int userId)
-        {
-            var assignedIssues = _context.Issues.Where(i => i.AssignedToUserId == userId && i.GroupId == groupId).ToList();
-
-            foreach (var issue in assignedIssues)
-            {
-                issue.AssignedToUserId = null;
-                this.Update(issue);
-            }
-        }
     }
 }

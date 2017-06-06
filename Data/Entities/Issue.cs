@@ -16,8 +16,6 @@ namespace Data.Entities
         [Required]
         public int GroupId { get; set; }
 
-       public int? AssignedToUserId { get; set; }
-
         [Required]
         public int IssueNumber { get; set; }
 
@@ -40,8 +38,6 @@ namespace Data.Entities
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<GroupMember> GroupMembers { get; set; }
-
-        public virtual ApplicationUser Assignee { get; set; }
 
         public virtual ApplicationUser UserOpened { get; set; }
 

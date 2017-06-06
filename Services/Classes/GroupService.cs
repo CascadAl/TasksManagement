@@ -120,16 +120,12 @@ namespace Services.Classes
                 if (owners > 1)
                 {
                     _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
-                    _issueRepository.AssignToNoone(groupId, userId);
-
                     return true;
                 }
             }
             else
             {
                 _groupMemberRepository.RemoveUserFromGroup(groupId, userId);
-                _issueRepository.AssignToNoone(groupId, userId);
-
                 return true;
             }
 
@@ -205,16 +201,12 @@ namespace Services.Classes
                 if (owners > 1)
                 {
                     _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
-                    _issueRepository.AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
-
                     return true;
                 }
                 return false;
             }
 
             _groupMemberRepository.RemoveUserFromGroup(viewModel.GroupId, viewModel.UserToRemove);
-            _issueRepository.AssignToNoone(viewModel.GroupId, viewModel.UserToRemove);
-
             return true;
         }
 
