@@ -20,8 +20,17 @@ namespace Services.Classes
         private string _avatarFolder;
         private string _defaultAvatar;
 
-        public string AvatarFolder { get => _avatarFolder; set => _avatarFolder = value; }
-        public string DefaultAvatar { get => _defaultAvatar; set => _defaultAvatar = value; }
+        public string AvatarFolder
+        {
+            get { return this._avatarFolder; }
+            set { this._avatarFolder = value; }
+        }
+
+        public string DefaultAvatar
+        {
+            get { return this._defaultAvatar; }
+            set { this._defaultAvatar = value; }
+        }
 
         public ProfileService(IUserRepository userRepository)
         {

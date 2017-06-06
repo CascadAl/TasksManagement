@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using WebUI.Models;
 using Data.Entities;
 using Data;
 using System.Net.Mail;
-using System.Net;
 
 namespace WebUI
 {
@@ -22,11 +16,15 @@ namespace WebUI
     {
         public Task SendAsync(IdentityMessage message)
         {
-            //The address and port of the SMTP-server from which we will send the letter
-            SmtpClient client = new SmtpClient();
+            string from = "panasyuk89va@gmail.com";
+            string pass = "12212110v";
+            SmtpClient client = new SmtpClient("mail.smtp2go.com", 2525);
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential(from, pass);
+            client.EnableSsl = false;
+            MailMessage mail = new MailMessage(from, message.Destination);
 
-            //Create a message: message.Destination - address of the recipient
-            MailMessage mail = new MailMessage(((NetworkCredential)client.Credentials).UserName, message.Destination);
             mail.Subject = message.Subject;
             mail.Body = message.Body;
             mail.IsBodyHtml = true;
@@ -83,13 +81,16 @@ namespace WebUI
             {
                 MessageFormat = "Your security code is {0}"
             });
+
             manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser, int>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
+
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
+
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
