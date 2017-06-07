@@ -16,8 +16,8 @@ namespace WebUI
     {
         public Task SendAsync(IdentityMessage message)
         {
-            string from = "panasyuk89va@gmail.com";
-            string pass = "12212110v";
+            string from = "test_email_from@apriorit.com";
+            string pass = "GG15DyllhVZf";
             SmtpClient client = new SmtpClient("mail.smtp2go.com", 2525);
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = false;
