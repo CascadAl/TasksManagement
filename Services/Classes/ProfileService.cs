@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Services.Interfaces;
 using Services.Models;
 using Data.Repository;
@@ -58,7 +59,10 @@ namespace Services.Classes
             ApplicationUser user = _userRepository.GetUserById(profile.Id);
             user.UserName = profile.UserName;
             user.UserProfile.FullName = profile.FullName;
-            user.UserProfile.AvatarName= profile.AvatarPath;
+            user.UserProfile.AvatarName = profile.AvatarPath;
+
+            var baseService = new BaseService(_userRepository);
+            baseService.CheckAccessPermission(profile);
 
             _userRepository.SaveChanges();
         }
